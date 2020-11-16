@@ -1,0 +1,53 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.topleft {
+  position: absolute;
+  top: 0;
+  left: 16px;
+}
+
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.middle_bottom {
+  bottom: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.footer_social{
+  left: 50%;
+  height: 50px;
+  text-align: center;
+  vertical-align: center;
+}
+
+hr {
+  margin: auto;
+  width: 40%;
+}
+
+.wrapper {
+  min-height: 100%;
+
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+  margin-bottom: -50px;
+}
+.footer,
+.push {
+  height: 50px;
+}
+
+.mt-2-3 {
+  margin-top: 1rem !important;
+}

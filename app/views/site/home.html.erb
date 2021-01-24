@@ -12,9 +12,9 @@
 <body >
   <div>
     <div class="middle">
-      <%= image_tag('logo_large.png', size: "500x500", alt: "Superior Essays") %>
+      <%= image_tag('logo_large.png', size: "500x500", alt: "Superior Essays") %><br/>
+      <%= link_to '<i class="icon-google icon-3x mr-1"></i> Signin with Google'.html_safe, '/auth/google_oauth2', method: :post, :class => "btn btn-primary text-lg" %>
     </div>
-      <%= link_to "Log In with Google", '/auth/google_oauth2', method: :post %>
   </div>
 </body>
 </html>

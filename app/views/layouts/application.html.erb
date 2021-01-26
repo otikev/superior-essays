@@ -10,6 +10,18 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!-- Main content -->
+  <div class="content-wrapper">
+    <div class="content">
+      <% flash.each do |key, value| %>
+        <% if value.is_a?(String) %>
+          <div class="text-center alert alert-<%= key %> ">
+            <%= content_tag :div, simple_format(value), :id => "flash_#{key}" %>
+          </div>
+        <% end %>
+      <% end %>
+      <%= yield %>
+    </div>
+  </div>
   </body>
 </html>

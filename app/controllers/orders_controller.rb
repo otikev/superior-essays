@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   def create
       @order = Order.new(order_params)
       @order.user_id = @current_user.id
-      @order.save
+      @order.order_status = OrderStatus.where(name: "Todo").first
+      @order.save!
       flash[:notice] = "Order successfully created."
       redirect_to client_home_path
   end
@@ -20,8 +21,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
   def order_params
-    params.require(:order).permit(:order_type, :topic, :instructions,:contact_phone)
+    params.require(:order).permit(:order_type_id, :topic, :instructions, :contact_phone)
   end
 end

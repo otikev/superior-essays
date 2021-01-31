@@ -10,14 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_31_130201) do
+ActiveRecord::Schema.define(version: 2021_01_31_203922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
+  create_table "order_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "order_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "orders", force: :cascade do |t|
-    t.string "order_type"
     t.string "topic"
     t.text "instructions"
     t.uuid "key", default: -> { "uuid_generate_v4()" }
@@ -25,6 +36,8 @@ ActiveRecord::Schema.define(version: 2021_01_31_130201) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "order_status_id"
+    t.integer "order_type_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_130201) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.boolean "admin", default: false
   end
 
 end

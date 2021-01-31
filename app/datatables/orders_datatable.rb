@@ -5,8 +5,15 @@ private
 	def data
 		orders.map do |order|
 			[].tap do |column|
-				column << order.order_type
+				column << order.order_status.name
+				column << order.order_type.name
 				column << order.topic
+				column << "<a href=\"/orders/show?key=#{order.key}\">
+                      <i class=\"icon-eye\"></i>
+                      <span>
+                        View
+                      </span>
+                  </a>"
 			end
 		end
 	end
@@ -31,13 +38,13 @@ private
 
 		orders = Order.order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
 		if params[:search].present?
-			orders = orders.joins(:user).where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
+			orders = orders.joins([:user, :order_status]).where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
 		end
 		orders
 	end
 
 	def columns
-		%w(order_type topic)
+		%w(name topic)
 	end
 
 end

@@ -14,7 +14,10 @@ class ApplicationController < ActionController::Base
 
   def must_have_user
     if !@current_user
+      puts "**************** User does not exist!"
       redirect_to root_path
+    else
+      puts "**************** User exists"
     end
   end
 end

@@ -1,0 +1,18 @@
+<script>
+  $(document).ready(function () {
+	$("#searchable").DataTable({
+      	processing: true,
+      	serverSide: true,
+      	ajax: $("#searchable").data('url'),
+      	language: {
+      		search: "Filter:",
+      		searchPlaceholder: "Type to filter...",
+      		paginate: {
+      			previous: '<span>&larr;</span>',
+      			next: '<span>&rarr;</span>'
+      		}
+      	},
+      	dom: '<"datatable_header"fl>r<"datatables-scroll"t><"datatable_footer px-3 pt-2"ip>'
+      });
+  });
+</script>

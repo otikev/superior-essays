@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   match '/client/home', to: 'client#home', via: :get
   match '/orders/new', to: 'orders#new', via: :get
   match '/orders/create', to: 'orders#create', via: :post
-
+  match '/orders/fetch', to: 'orders#fetch', via: :get
 end

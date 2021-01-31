@@ -13,6 +13,13 @@ class OrdersController < ApplicationController
       redirect_to client_home_path
   end
 
+  def fetch
+    respond_to do |format|
+      format.html
+      format.json { render json: OrdersDatatable.new(view_context) }
+    end
+  end
+
   private
   def order_params
     params.require(:order).permit(:order_type, :topic, :instructions,:contact_phone)

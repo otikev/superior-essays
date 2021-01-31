@@ -3,9 +3,14 @@ Rails.application.routes.draw do
   root 'site#home'
   get 'auth/:provider/callback' => 'sessions#omniauth'
 
-  match '/client/home', to: 'client#home', via: :get
+
   match '/orders/new', to: 'orders#new', via: :get
   match '/orders/create', to: 'orders#create', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get
   match '/orders/show', to: 'orders#show', via: :get
+
+  match '/client/home', to: 'client#home', via: :get
+
+  match '/admin/home', to: 'admin#home', via: :get
+  match '/admin/orders', to: 'admin#orders', via: :get
 end

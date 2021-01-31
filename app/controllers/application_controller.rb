@@ -20,4 +20,13 @@ class ApplicationController < ActionController::Base
       puts "**************** User exists"
     end
   end
+
+  def must_have_admin_user
+    if @current_user && @current_user.admin?
+      puts "**************** User exists"
+    else
+      puts "**************** User does not exist!"
+      redirect_to root_path
+    end
+  end
 end

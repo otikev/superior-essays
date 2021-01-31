@@ -5,7 +5,12 @@ class SessionsController < ApplicationController
     @user.save
 
     session[:auth_token] = @user.password
-    redirect_to client_home_path
+
+    if @user.admin?
+      redirect_to admin_home_path
+    else
+      redirect_to client_home_path
+    end
   end
 
   private

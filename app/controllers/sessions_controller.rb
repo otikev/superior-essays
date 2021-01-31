@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     @user = User.from_omniauth(auth)
     @user.save
 
-    session[:user_id] = @user.key
+    session[:auth_token] = @user.password
     redirect_to client_home_path
   end
 

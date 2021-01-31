@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback' => 'sessions#omniauth'
 
   match '/client/home', to: 'client#home', via: :get
+  match '/orders/new', to: 'orders#new', via: :get
+  match '/orders/create', to: 'orders#create', via: :post
 
 end

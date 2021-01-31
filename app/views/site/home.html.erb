@@ -10,9 +10,25 @@
 </head>
 
 <body >
-  <div>
-    <div class="middle">
-      <%= link_to '<i class="icon-google icon-3x mr-1"></i> Signin with Google'.html_safe, '/auth/google_oauth2', method: :post, :class => "btn btn-primary text-lg" %>
+  <div class="row bg-white">
+    <div class="col-4">
+      <%= image_tag('logo_large.png', size: "500x500", alt: "Superior Essays") %>
+    </div>
+    <div class="col-4">
+      <div class="middle">
+        <p class="h1">Superior Essays</p>
+        <p>Place an order and get professional help from academic writers.</p>
+        <p>Delivering quality work is our priority</p>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="middle">
+        <% if @current_user %>
+          <%= link_to 'Place Order'.html_safe, '/orders/new', method: :get, :class => "btn btn-primary mr-3" %>
+        <% else %>
+          <%= link_to 'Place Order'.html_safe, '/auth/google_oauth2', method: :post, :class => "btn btn-primary mr-3" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </body>

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-
+  has_many :orders
+  
   def self.from_omniauth(auth)
     where(email: auth.info.email).first_or_initialize do |user|
       user.first_name = auth.info.first_name

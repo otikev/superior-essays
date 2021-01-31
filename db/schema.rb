@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_105709) do
+ActiveRecord::Schema.define(version: 2021_01_31_130201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "orders", force: :cascade do |t|
+    t.string "order_type"
+    t.string "topic"
+    t.text "instructions"
+    t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.string "contact_phone"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "user_name"

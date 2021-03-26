@@ -19,7 +19,7 @@ private
 	end
 
 	def count
-		Order.count
+		Order.where(user_id: @user.id).count
 	end
 
 	def total_entries
@@ -27,7 +27,7 @@ private
 	end
 
 	def orders
-		@orders ||= fetch_orders
+		fetch_orders
 	end
 
 	def fetch_orders
@@ -36,7 +36,7 @@ private
 			search_string << "lower(#{term}) like :search"
 		end
 
-		orders = Order.order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
+		orders = Order.where(user_id: @user.id).order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
 		if params[:search].present?
 			orders = orders.joins([:user, :order_status, :order_type]).where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
 		end

@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   def orders
     respond_to do |format|
       format.html
-      format.json { render json: AdminOrdersDatatable.new(view_context) }
+      format.json { render json: AdminOrdersDatatable.new(view_context, @current_user) }
     end
   end
 end

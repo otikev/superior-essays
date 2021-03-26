@@ -1,8 +1,9 @@
 class ApplicationDatatable
 	delegate :params, to: :@view
 
-	def initialize(view)
+	def initialize(view, user)
 		@view = view
+		@user = user
 	end
 
 	def as_json(options={})
@@ -25,7 +26,7 @@ private
 
 	def sort_column
 		columns[params[:order]['0'][:column].to_i]
-	end	
+	end
 
 	def sort_direction
 		params[:order]['0'][:dir] == "desc" ? "desc" : "asc"

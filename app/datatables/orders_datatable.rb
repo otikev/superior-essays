@@ -5,6 +5,7 @@ private
 	def data
 		orders.map do |order|
 			[].tap do |column|
+				column << order.code
 				column << order.order_status.name
 				column << order.order_type.name
 				column << order.topic
@@ -44,7 +45,7 @@ private
 	end
 
 	def columns
-		%w(order_statuses.name order_types.name topic)
+		%w(order_statuses.name order_types.name topic code)
 	end
 
 end

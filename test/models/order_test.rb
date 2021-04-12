@@ -12,6 +12,7 @@
 #  updated_at      :datetime         not null
 #  order_status_id :integer
 #  order_type_id   :integer
+#  code            :string
 #
 
 require "test_helper"

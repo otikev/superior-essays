@@ -12,6 +12,7 @@
 #  updated_at      :datetime         not null
 #  order_status_id :integer
 #  order_type_id   :integer
+#  code            :string
 #
 
 class Order < ApplicationRecord
@@ -23,4 +24,9 @@ class Order < ApplicationRecord
 
   belongs_to :order_type
   belongs_to :order_status
+
+  before_save do
+    self.code = Utils.random_upcase_string(5)
+  end
+
 end

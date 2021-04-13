@@ -1,1 +1,30 @@
-Coming Soon
+
+Order Title : <%= @order.topic %> (<%= @order.code %>)
+
+<% if @order.paid %>
+Paid
+<% else %>
+<script src="https://www.paypal.com/sdk/js?client-id=<%=@client_id%>"></script>
+<div id="paypal-button-container"></div>
+<script>
+  paypal.Buttons({
+    env: '<%= @env %>', // Valid values are sandbox and live.
+    createOrder: async () => {
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+        const config = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({key: '<%= @order.key %>'})
+        }
+        const response = await fetch('/orders/pay', config);
+        const responseData = await response.json();
+        return responseData.token;
+    },
+    onApprove: async (data) => {}
+  }).render('#paypal-button-container');
+</script>
+<% end %>

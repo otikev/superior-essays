@@ -9,6 +9,11 @@ private
 				column << order.order_status.name
 				column << order.order_type.name
 				column << order.topic
+				if order.paid?
+					column << "Paid"
+				else
+					column << "Pending"
+				end
 				column << "<a href=\"/orders/show?key=#{order.key}\">
                       <i class=\"icon-eye\"></i>
                       <span>

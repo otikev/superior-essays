@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     puts "Session = #{session.to_json}"
     if session[:auth_token] && session[:auth_token].length > 0
       puts "finding user..."
-      @current_user = User.find_by!(password: session[:auth_token])
+      @current_user = User.find_by!(key: session[:auth_token])
       puts "User = #{@current_user.to_json}"
     end
   end

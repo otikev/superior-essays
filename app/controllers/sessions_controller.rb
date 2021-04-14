@@ -1,10 +1,12 @@
 class SessionsController < ApplicationController
 
-  def omniauth
+  def create
+    puts "omniauth **************"
     @user = User.from_omniauth(auth)
+    puts @user.to_json
     @user.save
 
-    session[:auth_token] = @user.password
+    session[:auth_token] = @user.key
 
     if @user.admin?
       redirect_to admin_home_path
@@ -14,11 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def logout
-    if session[:auth_token] && session[:auth_token].length > 0
-      user = User.find_by!(password: session[:auth_token])
-      user&.update_attribute(:password, nil)
-      session.delete(:auth_token)
-    end
+    session[:auth_token] = nil
     redirect_to root_path
   end
 

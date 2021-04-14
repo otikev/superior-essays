@@ -63,12 +63,7 @@
   </div>
 </div>
 
-
-Order Title : <%= @order.topic %> (<%= @order.code %>)
-
-<% if @order.paid %>
-Paid
-<% else %>
+<% if !@order.paid? %>
 <script src="https://www.paypal.com/sdk/js?client-id=<%=@client_id%>"></script>
 <div id="paypal-button-container"></div>
 <script>

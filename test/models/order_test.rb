@@ -13,6 +13,9 @@
 #  order_status_id :integer
 #  order_type_id   :integer
 #  code            :string
+#  paid            :boolean          default("false")
+#  token           :string
+#  price           :integer
 #
 
 require "test_helper"

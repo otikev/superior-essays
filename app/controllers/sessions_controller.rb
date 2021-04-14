@@ -13,6 +13,15 @@ class SessionsController < ApplicationController
     end
   end
 
+  def logout
+    if session[:auth_token] && session[:auth_token].length > 0
+      user = User.find_by!(password: session[:auth_token])
+      user&.update_attribute(:password, nil)
+      session.delete(:auth_token)
+    end
+    redirect_to root_path
+  end
+
   private
 
   def auth

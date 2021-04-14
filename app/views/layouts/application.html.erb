@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SuperiorEssays</title>
+    <title>Superior Essays</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -13,6 +13,9 @@
     <!-- Main content -->
   <div class="content-wrapper">
     <div class="content">
+      <% if @current_user %>
+        <%= render 'general/top_bar' %>
+      <% end %>
       <% flash.each do |key, value| %>
         <% if value.is_a?(String) %>
           <div class="text-center alert alert-<%= key %> ">

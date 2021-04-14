@@ -10,9 +10,9 @@ private
 				column << order.order_type.name
 				column << order.topic
 				if order.paid?
-					column << "Paid"
+					column << '<span class="badge bg-success badge-pill">Paid</span>'
 				else
-					column << "Pending"
+					column << '<span class="badge bg-warning badge-pill">Pending</span>'
 				end
 				column << "<a href=\"/orders/show?key=#{order.key}\">
                       <i class=\"icon-eye\"></i>

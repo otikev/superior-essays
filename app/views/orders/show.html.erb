@@ -24,7 +24,22 @@ Paid
         const responseData = await response.json();
         return responseData.token;
     },
-    onApprove: async (data) => {}
+    onApprove: async (data) => {
+      var csrfToken = $("meta[name='csrf-token']").attr("content");
+      const response = await fetch('/orders/capture_order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
+        },
+        body: JSON.stringify({token: data.orderID})
+      });
+      const responseData = await response.json();
+      if (responseData.status === 'COMPLETED') {
+        alert('Payment success!');
+        location.reload();
+      }
+    }
   }).render('#paypal-button-container');
 </script>
 <% end %>

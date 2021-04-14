@@ -46,7 +46,17 @@ class OrdersController < ApplicationController
 
   # PAYPAL CAPTURE ORDER
   def capture_order
-    
+    request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new params[:token]
+    begin
+      response = @client.execute request
+      order = Order.find_by :token => params[:token]
+      order.paid = response.result.status == 'COMPLETED'
+      if order.save
+        return render :json => {:status => response.result.status}, :status => :ok
+      end
+    rescue PayPalHttp::HttpError => ioe
+      # HANDLE THE ERROR
+    end
   end
 
   def fetch

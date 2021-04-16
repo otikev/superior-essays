@@ -42,7 +42,10 @@ private
 			search_string << "lower(#{term}) like :search"
 		end
 
-		orders = Order.order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
+		_user_id = @view.instance_variable_get(:@current_user).id
+
+		orders = Order.where(user_id: _user_id).order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
+
 		if params[:search].present?
 			orders = orders.joins([:user, :order_status, :order_type]).where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
 		end

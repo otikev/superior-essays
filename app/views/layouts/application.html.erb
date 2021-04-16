@@ -7,6 +7,10 @@
 
     <%= stylesheet_link_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
+
+    <% if !@current_user or (@current_user and !@current_user.admin?) %>
+      <script>(function(){var pp=document.createElement('script'), ppr=document.getElementsByTagName('script')[0]; stid='cFU2U21MQnd5eUloUno5RDZXQjE2QT09';pp.type='text/javascript'; pp.async=true; pp.src=('https:' == document.location.protocol ? 'https://' : 'http://') + 's01.live2support.com/dashboardv2/chatwindow/'; ppr.parentNode.insertBefore(pp, ppr);})();</script>
+    <% end %>
   </head>
 
   <body>

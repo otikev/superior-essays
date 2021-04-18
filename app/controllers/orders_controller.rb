@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
       end
     rescue PayPalHttp::HttpError => ioe
       puts "** An exception has occurred!"
-      puts exception.backtrace
+      puts ioe.backtrace
     end
   end
 

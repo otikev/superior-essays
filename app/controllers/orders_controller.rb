@@ -19,7 +19,12 @@ class OrdersController < ApplicationController
     ky = params[:key]
     order = Order.where(key:ky).first
 
+    puts " *** order = #{order.to_json}"
+
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
+
+    puts "request object created!"
+
     request.request_body({
       :intent => 'CAPTURE',
       :purchase_units => [
@@ -39,7 +44,8 @@ class OrdersController < ApplicationController
         return render :json => {:token => response.result.id}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe
-      # HANDLE THE ERROR
+      puts "** An exception has occurred!"
+      puts exception.backtrace
     end
   end
 

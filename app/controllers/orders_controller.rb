@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     })
 
     begin
-      puts "pay request #{request}"
+      puts "pay request #{request.to_json}"
       response = @client.execute(request)
       result = response.result
       puts "pay result = #{result}"

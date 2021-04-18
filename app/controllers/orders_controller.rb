@@ -38,6 +38,7 @@ class OrdersController < ApplicationController
     })
 
     begin
+      puts "pay request #{request}"
       response = @client.execute(request)
       result = response.result
       puts "pay result = #{result}"

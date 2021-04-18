@@ -49,15 +49,13 @@
 <script>
   paypal.Buttons({
     env: '<%= @env %>', // Valid values are sandbox and live.
+    //env: 'live', // Valid values are sandbox and live.
     createOrder: async () => {
-        var csrfToken = $("meta[name='csrf-token']").attr("content");
         const config = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+csrfToken,
-                'X-CSRF-Token': csrfToken
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({key: '<%= @order.key %>'})
         }
@@ -66,12 +64,10 @@
         return responseData.token;
     },
     onApprove: async (data) => {
-      var csrfToken = $("meta[name='csrf-token']").attr("content");
       const response = await fetch('/orders/capture_order', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({token: data.orderID})
       });

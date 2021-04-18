@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :must_have_user, :paypal_init
+  skip_before_action :verify_authenticity_token, :only => [:pay,:capture_order]
 
   def new
     @order = Order.new

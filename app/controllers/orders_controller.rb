@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
       @order = Order.new(order_params)
       @order.user_id = @current_user.id
       @order.order_status = OrderStatus.where(name: "Todo").first
+      @order.price = 10.0 # TODO: This will be a dynamic value as calculated by the cost calculator
       @order.save!
       flash[:notice] = "Order successfully created."
       redirect_to client_home_path
@@ -18,7 +19,6 @@ class OrdersController < ApplicationController
     ky = params[:key]
     order = Order.where(key:ky).first
 
-    price = '10.00' # TODO: This will be a dynamic value as calculated by the cost calculator
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
     request.request_body({
       :intent => 'CAPTURE',
@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
         {
           :amount => {
             :currency_code => 'USD',
-            :value => price
+            :value => order.price
           }
         }
       ]
@@ -34,7 +34,6 @@ class OrdersController < ApplicationController
 
     begin
       response = @client.execute request
-      order.price = price.to_i
       order.token = response.result.id
       if order.save
         return render :json => {:token => response.result.id}, :status => :ok

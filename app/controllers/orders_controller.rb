@@ -38,14 +38,17 @@ class OrdersController < ApplicationController
     })
 
     begin
-      response = @client.execute request
-      order.token = response.result.id
-      if order.save
-        return render :json => {:token => response.result.id}, :status => :ok
+      response = @client.execute(request)
+      result = response.result
+      puts "pay result = #{result}"
+
+      order.token = result.id
+      if order.save!
+        return render :json => {:token => order.token}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe
-      puts "** An exception has occurred!"
-      puts ioe.backtrace
+      puts ioe.status_code
+      puts ioe.headers["debug_id"]
     end
   end
 

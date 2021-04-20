@@ -6,4 +6,7 @@ class SiteController < ApplicationController
     end
   end
 
+  def pricing
+    @order = Order.new
+  end
 end

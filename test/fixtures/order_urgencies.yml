@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: order_urgencies
+#
+#  id         :integer          not null, primary key
+#  urgency    :integer
+#  unit       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  urgency: MyString
+
+two:
+  urgency: MyString

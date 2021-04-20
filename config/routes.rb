@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   root 'site#home'
   get 'auth/:provider/callback' => 'sessions#create'
   get 'logout' => 'sessions#logout'
-
+  
+  match '/pricing', to: 'site#pricing', via: :get
 
   match '/orders/new', to: 'orders#new', via: :get
   match '/orders/create', to: 'orders#create', via: :post

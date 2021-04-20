@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h1 class="card-title">Superior Essays Pricing Table</h1>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr class="bg-info">
+                    <th>Urgency</th>
+                    <th>Standard Quality</th>
+                    <th>Premium Quality</th>
+                    <th>Platinum Quality</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for i in 0..9 %>
+                    <tr>
+                        <td><%= @pricing_matrix["urgency"][i] %></td>
+                        <td>$<%= @pricing_matrix["standard_quality"][i] %></td>
+                        <td>$<%= @pricing_matrix["premium_quality"][i] %></td>
+                        <td>$<%= @pricing_matrix["platinum_quality"][i] %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

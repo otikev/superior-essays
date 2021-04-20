@@ -88,7 +88,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:order_type_id, :topic, :instructions, :contact_phone)
+    params.require(:order).permit(:order_type_id, :topic, :instructions, :contact_phone, :order_quality_id, :order_urgency_id, :pages)
   end
 
   def paypal_init

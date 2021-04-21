@@ -10,11 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_202248) do
+ActiveRecord::Schema.define(version: 2021_04_21_222832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "academic_levels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "english_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "order_qualities", force: :cascade do |t|
     t.string "quality"
@@ -45,7 +57,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_202248) do
     t.string "topic"
     t.text "instructions"
     t.uuid "key", default: -> { "uuid_generate_v4()" }
-    t.string "contact_phone"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -58,6 +69,20 @@ ActiveRecord::Schema.define(version: 2021_04_20_202248) do
     t.integer "pages"
     t.integer "order_quality_id"
     t.integer "order_urgency_id"
+    t.integer "sources_count", default: 0
+    t.integer "charts_count", default: 0
+    t.integer "slides_count", default: 0
+    t.integer "spacing", default: 1
+    t.integer "paper_format_id", default: 1
+    t.integer "english_type_id", default: 1
+    t.integer "academic_level_id", default: 1
+  end
+
+  create_table "paper_formats", force: :cascade do |t|
+    t.string "name"
+    t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

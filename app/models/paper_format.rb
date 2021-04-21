@@ -1,18 +1,14 @@
 # == Schema Information
 #
-# Table name: order_urgencies
+# Table name: paper_formats
 #
 #  id         :integer          not null, primary key
-#  urgency    :integer
-#  unit       :string
+#  name       :string
+#  key        :uuid
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class OrderUrgency < ApplicationRecord
+class PaperFormat < ApplicationRecord
     has_many :orders
-
-    def display
-        "#{urgency} #{unit}"
-    end
 end

@@ -49,6 +49,17 @@ class Order < ApplicationRecord
 
   before_save do
     self.code = Utils.random_upcase_string(5)
+
+    base_price = 0
+    if order_quality_id == 1
+      base_price = STANDARD_BASE_PRICE
+    elsif order_quality_id == 2
+      base_price = PREMIUM_BASE_PRICE
+    elsif order_quality_id == 3
+      base_price = PLATINUM_BASE_PRICE
+    end
+
+    self.price = (base_price+self.order_urgency_id-1)*self.pages
   end
 
 end

@@ -12,63 +12,69 @@
                 <span class="px-2">Order Details</span>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Type:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Type:</label>
                 <div class="col-lg-7">
                     <%= form.collection_select :order_type_id, OrderType.all, :id, :name, {prompt: "Select Order Type" }, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Quality:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Quality:</label>
                 <div class="col-lg-7">
-                    <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" }, class: "form-control"  , :required=>true%>
+                    <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paper Format:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paper Format:</label>
                 <div class="col-lg-7">
                     <%= form.collection_select :paper_format_id, PaperFormat.all, :id, :name, {prompt: "Select Format" }, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;English Type:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;English Type:</label>
                 <div class="col-lg-7">
-                    <%= form.collection_select :english_type_id, EnglishType.all, :id, :name, {prompt: "Select English" }, class: "form-control"  , :required=>true%>
+                    <%= form.collection_select :english_type_id, EnglishType.all, :id, :name, {prompt: "Select English" , :selected =>1}, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Academic Level:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Academic Level:</label>
                 <div class="col-lg-7">
-                    <%= form.collection_select :academic_level_id, AcademicLevel.all, :id, :name, {prompt: "Select Level" }, class: "form-control"  , :required=>true%>
+                    <%= form.collection_select :academic_level_id, AcademicLevel.all, :id, :name, {prompt: "Select Level" , :selected =>1}, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Deadline:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Deadline:</label>
                 <div class="col-lg-7">
-                    <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" }, class: "form-control"  , :required=>true%>
+                    <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pages:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pages:</label>
                 <div class="col-lg-7">
-                    <%= form.text_field :pages, placeholder: "Pages", class: "form-control"  , :required=>true%>
+                    <%= form.number_field :pages, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spacing:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spacing:</label>
                 <div class="col-lg-7">
                     <%= form.select(:spacing, options_for_select([['Single Spaced', 1], ['Double Spaced', 2]]), {:prompt => 'Select Spacing', :selected =>1},{class: "form-control"}) %>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "building"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Topic:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Topic:</label>
                 <div class="col-lg-7">
-                    <%= form.text_field :topic, placeholder: "Topic", class: "form-control"  , :required=>true%>
+                    <%= form.text_field :topic, placeholder: "Topic", class: "form-control" , :required=>true%>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left"><%= fa_icon "phone"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instructions:</label>
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instructions:</label>
                 <div class="col-lg-7">
                     <%= form.text_area :instructions, placeholder: "Instructions", class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Price ($):</label>
+                <div class="col-lg-7">
+                    <%= text_field_tag :total_price,0, placeholder: "Topic", class: "form-control" , :readonly => true %>
                 </div>
             </div>
             <%= button_tag(:class => "btn bg-info btn-block") do %>
@@ -77,3 +83,41 @@
         </div>
     </div>
 <%end%>
+
+<script>
+    function calculate(){
+        var quality = parseInt($("#order_order_quality_id").val());
+        var basePrice = 0;
+        if(quality == 1){//standard
+            basePrice = <%= STANDARD_BASE_PRICE %>;
+        }else if(quality == 2){//premium
+            basePrice = <%= PREMIUM_BASE_PRICE %>;
+        }else if(quality == 3){//platinum
+            basePrice = <%= PLATINUM_BASE_PRICE %>;
+        }
+
+        var pages = parseInt($("#order_pages").val());
+
+        var totalPrice = (basePrice+parseInt($("#order_order_urgency_id").val())-1)*pages;
+
+        if(isNaN(totalPrice)){
+            totalPrice = 0;
+        }
+        
+        $("#total_price").prop('readonly', false);
+        $("#total_price").val(totalPrice);
+        $("#total_price").prop('readonly', true);
+    }
+
+    $(document).ready(function () {
+        $("body").on('change','#order_order_urgency_id', function() {
+            calculate();
+        });
+        $("body").on('change','#order_pages', function() {
+            calculate();
+        });
+        $("body").on('change','#order_order_quality_id', function() {
+            calculate();
+        });
+    });
+</script>

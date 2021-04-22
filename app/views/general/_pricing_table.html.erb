@@ -15,10 +15,10 @@
             <tbody>
                 <% for i in 0..9 %>
                     <tr>
-                        <td><%= @pricing_matrix["urgency"][i] %></td>
-                        <td>$<%= @pricing_matrix["standard_quality"][i] %></td>
-                        <td>$<%= @pricing_matrix["premium_quality"][i] %></td>
-                        <td>$<%= @pricing_matrix["platinum_quality"][i] %></td>
+                        <td><%= OrderUrgency.find(i+1).display %></td>
+                        <td>$<%= STANDARD_BASE_PRICE + i %></td>
+                        <td>$<%= PREMIUM_BASE_PRICE + i %></td>
+                        <td>$<%= PLATINUM_BASE_PRICE + i %></td>
                     </tr>
                 <% end %>
             </tbody>

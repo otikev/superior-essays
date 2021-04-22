@@ -7,13 +7,19 @@ class OrdersController < ApplicationController
   end
 
   def create
-      @order = Order.new(order_params)
-      @order.user_id = @current_user.id
-      @order.order_status = OrderStatus.where(name: "Todo").first
-      @order.price = 10.0 # TODO: This will be a dynamic value as calculated by the cost calculator
-      @order.save!
-      flash[:notice] = "Order successfully created."
-      redirect_to client_home_path
+    @order = Order.new(order_params)
+    @order.user_id = @current_user.id
+    @order.order_status = OrderStatus.where(name: "Todo").first
+    @order.save!
+
+    if @order.price == params[:total_price].to_i
+      puts "backend and frontend pricing is the same"
+    else
+      puts "!!!! backend pricing differs from frontend pricing!"
+    end
+
+    flash[:notice] = "Order successfully created."
+    redirect_to client_home_path
   end
 
   def pay

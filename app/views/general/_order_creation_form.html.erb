@@ -18,12 +18,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Quality:</label>
-                <div class="col-lg-7">
-                    <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paper Format:</label>
                 <div class="col-lg-7">
                     <%= form.collection_select :paper_format_id, PaperFormat.all, :id, :name, {prompt: "Select Format" }, class: "form-control"  , :required=>true%>
@@ -42,18 +36,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Deadline:</label>
-                <div class="col-lg-7">
-                    <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pages:</label>
-                <div class="col-lg-7">
-                    <%= form.number_field :pages, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spacing:</label>
                 <div class="col-lg-7">
                     <%= form.select(:spacing, options_for_select([['Single Spaced', 1], ['Double Spaced', 2]]), {:prompt => 'Select Spacing', :selected =>1},{class: "form-control"}) %>
@@ -69,6 +51,27 @@
                 <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instructions:</label>
                 <div class="col-lg-7">
                     <%= form.text_area :instructions, placeholder: "Instructions", class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group text-center text-muted content-divider">
+                <span class="px-2"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Quality:</label>
+                <div class="col-lg-7">
+                    <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Deadline:</label>
+                <div class="col-lg-7">
+                    <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pages:</label>
+                <div class="col-lg-7">
+                    <%= form.number_field :pages, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
                 </div>
             </div>
             <div class="form-group row alert alert-success">

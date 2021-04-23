@@ -1,7 +1,9 @@
 class SiteController < ApplicationController
 
   def home
-    if @current_user && !@current_user.admin?
+    if @current_user && @current_user.admin?
+      redirect_to admin_home_path
+    elsif @current_user && !@current_user.admin?
       redirect_to client_home_path
     end
   end

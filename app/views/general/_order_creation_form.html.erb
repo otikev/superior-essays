@@ -94,6 +94,7 @@
 
 <script>
     function calculate(){
+        var spacing = parseInt($("#order_spacing").val());
         var quality = parseInt($("#order_order_quality_id").val());
         var basePrice = 0;
         if(quality == 1){//standard
@@ -111,6 +112,10 @@
         if(isNaN(totalPrice)){
             totalPrice = 0;
         }
+
+        if(spacing == 1){
+            totalPrice = totalPrice*2;
+        }
         
         $("#total_price").prop('readonly', false);
         $("#total_price").val(totalPrice);
@@ -125,6 +130,9 @@
             calculate();
         });
         $("body").on('change','#order_order_quality_id', function() {
+            calculate();
+        });
+        $("body").on('change','#order_spacing', function() {
             calculate();
         });
     });

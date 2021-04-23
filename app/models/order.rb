@@ -60,6 +60,9 @@ class Order < ApplicationRecord
     end
 
     self.price = (base_price+self.order_urgency_id-1)*self.pages
-  end
 
+    if self.spacing == 1
+      self.price = self.price*2
+    end
+  end
 end

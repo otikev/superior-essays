@@ -1,49 +1,13 @@
-<div class="page-header page-header-light mb-3">
-				<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-                            <% if @current_user.admin? %>
-                                <%= link_to admin_home_path, class: "breadcrumb-item" do %>
-                                    <i class="icon-home2 mr-2"></i> Home</a>
-                                <% end %>
+<li class="nav-item">
+    <%= link_to '/pricing', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+        <span class="text-white-400"><i class="icon-list-unordered mr-1"></i> Pricing</span>
+    <% end %>
+</li>
 
-                                <%= link_to "#", class: "breadcrumb-item" do %>
-                                    <i class="icon-users mr-2"></i> Users</a>
-                                <% end %>
-                            <% else %>
-                                <%= link_to client_home_path, class: "breadcrumb-item" do %>
-                                    <i class="icon-home2 mr-2"></i> Home</a>
-                                <% end %>
-                            <% end %>
-						</div>
-					</div>
+<% if @current_user %>
+    <% if @current_user.admin? %>
 
-					<div class="header-elements d-none">
-						<div class="breadcrumb justify-content-center">
-                            <div class="breadcrumb-elements-item">
-                                <% if @current_user.admin? %>
-                                Admin
-                                <% else %>
-                                Client
-                                <% end %>
-                            </div>
+    <% else %>
 
-							<div class="breadcrumb-elements-item dropdown p-0">
-								<a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
-									<%= @current_user.email %>
-								</a>
-
-								<div class="dropdown-menu dropdown-menu-right">
-									<a href="#" class="dropdown-item">Profile</a>
-									<a href="#" class="dropdown-item">Settings</a>
-									<div class="dropdown-divider"></div>
-                                    <%= link_to logout_path, class: "dropdown-item" do %>
-                                        <i class="icon-switch2"></i>
-                                        Logout
-                                      <% end %>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+    <% end %>
+<% end %>

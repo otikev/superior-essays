@@ -22,13 +22,6 @@
       </div>
     </div>
     <div class="col-4">
-      <div class="middle">
-        <% if @current_user %>
-          <%= link_to 'Place Order'.html_safe, '/orders/new', method: :get, :class => "btn btn-primary mr-3" %>
-        <% else %>
-          <%= link_to 'Place Order'.html_safe, '/auth/google_oauth2', method: :post, :class => "btn btn-primary mr-3" %>
-        <% end %>
-      </div>
     </div>
   </div>
 </body>

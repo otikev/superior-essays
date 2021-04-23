@@ -4,6 +4,7 @@
     <title>Superior Essays</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 
     <%= stylesheet_link_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
@@ -13,22 +14,120 @@
     <% end %>
   </head>
 
-  <body>
-    <!-- Main content -->
-  <div class="content-wrapper">
-    <div class="content">
-      <% if @current_user %>
-        <%= render 'general/top_bar' %>
-      <% end %>
-      <% flash.each do |key, value| %>
-        <% if value.is_a?(String) %>
-          <div class="text-center alert alert-<%= key %> ">
-            <%= content_tag :div, simple_format(value), :id => "flash_#{key}" %>
-          </div>
-        <% end %>
-      <% end %>
-      <%= yield %>
-    </div>
-  </div>
-  </body>
+<body class="layout-boxed-bg navbar-top">
+
+	<!-- Boxed layout wrapper -->
+	<div class="d-flex flex-column flex-1 layout-boxed">
+
+		<!-- Main navbar -->
+		<div class="navbar navbar-expand-md navbar-dark fixed-top">
+			<div class="navbar-brand">
+				<a href="/" class="d-inline-block">
+          <%= image_tag('logo_large.png', size: "50x50", alt: "Superior Essays") %>
+				</a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-mobile">
+
+        <div class="ml-md-3 mr-md-auto">
+        <%= link_to '/', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+                <span class="text-white-400"><i class="icon-home2 mr-1"></i>Home</span>
+              <% end %>
+        </div>
+
+				<ul class="navbar-nav">
+          <%= render 'general/top_bar' %>
+          <li class="nav-item">
+            <% if @current_user %>
+              <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+                <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
+              <% end %>
+            <% else %>
+              <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
+              <% end %>
+            <% end %>
+					</li>
+          <% if @current_user %>
+            <li class="nav-item dropdown dropdown-user">
+              <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
+                <span>
+                <% if @current_user.admin? %>
+                  Admin:
+                <% else %>
+                  Customer:
+                <% end %>
+                  <%= @current_user.email %>
+                </span>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                <div class="dropdown-divider"></div>
+                <%= link_to logout_path, class: "dropdown-item" do %>
+                  <i class="icon-switch2"></i>Logout
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+				</ul>
+			</div>
+		</div>
+		<!-- /main navbar -->
+
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Page header here -->
+
+				<!-- Content area -->
+				<div class="content">
+          <% flash.each do |key, value| %>
+            <% if value.is_a?(String) %>
+              <div class="text-center alert alert-<%= key %> ">
+                <%= content_tag :div, simple_format(value), :id => "flash_#{key}" %>
+              </div>
+            <% end %>
+          <% end %>
+          <%= yield %>
+				</div>
+				<!-- /content area -->
+
+
+				<!-- Footer -->
+				<div class="navbar navbar-expand-lg navbar-light">
+					<div class="navbar-collapse collapse" id="navbar-footer">
+						<span class="navbar-text">
+							Delivering quality work is our priority
+						</span>
+
+						<ul class="navbar-nav ml-lg-auto">
+              <li class="nav-item">
+               <% if @current_user %>
+                  <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+                    <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
+                  <% end %>
+                <% else %>
+                  <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                    <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
+                  <% end %>
+                <% end %>
+                </li>
+						</ul>
+					</div>
+				</div>
+				<!-- /footer -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /boxed layout wrapper -->
+
 </html>

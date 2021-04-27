@@ -5,5 +5,9 @@ class CreateOrderStatuses < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    OrderStatus.new(name: 'Todo').save!
+    OrderStatus.new(name: 'In Progress').save!
+    OrderStatus.new(name: 'Complete').save!
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_222832) do
+ActiveRecord::Schema.define(version: 2021_05_04_212120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,24 @@ ActiveRecord::Schema.define(version: 2021_04_21_222832) do
 
   create_table "paper_formats", force: :cascade do |t|
     t.string "name"
+    t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "resource_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "resource_type_id", default: 1
+    t.string "name"
+    t.string "internal_resource_url"
+    t.string "description"
+    t.string "file"
     t.uuid "key", default: -> { "uuid_generate_v4()" }
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

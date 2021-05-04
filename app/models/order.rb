@@ -47,6 +47,8 @@ class Order < ApplicationRecord
   belongs_to :english_type
   belongs_to :academic_level
 
+  has_many :resources
+
   before_save do
     self.code = Utils.random_upcase_string(5)
 

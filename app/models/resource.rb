@@ -56,6 +56,14 @@ class Resource < ApplicationRecord
     resource
   end
 
+  def delete_resource
+    obj = S3_OBJ.bucket(ENV['S3_BUCKET']).object(self.file)
+    if obj
+      obj.delete
+      self.delete
+    end
+  end
+
   def self.upload_to_s3(params)
     uploaded_io = params[:resource][:file]
 

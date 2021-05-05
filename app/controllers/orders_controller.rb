@@ -85,16 +85,54 @@ class OrdersController < ApplicationController
   def show
     ky = params[:key]
     @order = Order.where(key:ky).first
+    @resource = Resource.new
 
     if !@order # order not found!
       redirect_to root_path and return false
     end
   end
 
+  def delete_resource
+      resource = Resource.where(id: params[:resource][:id]).first
+      order = resource.order
+      if resource
+        resource.delete_resource
+      end
+      redirect_to orders_show_path(:key => order.key)
+  end
+
+  def upload_resource
+    order = Order.where(id: params[:resource][:order_id]).first
+
+    if !order # order not found!
+      puts 'Cannot find order'
+      redirect_to root_path and return false
+    end
+
+    accepted_formats = ['.pdf', '.doc', '.docx', '.txt']
+    uploaded_io = params[:resource][:file]
+    extension = File.extname(uploaded_io.original_filename)
+    if accepted_formats.include? extension.downcase
+      upload = Resource.upload_to_s3(params)
+      if !upload.save
+        flash[:danger] = Utils.get_error_string(upload,'File not uploaded')
+        redirect_to orders_show_path(:key => order.key) and return false
+      end
+    else
+      flash[:danger] = 'Invalid file type.'
+      redirect_to orders_show_path(:key => order.key) and return false
+    end
+
+    redirect_to orders_show_path(:key => order.key)
+  end
+
   private
 
   def order_params
-    params.require(:order).permit(:order_type_id, :topic, :instructions, 
+    params.require(:resource).permit(:order_id, :resource_type_id, :name,
+      :description, :file)
+
+    params.require(:order).permit(:order_type_id, :topic, :instructions,
       :order_quality_id, :order_urgency_id, :pages, :academic_level_id,
       :english_type_id, :paper_format_id, :spacing)
   end

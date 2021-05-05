@@ -3,11 +3,14 @@ Rails.application.routes.draw do
   root 'site#home'
   get 'auth/:provider/callback' => 'sessions#create'
   get 'logout' => 'sessions#logout'
-  
+
   match '/pricing', to: 'site#pricing', via: :get
 
   match '/orders/new', to: 'orders#new', via: :get
   match '/orders/create', to: 'orders#create', via: :post
+  match '/orders/upload_resource', to: 'orders#upload_resource', via: :post
+  match '/orders/delete_resource', to: 'orders#delete_resource', via: :patch
+
   match '/orders/pay', to: 'orders#pay', via: :post
   match '/orders/capture_order', to: 'orders#capture_order', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get

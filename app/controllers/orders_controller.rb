@@ -139,10 +139,12 @@ class OrdersController < ApplicationController
 
   private
 
-  def order_params
+  def resource_params
     params.require(:resource).permit(:order_id, :resource_type_id, :name,
       :description, :file)
+  end
 
+  def order_params
     params.require(:order).permit(:order_type_id, :topic, :instructions,
       :order_quality_id, :order_urgency_id, :pages, :academic_level_id,
       :english_type_id, :paper_format_id, :spacing)

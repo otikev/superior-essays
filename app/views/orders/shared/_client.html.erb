@@ -7,16 +7,16 @@
     <% if @order.client_resources.count > 0%>
       <div class="list-feed mb-3">
         <div class="list-feed-item">
-          <b>My files</b>
+          <b>My Uploads</b>
         </div>
         <% @order.client_resources.each do |resource| %>
             <div class="list-feed-item">
-              <%= resource.name %>
               <%= form_for resource,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'delete_resource' ) do |form| %>
                 <%= form.hidden_field :key, value: resource.key %>
                 <%= button_tag(:class => "btn btn-outline-danger btn-sm") do %>
                 <span class="text-white-400"><i class="icon-trash mr-1"></i>Delete</span>
                 <% end %>
+                <%= resource.name %>
               <%end%>
             </div>
         <% end %>
@@ -45,7 +45,7 @@
     <% if @order.business_resources.count > 0%>
       <div class="list-feed mb-3">
         <div class="list-feed-item">
-          <b>Finished files</b>
+          <b>Finished Files</b>
         </div>
         <% @order.business_resources.each do |resource| %>
             <div class="list-feed-item">
@@ -61,12 +61,7 @@
 </div>
 
 <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-  <span>
-    <span class="badge badge-mark border-danger mr-2"></span>
-    Due:
-    <span class="font-weight-semibold">2015/02/25</span>
-  </span>
-
+  <span></span>
   <div id="paypal-button-container"></div>
 </div>
 

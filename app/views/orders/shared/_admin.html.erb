@@ -1,0 +1,60 @@
+
+
+<legend class="text-uppercase font-size-sm font-weight-bold">Files</legend>
+
+<div class="row mb-3">
+  <div class="col-lg-6">
+    <% if @order.client_resources.count > 0%>
+      <div class="list-feed mb-3">
+        <div class="list-feed-item">
+          <b>Client Uploads</b>
+        </div>
+        <% @order.client_resources.each do |resource| %>
+            <div class="list-feed-item">
+              <%= link_to orders_download_resource_path(key: resource.key), method: :get, :class => "btn btn-outline-success btn-sm" do %>
+                <span class="text-white-400"><i class="icon-file-download mr-1"></i>Download</span>
+              <% end %>
+              <%= resource.name %>
+            </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-lg-6">
+    <% if @order.business_resources.count > 0%>
+      <div class="list-feed mb-3">
+        <div class="list-feed-item">
+          <b>Admin Uploads</b>
+        </div>
+        <% @order.business_resources.each do |resource| %>
+            <div class="list-feed-item">
+              <%= form_for resource,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'delete_resource' ) do |form| %>
+                <%= form.hidden_field :key, value: resource.key %>
+                <%= button_tag(:class => "btn btn-outline-danger btn-sm") do %>
+                <span class="text-white-400"><i class="icon-trash mr-1"></i>Delete</span>
+                <% end %>
+                <%= resource.name %>
+              <%end%>
+            </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= form_for @resource,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'upload_resource' ) do |form| %>
+      <div class="row mb-3">
+        <div class="col-lg-12">
+          <%= form.text_field :name, placeholder: "File Summary", class: "form-control" , :required=>true %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-lg-12">
+          <%= form.file_field :file, class: "form-control h-auto", :required=>true %>
+        </div>
+      </div>
+      <%= form.hidden_field :order_id, value: @order.id %>
+      <%= form.hidden_field :resource_type_id, value: ResourceType.business.id %>
+      <%= button_tag(:class => "btn bg-success") do %>
+      Upload file
+      <% end %>
+    <%end%>
+  </div>
+</div>

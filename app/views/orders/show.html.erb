@@ -19,7 +19,7 @@
       <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
         <h6 class="font-weight-semibold">Price: $<%= @order.price%></h6>
         <ul class="list list-unstyled mb-0">
-          <li>Order Status: <span class="font-weight-semibold">In Progress</span></li>
+          <li>Order Status: <span class="font-weight-semibold"><%= @order.order_status.name %></span></li>
           <li>
             Payment Status:
               <% if @order.paid? %>

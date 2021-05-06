@@ -48,6 +48,8 @@ class Order < ApplicationRecord
   belongs_to :academic_level
 
   has_many :resources
+  has_many :client_resources, -> { where(resource_type_id: ResourceType.client.id) }, class_name: 'Resource'
+  has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'
 
   before_save do
     self.code = Utils.random_upcase_string(5)
@@ -67,4 +69,5 @@ class Order < ApplicationRecord
       self.price = self.price*2
     end
   end
+
 end

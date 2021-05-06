@@ -92,11 +92,22 @@ class OrdersController < ApplicationController
     end
   end
 
+  def download_resource
+    resource = Resource.where(key: params[:key]).first
+    if resource
+      file = resource.get_file_from_s3
+      extension = File.extname(resource.file).slice!(0)
+      send_file file,filename: "#{resource.file}",type: "application/#{extension}"
+    else
+      not_found
+    end
+  end
+
   def delete_resource
-      resource = Resource.where(id: params[:resource][:id]).first
+      resource = Resource.where(key: params[:resource][:key]).first
       order = resource.order
       if resource
-        resource.delete_resource
+        resource.delete
       end
       redirect_to orders_show_path(:key => order.key)
   end

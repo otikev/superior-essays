@@ -19,13 +19,15 @@
 class Resource < ApplicationRecord
   require 'utils'
 
+  before_destroy :delete_s3_resource
+
   has_one :order
   has_one :resource_type
 
   belongs_to :order
   belongs_to :resource_type
 
-  def get_file_from_s3(user)
+  def get_file_from_s3
     directory_name = Rails.root.join('public','downloads')
     Dir.mkdir(directory_name) unless File.exists?(directory_name)
     filename =  Rails.root.join(directory_name, self.file)
@@ -33,9 +35,7 @@ class Resource < ApplicationRecord
     if !File.exists?(filename)
       s3 = Aws::S3::Client.new(region: 'eu-west-1')
       File.open(filename, 'wb') do |file|
-        resp = s3.get_object({ response_target: file,
-                        bucket: ENV['S3_BUCKET'],
-                        key: "resources/#{File.basename(filename)}" })
+        resp = s3.get_object({ response_target: file, bucket: ENV['S3_BUCKET'], key: "resources/#{File.basename(filename)}" })
 
         unless resp.present?
           puts "File #{self.file} doesnt exist on Amazon S3"
@@ -54,14 +54,6 @@ class Resource < ApplicationRecord
     resource.resource_type_id = params[:resource][:resource_type_id]
 
     resource
-  end
-
-  def delete_resource
-    obj = S3_OBJ.bucket(ENV['S3_BUCKET']).object(self.file)
-    if obj
-      obj.delete
-      self.delete
-    end
   end
 
   def self.upload_to_s3(params)
@@ -98,13 +90,10 @@ class Resource < ApplicationRecord
   end
 
   private
-
   def delete_s3_resource
-    if !resource_used_by_others?
-      obj = S3_OBJ.bucket(ENV['S3_BUCKET']).object(self.file)
-      if obj
-        obj.delete
-      end
+    obj = S3_OBJ.bucket(ENV['S3_BUCKET']).object(self.file)
+    if obj
+      obj.delete
     end
   end
 

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match '/orders/create', to: 'orders#create', via: :post
   match '/orders/upload_resource', to: 'orders#upload_resource', via: :post
   match '/orders/delete_resource', to: 'orders#delete_resource', via: :patch
+  match '/orders/download_resource', to: 'orders#download_resource', via: :get
 
   match '/orders/pay', to: 'orders#pay', via: :post
   match '/orders/capture_order', to: 'orders#capture_order', via: :post

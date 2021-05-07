@@ -27,14 +27,23 @@
           <b>Admin Uploads</b>
         </div>
         <% @order.business_resources.each do |resource| %>
-            <div class="list-feed-item">
-              <%= form_for resource,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'delete_resource' ) do |form| %>
-                <%= form.hidden_field :key, value: resource.key %>
-                <%= button_tag(:class => "btn btn-outline-danger btn-sm") do %>
-                <span class="text-white-400"><i class="icon-trash mr-1"></i>Delete</span>
-                <% end %>
-                <%= resource.name %>
-              <%end%>
+              <div class="list-feed-item">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <%= link_to orders_download_resource_path(key: resource.key), method: :get, :class => "btn btn-outline-success btn-sm" do %>
+                      <span class="text-white-400"><i class="icon-file-download mr-1"></i>Download</span>
+                    <% end %>
+                  </div>
+                  <div class="col-lg-9">
+                    <%= form_for resource, :url => url_for(:controller => 'orders', :action => 'delete_resource' ) do |form| %>
+                      <%= form.hidden_field :key, value: resource.key %>
+                      <%= button_tag(:class => "btn btn-outline-danger btn-sm") do %>
+                      <span class="text-white-400"><i class="icon-trash mr-1"></i>Delete</span>
+                      <% end %>
+                      <%= resource.name %>
+                    <%end%>
+                  </div>
+                </div>
             </div>
         <% end %>
       </div>

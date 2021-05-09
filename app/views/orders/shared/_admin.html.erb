@@ -48,22 +48,40 @@
         <% end %>
       </div>
     <% end %>
-    <%= form_for @resource,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'upload_resource' ) do |form| %>
-      <div class="row mb-3">
-        <div class="col-lg-12">
-          <%= form.text_field :name, placeholder: "File Summary", class: "form-control" , :required=>true %>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-lg-12">
-          <%= form.file_field :file, class: "form-control h-auto", :required=>true %>
-        </div>
-      </div>
+  </div>
+</div>
+
+<legend class="text-uppercase font-size-sm font-weight-bold">Actions</legend>
+<div class="row mb-3">
+  <div class="col-lg-6">
+    <%= form_for @resource, :url => url_for(:controller => 'orders', :action => 'upload_resource' ) do |form| %>
       <%= form.hidden_field :order_id, value: @order.id %>
       <%= form.hidden_field :resource_type_id, value: ResourceType.business.id %>
-      <%= button_tag(:class => "btn bg-success") do %>
-      Upload file
-      <% end %>
+      <div class="row">
+        <div class="col-lg-9">
+          <%= form.file_field :file, class: "form-control", :required=>true %>
+        </div>
+        <div class="col-lg-3">
+          <%= button_tag(:class => "btn bg-success") do %>
+          Upload file
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-lg-6">
+    <%= form_for @order, :url => url_for(:controller => 'orders', :action => 'update_status' ) do |form| %>
+      <%= form.hidden_field :key, value: @order.key %>
+      <div class="row">
+        <div class="col-lg-9">
+          <%= form.collection_select :order_status_id, OrderStatus.all, :id, :name, {prompt: "Select status" , :selected => @order.order_status_id}, class: "form-control", :required=>true%>
+        </div>
+        <div class="col-lg-3">
+          <%= button_tag(:class => "btn bg-success") do %>
+          Update
+          <% end %>
+        </div>
+      </div>
     <%end%>
   </div>
 </div>

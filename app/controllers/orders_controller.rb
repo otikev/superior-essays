@@ -103,11 +103,24 @@ class OrdersController < ApplicationController
     end
   end
 
+  def update_status
+    order = Order.where(key: params[:order][:key]).first
+    if order
+      order.order_status_id = params[:order][:order_status_id].to_i
+      order.save
+    else
+      not_found
+    end
+    redirect_to orders_show_path(:key => order.key)
+  end
+
   def delete_resource
       resource = Resource.where(key: params[:resource][:key]).first
       order = resource.order
       if resource
         resource.delete
+      else
+        not_found
       end
       redirect_to orders_show_path(:key => order.key)
   end

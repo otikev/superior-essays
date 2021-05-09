@@ -60,8 +60,7 @@ class Resource < ApplicationRecord
     uploaded_io = params[:resource][:file]
 
     upload = Resource.new
-    upload.name = params[:resource][:name]
-    upload.description = params[:resource][:description]
+    upload.name = uploaded_io.original_filename
     upload.order_id = params[:resource][:order_id]
     upload.resource_type_id = params[:resource][:resource_type_id]
 
@@ -70,7 +69,8 @@ class Resource < ApplicationRecord
     directory_name = Rails.root.join('public','uploads')
     Dir.mkdir(directory_name) unless File.exists?(directory_name)
 
-    filename =  Rails.root.join(directory_name, "#{Time.now.to_i}-#{Utils.random_upcase_string(5)}#{extension}")
+    order = Order.where(id: params[:resource][:order_id]).first
+    filename =  Rails.root.join(directory_name, "#{order.code}-#{uploaded_io.original_filename}")
 
     File.open(filename, 'wb') do |file|
       file.write(uploaded_io.read)

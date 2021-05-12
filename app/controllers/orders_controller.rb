@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :must_have_user, :paypal_init
-  skip_before_action :verify_authenticity_token, :only => [:pay,:capture_order]
+  skip_before_action :verify_authenticity_token, :only => [:create_order,:capture_order]
 
   def new
     @order = Order.new
@@ -22,23 +22,19 @@ class OrdersController < ApplicationController
     redirect_to client_home_path
   end
 
-  def pay
+  def create_order
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@ pay params = #{params}"
     ky = params[:key]
     order = Order.where(key:ky).first
 
-    puts " *** order = #{order.to_json}"
-
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
-
-    puts "request object created!"
-
     request.request_body({
       :intent => 'CAPTURE',
       :purchase_units => [
         {
           :amount => {
             :currency_code => 'USD',
-            :value => order.price
+            :value => order.price.to_s
           }
         }
       ]
@@ -47,6 +43,9 @@ class OrdersController < ApplicationController
     begin
       puts "pay request #{request.to_json}"
       response = @client.execute(request)
+
+      puts "pay response = #{response}"
+
       result = response.result
       puts "pay result = #{result}"
 

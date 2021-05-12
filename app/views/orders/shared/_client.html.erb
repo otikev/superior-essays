@@ -94,7 +94,7 @@ paypal.Buttons({
           },
           body: JSON.stringify({key: '<%= @order.key %>'})
       }
-      const response = await fetch('/orders/pay', config);
+      const response = await fetch('/orders/create_order', config);
       const responseData = await response.json();
       return responseData.token;
   },
@@ -102,6 +102,7 @@ paypal.Buttons({
     const response = await fetch('/orders/capture_order', {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({token: data.orderID})

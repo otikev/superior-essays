@@ -1,6 +1,5 @@
 <%= form_for @order,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'orders', :action => 'create', ) do |form| %>
     <div class="card mb-0">
-    <%= render 'general/pricing_table'%>
         <div class="card-body">
             <div class="text-center mb-3">
                 <h1 class="mb-0">Create your order</h1>
@@ -116,7 +115,7 @@
         if(spacing == 1){
             totalPrice = totalPrice*2;
         }
-        
+
         $("#total_price").prop('readonly', false);
         $("#total_price").val(totalPrice);
         $("#total_price").prop('readonly', true);

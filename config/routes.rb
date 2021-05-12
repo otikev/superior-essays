@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   match '/orders/update_status', to: 'orders#update_status', via: :patch
   match '/orders/download_resource', to: 'orders#download_resource', via: :get
 
-  match '/orders/pay', to: 'orders#pay', via: :post
+  match '/orders/create_order', to: 'orders#create_order', via: :post
   match '/orders/capture_order', to: 'orders#capture_order', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get
   match '/orders/show', to: 'orders#show', via: :get

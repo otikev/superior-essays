@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  require "base64"
+
   before_action :must_have_user, :paypal_init
   skip_before_action :verify_authenticity_token, :only => [:create_order,:capture_order]
 
@@ -28,6 +30,8 @@ class OrdersController < ApplicationController
     order = Order.where(key:ky).first
 
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
+    encoded   = Base64.strict_encode64("#{ENV["PAYPAL_CLIENT_ID"]}:#{ENV["PAYPAL_CLIENT_SECRET"]}")
+    request.headers["Authorization"] = "Basic #{encoded}"
     request.request_body({
       :intent => 'CAPTURE',
       :purchase_units => [

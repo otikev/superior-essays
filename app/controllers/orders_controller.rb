@@ -30,8 +30,6 @@ class OrdersController < ApplicationController
     order = Order.where(key:ky).first
 
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
-    encoded   = Base64.strict_encode64("#{ENV["PAYPAL_CLIENT_ID"]}:#{ENV["PAYPAL_CLIENT_SECRET"]}")
-    request.headers["Authorization"] = "Basic #{encoded}"
     request.request_body({
       :intent => 'CAPTURE',
       :purchase_units => [
@@ -170,7 +168,11 @@ class OrdersController < ApplicationController
     @env = ENV["PAYPAL_ENV"]
     @client_id = ENV["PAYPAL_CLIENT_ID"]
     client_secret = ENV["PAYPAL_CLIENT_SECRET"]
-    environment = PayPal::SandboxEnvironment.new @client_id, client_secret
+    if @env == 'sandbox'
+      environment = PayPal::SandboxEnvironment.new @client_id, client_secret
+    else
+      environment = PayPal::LiveEnvironment.new @client_id, client_secret
+    end
     @client = PayPal::PayPalHttpClient.new environment
   end
 end

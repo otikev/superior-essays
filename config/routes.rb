@@ -13,13 +13,19 @@ Rails.application.routes.draw do
   match '/orders/update_status', to: 'orders#update_status', via: :patch
   match '/orders/download_resource', to: 'orders#download_resource', via: :get
 
+
   match '/orders/create_order', to: 'orders#create_order', via: :post
   match '/orders/capture_order', to: 'orders#capture_order', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get
   match '/orders/show', to: 'orders#show', via: :get
 
   match '/client/home', to: 'client#home', via: :get
+  match '/client/orders_todo', to: 'client#orders_todo', via: :get
+  match '/client/orders_complete', to: 'client#orders_complete', via: :get
+  match '/client/orders_in_progress', to: 'client#orders_in_progress', via: :get
 
   match '/admin/home', to: 'admin#home', via: :get
-  match '/admin/orders', to: 'admin#orders', via: :get
+  match '/admin/orders_todo', to: 'admin#orders_todo', via: :get
+  match '/admin/orders_complete', to: 'admin#orders_complete', via: :get
+  match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get
 end

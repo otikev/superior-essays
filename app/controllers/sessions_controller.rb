@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
     session[:auth_token] = @user.key
 
     if @user.admin?
-      redirect_to admin_home_path
+      redirect_to admin_orders_todo_path
     else
-      redirect_to client_home_path
+      redirect_to client_orders_todo_path
     end
   end
 

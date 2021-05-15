@@ -25,7 +25,6 @@ class OrdersController < ApplicationController
   end
 
   def create_order
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@ pay params = #{params}"
     ky = params[:key]
     order = Order.where(key:ky).first
 
@@ -43,13 +42,8 @@ class OrdersController < ApplicationController
     })
 
     begin
-      puts "pay request #{request.to_json}"
       response = @client.execute(request)
-
-      puts "pay response = #{response}"
-
       result = response.result
-      puts "pay result = #{result}"
 
       order.token = result.id
       if order.save!
@@ -72,7 +66,8 @@ class OrdersController < ApplicationController
         return render :json => {:status => response.result.status}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe
-      # HANDLE THE ERROR
+      puts ioe.status_code
+      puts ioe.headers["debug_id"]
     end
   end
 

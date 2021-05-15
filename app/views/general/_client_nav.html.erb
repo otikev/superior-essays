@@ -1,0 +1,27 @@
+<ul class="navbar-nav">
+  <li class="nav-item">
+    <%= link_to client_orders_todo_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 1}" do %>
+      <i class="icon-list mr-2"></i>
+      Todo Orders
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to client_orders_in_progress_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 2}" do %>
+      <i class="icon-play4 mr-2"></i>
+      Orders In Progress
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to client_orders_complete_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 3}" do %>
+      <i class="icon-checkmark mr-2"></i>
+      Completed Orders
+    <% end %>
+  </li>
+</ul>
+<ul class="navbar-nav ml-md-auto">
+  <li class="nav-item">
+      <%= link_to '/pricing', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+          <span class="text-white-400"><i class="icon-list-unordered mr-1"></i> Pricing</span>
+      <% end %>
+  </li>
+</ul>

@@ -4,7 +4,24 @@ class AdminController < ApplicationController
   def home
   end
 
-  def orders
+  def orders_todo
+    @order_status = OrderStatus.where(name: "Todo").first
+    respond_to do |format|
+      format.html
+      format.json { render json: AdminOrdersDatatable.new(view_context) }
+    end
+  end
+
+  def orders_in_progress
+    @order_status = OrderStatus.where(name: "In Progress").first
+    respond_to do |format|
+      format.html
+      format.json { render json: AdminOrdersDatatable.new(view_context) }
+    end
+  end
+
+  def orders_complete
+    @order_status = OrderStatus.where(name: "Complete").first
     respond_to do |format|
       format.html
       format.json { render json: AdminOrdersDatatable.new(view_context) }

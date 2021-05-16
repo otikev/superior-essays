@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
     end
 
     flash[:notice] = "Order successfully created."
-    redirect_to client_home_path
+    redirect_to client_orders_todo_path
   end
 
   def create_order

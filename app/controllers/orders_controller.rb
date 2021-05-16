@@ -81,7 +81,7 @@ class OrdersController < ApplicationController
   def show
     ky = params[:key]
     @order = Order.where(key:ky).first
-    @order.remaining_minutes
+    #@order.remaining_minutes
     @resource = Resource.new
 
     if !@order # order not found!

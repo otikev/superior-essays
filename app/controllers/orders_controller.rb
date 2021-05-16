@@ -62,6 +62,7 @@ class OrdersController < ApplicationController
       response = @client.execute request
       order = Order.find_by :token => params[:token]
       order.paid = response.result.status == 'COMPLETED'
+      order.paid_on = DateTime.now
       if order.save
         return render :json => {:status => response.result.status}, :status => :ok
       end

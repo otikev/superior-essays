@@ -15,4 +15,17 @@ class OrderUrgency < ApplicationRecord
     def display
         "#{urgency} #{unit}"
     end
+
+    def hours
+      case self.unit
+        when "days"
+          self.urgency*24
+        when "hours"
+          self.hours
+      end
+    end
+
+    def minutes
+      hours*60
+    end
 end

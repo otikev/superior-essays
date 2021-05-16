@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_09_213700) do
+ActiveRecord::Schema.define(version: 2021_05_16_121905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2021_05_09_213700) do
     t.integer "paper_format_id", default: 1
     t.integer "english_type_id", default: 1
     t.integer "academic_level_id", default: 1
+    t.datetime "paid_on"
   end
 
   create_table "paper_formats", force: :cascade do |t|

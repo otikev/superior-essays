@@ -25,6 +25,7 @@
 #  paper_format_id   :integer          default("1")
 #  english_type_id   :integer          default("1")
 #  academic_level_id :integer          default("1")
+#  paid_on           :datetime
 #
 
 class Order < ApplicationRecord
@@ -70,5 +71,17 @@ class Order < ApplicationRecord
       self.price = self.price*2
     end
   end
+
+  def remaining_minutes
+    # end time
+    urgency_minutes = self.order_urgency.minutes.minutes
+    puts "urgency = #{urgency_minutes}"
+    end_datetime = self.paid_on + urgency_minutes #get the urgency in minutes and add that to the paid date
+    puts "End datetime = #{end_datetime}"
+    minutes = ((end_datetime - DateTime.now) * 24 * 60).to_i
+    puts "Remaining minutes = #{minutes}"
+
+  end
+
 
 end

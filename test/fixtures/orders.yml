@@ -25,6 +25,7 @@
 #  paper_format_id   :integer          default("1")
 #  english_type_id   :integer          default("1")
 #  academic_level_id :integer          default("1")
+#  paid_on           :datetime
 #
 
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

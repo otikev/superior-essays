@@ -12,11 +12,14 @@
         <h6 class="font-weight-semibold">Topic: <%= @order.topic %></h6>
         <ul class="list list-unstyled mb-0">
           <li>Order #: <%= @order.code %></li>
-          <li>Issued on: <span class="font-weight-semibold"><%= @order.created_at%></span></li>
-          <li>Issued on: <span class="font-weight-semibold"><%= @order.created_at%></span></li>
+          <li>Issued On: <span class="font-weight-semibold"><%= @order.created_at%></span></li>
+          <% if @order.order_status.name == "Complete" %>
+          <li>Completed On: <span class="font-weight-semibold"><%= @order.completed_on%></span></li>
+          <% else %>
+            <%= render 'orders/shared/due_date'%>
+          <% end %>
         </ul>
       </div>
-
       <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
         <h6 class="font-weight-semibold">Price: $<%= @order.price%></h6>
         <ul class="list list-unstyled mb-0">
@@ -41,7 +44,6 @@
     <% end %>
   </div>
 </div>
-
 <div class="card">
   <div class="card-body">
     <legend class="text-uppercase font-size-sm font-weight-bold">Feed</legend>

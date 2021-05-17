@@ -26,6 +26,7 @@
 #  english_type_id   :integer          default("1")
 #  academic_level_id :integer          default("1")
 #  paid_on           :datetime
+#  completed_on      :datetime
 #
 
 class Order < ApplicationRecord
@@ -54,7 +55,9 @@ class Order < ApplicationRecord
   has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'
 
   before_save do
-    self.code = Utils.random_upcase_string(5)
+    if self.code == nil
+      self.code = Utils.random_upcase_string(5)
+    end
 
     base_price = 0
     if order_quality_id == 1
@@ -70,18 +73,59 @@ class Order < ApplicationRecord
     if self.spacing == 1
       self.price = self.price*2
     end
+
+    if self.order_status.id != 3 #complete
+      self.completed_on = nil
+    elsif self.completed_on == nil
+      puts "Completing order!"
+      self.completed_on = DateTime.now
+    end
+  end
+
+  def is_overdue?
+    DateTime.now.utc > end_date
+  end
+
+  def end_date
+    urgency_minutes = self.order_urgency.minutes
+    puts "urgency = #{urgency_minutes}"
+    puts "Paid datetime = #{self.paid_on}"
+    end_datetime = self.paid_on + urgency_minutes.minutes #get the urgency in minutes and add that to the paid date
   end
 
   def remaining_minutes
-    # end time
-    urgency_minutes = self.order_urgency.minutes.minutes
-    puts "urgency = #{urgency_minutes}"
-    end_datetime = self.paid_on + urgency_minutes #get the urgency in minutes and add that to the paid date
-    puts "End datetime = #{end_datetime}"
-    minutes = ((end_datetime - DateTime.now) * 24 * 60).to_i
-    puts "Remaining minutes = #{minutes}"
-
+    diff = (remaining_seconds/60).to_i
+    puts "Difference(minutes) = #{diff}"
+    diff
   end
 
+  def remaining_hours
+    diff = (remaining_minutes/60).to_i
+    puts "Difference(hours) = #{diff}"
+    diff
+  end
+
+  def remaining_time_text
+    mins = remaining_minutes
+    due = ""
+    if (mins).abs > 1440
+      due = "~ #{(mins/1440).to_i} Days"
+    elsif (mins).abs > 60
+      due = "~ #{(mins/60).to_i} Hours"
+    else
+      due = "~ #{(mins).to_i} Minutes"
+    end
+  end
+
+  private
+
+  def remaining_seconds
+    end_datetime = end_date
+    puts "End datetime = #{end_datetime}"
+    puts "Now datetime = #{DateTime.now.utc}"
+    diff = (end_datetime - DateTime.now.utc).to_i
+    puts "Difference(seconds) = #{diff}"
+    diff
+  end
 
 end

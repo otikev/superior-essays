@@ -21,7 +21,7 @@ class OrderUrgency < ApplicationRecord
         when "days"
           self.urgency*24
         when "hours"
-          self.hours
+          self.urgency
       end
     end
 

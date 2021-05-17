@@ -26,6 +26,7 @@
 #  english_type_id   :integer          default("1")
 #  academic_level_id :integer          default("1")
 #  paid_on           :datetime
+#  completed_on      :datetime
 #
 
 require "test_helper"

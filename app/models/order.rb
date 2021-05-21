@@ -89,8 +89,16 @@ class Order < ApplicationRecord
   def end_date
     urgency_minutes = self.order_urgency.minutes
     puts "urgency = #{urgency_minutes}"
-    puts "Paid datetime = #{self.paid_on}"
-    end_datetime = self.paid_on + urgency_minutes.minutes #get the urgency in minutes and add that to the paid date
+
+    start_datetime = DateTime.now
+
+    if self.paid_on
+      start_datetime = self.paid_on.utc
+    end
+    puts "Start datetime = #{start_datetime}"
+    end_datetime = start_datetime + urgency_minutes.minutes
+    puts "End datetime = #{end_datetime}"
+    end_datetime
   end
 
   def remaining_minutes
@@ -123,7 +131,7 @@ class Order < ApplicationRecord
     end_datetime = end_date
     puts "End datetime = #{end_datetime}"
     puts "Now datetime = #{DateTime.now.utc}"
-    diff = (end_datetime - DateTime.now.utc).to_i
+    diff = (end_datetime.utc - DateTime.now.utc).to_i
     puts "Difference(seconds) = #{diff}"
     diff
   end

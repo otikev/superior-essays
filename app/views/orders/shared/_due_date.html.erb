@@ -1,22 +1,14 @@
-<% if @order.paid? %>
-  <li>Due On: <span class="font-weight-semibold"><%= @order.end_date%></span></li>
-  <% if @order.is_overdue? %>
-    <li>
-      <div class="alert alert-danger font-weight-semibold mb-0">
-        <h3 class="mb-0">	Overdue: <%= @order.remaining_time_text %> </h3>
-      </div>
-    </li>
-  <% else %>
-    <li>
-      <div class="alert alert-success font-weight-semibold mb-0">
-        <h3 class="mb-0">	Due In: <%= @order.remaining_time_text %> </h3>
-      </div>
-    </li>
-  <% end %>
+<li>Due On: <span class="font-weight-semibold"><%= @order.end_date%></span></li>
+<% if @order.is_overdue? %>
+  <li>
+    <div class="alert alert-danger font-weight-semibold mb-0">
+      <h3 class="mb-0">	Overdue: <%= @order.remaining_time_text %> </h3>
+    </div>
+  </li>
 <% else %>
   <li>
-    <div class="alert alert-primary font-weight-semibold mb-0">
-      <h3 class="mb-0">	Due date is set after successful payment </h3>
+    <div class="alert alert-success font-weight-semibold mb-0">
+      <h3 class="mb-0">	Due In: <%= @order.remaining_time_text %> </h3>
     </div>
   </li>
 <% end %>

@@ -27,6 +27,7 @@
 #  academic_level_id :integer          default("1")
 #  paid_on           :datetime
 #  completed_on      :datetime
+#  subject_id        :integer
 #
 
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

@@ -9,7 +9,14 @@
   <div class="card-body">
     <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
       <div>
-        <h6 class="font-weight-semibold">Topic: <%= @order.topic %></h6>
+        <h2 class="font-weight-semibold">Topic: <%= @order.topic %></h2>
+        <h2 class="font-weight-semibold">Subject:
+          <% if @order.subject %>
+            <%= @order.subject.name %>
+          <% else %>
+            No Subject
+          <% end %>
+        </h2>
         <ul class="list list-unstyled mb-0">
           <li>Order #: <%= @order.code %></li>
           <li>Issued On: <span class="font-weight-semibold"><%= @order.created_at %></span></li>

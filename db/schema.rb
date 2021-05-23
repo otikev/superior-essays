@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_100416) do
+ActiveRecord::Schema.define(version: 2021_05_23_114249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_100416) do
     t.integer "academic_level_id", default: 1
     t.datetime "paid_on"
     t.datetime "completed_on"
+    t.integer "subject_id"
   end
 
   create_table "paper_formats", force: :cascade do |t|
@@ -111,6 +112,12 @@ ActiveRecord::Schema.define(version: 2021_05_23_100416) do
     t.string "description"
     t.string "file"
     t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

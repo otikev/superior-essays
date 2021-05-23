@@ -27,6 +27,7 @@
 #  academic_level_id :integer          default("1")
 #  paid_on           :datetime
 #  completed_on      :datetime
+#  subject_id        :integer
 #
 
 require "test_helper"

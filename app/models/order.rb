@@ -27,11 +27,13 @@
 #  academic_level_id :integer          default("1")
 #  paid_on           :datetime
 #  completed_on      :datetime
+#  subject_id        :integer
 #
 
 class Order < ApplicationRecord
   require 'utils'
 
+  has_one :subject
   has_one :order_status
   has_one :order_type
   has_one :order_quality
@@ -40,6 +42,7 @@ class Order < ApplicationRecord
   has_one :english_type
   has_one :academic_level
 
+  belongs_to :subject
   belongs_to :user
   belongs_to :order_type
   belongs_to :order_status

@@ -71,6 +71,16 @@ class Order < ApplicationRecord
       base_price = PLATINUM_BASE_PRICE
     end
 
+    if academic_level_id == 2
+      base_price = base_price + LEVEL_MASTERS_DELTA
+    elsif academic_level_id == 3
+      base_price = base_price + LEVEL_COLLEGE_DELTA
+    elsif academic_level_id == 4
+      base_price = base_price + LEVEL_UNIVERSITY_DELTA
+    elsif academic_level_id == 5
+      base_price = base_price + LEVEL_PHD_DELTA
+    end
+
     self.price = (base_price+self.order_urgency_id-1)*self.pages
 
     if self.spacing == 1

@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     @order.save!
 
     if @order.price == params[:total_price].to_i
-      puts "backend and frontend pricing is the same"
+      puts "**** backend and frontend pricing is the same"
     else
       puts "!!!! backend pricing differs from frontend pricing!"
     end

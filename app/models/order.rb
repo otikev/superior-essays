@@ -49,7 +49,7 @@ class Order < ApplicationRecord
   belongs_to :english_type
   belongs_to :academic_level
 
-  has_many :messages
+  has_many :messages, -> { order(created_at: :desc) }
   has_many :resources
   has_many :client_resources, -> { where(resource_type_id: ResourceType.client.id) }, class_name: 'Resource'
   has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'

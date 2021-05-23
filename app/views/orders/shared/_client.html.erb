@@ -58,10 +58,10 @@
       <%= form.hidden_field :order_id, value: @order.id %>
       <%= form.hidden_field :resource_type_id, value: ResourceType.client.id %>
       <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-8">
           <%= form.file_field :file, class: "form-control", :required=>true %>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-4">
           <%= button_tag(:class => "btn bg-success") do %>
           Upload file
           <% end %>

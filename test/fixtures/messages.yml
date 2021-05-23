@@ -6,7 +6,7 @@
 #  order_id   :integer
 #  user_id    :integer          default("0")
 #  message    :string
-#  type       :integer
+#  category   :integer
 #  key        :uuid
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   match '/orders/delete_resource', to: 'orders#delete_resource', via: :patch
   match '/orders/update_status', to: 'orders#update_status', via: :patch
   match '/orders/download_resource', to: 'orders#download_resource', via: :get
-
-
   match '/orders/create_order', to: 'orders#create_order', via: :post
   match '/orders/capture_order', to: 'orders#capture_order', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get
@@ -28,4 +26,6 @@ Rails.application.routes.draw do
   match '/admin/orders_todo', to: 'admin#orders_todo', via: :get
   match '/admin/orders_complete', to: 'admin#orders_complete', via: :get
   match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get
+
+  match '/messages/create', to: 'messages#create', via: :post
 end

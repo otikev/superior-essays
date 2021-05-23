@@ -6,13 +6,14 @@
 #  order_id   :integer
 #  user_id    :integer          default("0")
 #  message    :string
-#  type       :integer
+#  category   :integer
 #  key        :uuid
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 class Message < ApplicationRecord
+  #type = 1:user message,
 
   has_one :order
   has_one :user
@@ -20,4 +21,17 @@ class Message < ApplicationRecord
   belongs_to :order
   belongs_to :user
 
+
+  def feed_display
+    if category == MESSAGE_TYPE_USER_MESSAGE
+      if user.admin?
+        "#{created_at} : Admin : #{message}"
+      else
+        "#{created_at} : Client : #{message}"
+      end
+      
+    else
+      "#{created_at} : #{message}"
+    end
+  end
 end

@@ -1,0 +1,21 @@
+<%= form_for @message, :url => url_for(:controller => 'messages', :action => 'create' ) do |form| %>
+  <%= form.hidden_field :order_id, value: @order.id %>
+  <%= form.hidden_field :category, value: MESSAGE_TYPE_USER_MESSAGE %>
+  <div class="row">
+    <div class="col-lg-9 col-md-8">
+      <%= form.text_field :message, class: "form-control", :required=>true, :placeholder=>"Post a message" %>
+    </div>
+    <div class="col-lg-3 col-md-4">
+      <%= button_tag(:class => "btn bg-success") do %>
+      Post
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<div class="list-feed list-feed-square list-feed-solid mt-3">
+  <% @order.messages.each do |message| %>
+      <div class="list-feed-item border-success-400">
+        <%= message.feed_display %>
+      </div>
+  <% end %>
+</div>

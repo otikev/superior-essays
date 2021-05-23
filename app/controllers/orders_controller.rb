@@ -83,6 +83,7 @@ class OrdersController < ApplicationController
     ky = params[:key]
     @order = Order.where(key:ky).first
     @resource = Resource.new
+    @message = Message.new
 
     if !@order # order not found!
       redirect_to root_path and return false

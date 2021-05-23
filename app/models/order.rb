@@ -118,14 +118,31 @@ class Order < ApplicationRecord
 
   def remaining_time_text
     mins = remaining_minutes
+    puts "mins(all) = #{(mins).abs}"
+    days = (mins).abs/1440
+    remaining_mins = (mins).abs%1440
+    hours = remaining_mins/60
+    mins = remaining_mins%60
+
+    puts "days = #{days}, hours = #{hours}, mins = #{mins}"
+
     due = ""
-    if (mins).abs > 1440
-      due = "~ #{(mins/1440).to_i} Days"
-    elsif (mins).abs > 60
-      due = "~ #{(mins/60).to_i} Hours"
-    else
-      due = "~ #{(mins).to_i} Minutes"
+    if days > 1
+      due = "#{days} Days "
+    elsif days > 0
+      due = "#{days} Day "
     end
+
+    if hours > 1
+      due = due+"#{hours} Hours "
+    elsif hours > 0
+      due = due+"#{hours} Hour "
+    end
+
+    if mins > 0
+      due = due+"#{mins} Minutes"
+    end
+    due
   end
 
   private

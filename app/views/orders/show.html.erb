@@ -18,9 +18,16 @@
           <% end %>
         </h2>
         <ul class="list list-unstyled mb-0">
-          <li>Order #: <%= @order.code %></li>
-          <li>Issued On: <span class="font-weight-semibold"><%= @order.created_at %></span></li>
+          <li>Order Code: <%= @order.code %></li>
+          <li>Order Type: <%= @order.order_type.name %></li>
+          <li>Paper Format: <%= @order.paper_format.name %></li>
+          <li>Quality: <%= @order.order_quality.quality %></li>
+          <li>Spacing: <%= @order.spacing_text %></li>
+          <li>English Type: <%= @order.english_type.name %></li>
+          <li>Academic Level: <%= @order.academic_level.name %></li>
+          <li>Pages: <%= @order.pages %></li>
           <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
+          <li>Issued On: <span class="font-weight-semibold"><%= @order.created_at %></span></li>
           <li>Paid On: <span class="font-weight-semibold"><%= @order.paid_on %></span></li>
           <% if @order.order_status.name == "Complete" %>
             <li>Completed On: <span class="font-weight-semibold"><%= @order.completed_on%></span></li>
@@ -44,6 +51,8 @@
         </ul>
       </div>
     </div>
+    <legend class="text-uppercase font-size-sm font-weight-bold mt-3">Instructions</legend>
+    <%= @order.instructions %>
   </div>
   <div class="mr-3 ml-3">
     <% if @current_user.admin? %>
@@ -58,7 +67,7 @@
     <legend class="text-uppercase font-size-sm font-weight-bold">Messages</legend>
     <div class="row mb-3">
       <div class="col-lg-12">
-        <%= render 'orders/shared/feed'%>
+        <%= render 'orders/shared/messages'%>
       </div>
     </div>
   </div>

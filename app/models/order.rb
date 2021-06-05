@@ -126,6 +126,16 @@ class Order < ApplicationRecord
     diff
   end
 
+  def spacing_text
+    display = ''
+    if spacing == 1
+      display = 'Single Spaced'
+    elsif spacing == 2
+      display = 'Double Spaced'
+    end
+    display
+  end
+
   def remaining_time_text
     mins = remaining_minutes
     puts "mins(all) = #{(mins).abs}"

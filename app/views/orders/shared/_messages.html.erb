@@ -19,7 +19,7 @@
       <li class="media media-chat-item-reverse">
     		<div class="media-body">
     			<div class="media-chat-item"><%= message.message %></div>
-    			<div class="font-size-sm text-muted mt-2"><%= message.created_at %></div>
+    			<div class="font-size-sm text-muted mt-2"><%= local_time(message.created_at) %></div>
     		</div>
 
     		<div class="ml-3">
@@ -42,7 +42,7 @@
 
     		<div class="media-body">
     			<div class="media-chat-item"><%= message.message %></div>
-    			<div class="font-size-sm text-muted mt-2"><%= message.created_at %></div>
+    			<div class="font-size-sm text-muted mt-2"><%= local_time(message.created_at) %></div>
     		</div>
     	</li>
     <% end %>

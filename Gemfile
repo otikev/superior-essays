@@ -8,6 +8,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
+gem 'local_time'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'

@@ -1,4 +1,4 @@
-<li>Due On: <span class="font-weight-semibold"><%= @order.end_date%></span></li>
+<li>Due On: <span class="font-weight-semibold"><%= local_time(@order.end_date) %></span></li>
 <% if @order.is_overdue? %>
   <li>
     <div class="alert alert-danger font-weight-semibold mb-0">

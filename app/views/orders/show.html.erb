@@ -27,10 +27,10 @@
           <li>Academic Level: <%= @order.academic_level.name %></li>
           <li>Pages: <%= @order.pages %></li>
           <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
-          <li>Issued On: <span class="font-weight-semibold"><%= @order.created_at %></span></li>
-          <li>Paid On: <span class="font-weight-semibold"><%= @order.paid_on %></span></li>
+          <li>Issued On: <span class="font-weight-semibold"><%= local_time(@order.created_at) %></span></li>
+          <li>Paid On: <span class="font-weight-semibold"><%= @order.paid ? local_time(@order.paid_on) : "Unpaid" %></span></li>
           <% if @order.order_status.name == "Complete" %>
-            <li>Completed On: <span class="font-weight-semibold"><%= @order.completed_on%></span></li>
+            <li>Completed On: <span class="font-weight-semibold"><%= local_time(@order.completed_on) %></span></li>
           <% else %>
             <%= render 'orders/shared/due_date'%>
           <% end %>

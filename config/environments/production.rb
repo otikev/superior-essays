@@ -76,7 +76,17 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { host: 'www.superioressays.pro' }
+  config.x.mail_from = %(Superior Essays <no-reply@superioressays.pro>)
+  config.action_mailer.default_url_options = { host: 'superioressays.pro' }
+  config.action_mailer.smtp_settings = { 
+    address: 'email-smtp.eu-west-1.amazonaws.com',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    port: 587, # Port 25 is throttled on AWS
+    enable_starttls_auto: true,
+    authentication: :login
+  }
+  config.action_mailer.raise_delivery_errors = false
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'

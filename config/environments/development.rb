@@ -33,8 +33,19 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
+  config.x.mail_from = %(Superior Essays <no-reply@superioressays.pro>)
+  config.action_mailer.default_url_options = { host: 'superioressays.pro' }
+  config.action_mailer.smtp_settings = { 
+    address: 'email-smtp.eu-west-1.amazonaws.com',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    port: 587, # Port 25 is throttled on AWS
+    enable_starttls_auto: true,
+    authentication: :login
+  }
   config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false
 

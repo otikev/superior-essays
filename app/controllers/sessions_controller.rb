@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
 
     session[:auth_token] = @user.key
 
+    SeMailer.test_email.deliver
+
     if @user.admin?
       redirect_to admin_orders_todo_path
     else

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   match '/client/orders_complete', to: 'client#orders_complete', via: :get
   match '/client/orders_in_progress', to: 'client#orders_in_progress', via: :get
 
-  match '/admin/home', to: 'admin#home', via: :get
+  match '/admin/dashboard', to: 'admin#dashboard', via: :get
   match '/admin/orders_todo', to: 'admin#orders_todo', via: :get
   match '/admin/orders_complete', to: 'admin#orders_complete', via: :get
   match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get

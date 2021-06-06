@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   before_action :must_have_admin_user
 
   def dashboard
+    @upcoming_orders = Order.upcoming_orders(10)
   end
 
   def orders_todo

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_06_142849) do
+ActiveRecord::Schema.define(version: 2021_06_06_183955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_06_06_142849) do
     t.datetime "paid_on"
     t.datetime "completed_on"
     t.integer "subject_id"
+    t.datetime "due_date"
   end
 
   create_table "paper_formats", force: :cascade do |t|

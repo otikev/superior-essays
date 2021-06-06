@@ -3,15 +3,14 @@ class SessionsController < ApplicationController
   def create
     puts "omniauth **************"
     @user = User.from_omniauth(auth)
-    puts @user.to_json
-    @user.save
+    @user.save!
 
     session[:auth_token] = @user.key
 
-    SeMailer.test_email.deliver
+    SeMailer.test_email.deliver #TODO: delete once email is confirmed working
 
     if @user.admin?
-      redirect_to admin_orders_todo_path
+      redirect_to admin_dashboard_path
     else
       redirect_to client_orders_todo_path
     end

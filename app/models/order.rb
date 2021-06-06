@@ -103,25 +103,15 @@ class Order < ApplicationRecord
       self.completed_on = DateTime.now
       Indicator.generate_order_signal(SEConstants::Signals::ORDER_COMPLETED,self)
     end
+    set_end_date
   end
 
   def is_overdue?
-    DateTime.now.utc > end_date
-  end
-
-  def end_date
-    urgency_minutes = self.order_urgency.minutes
-    puts "urgency = #{urgency_minutes}"
-
-    start_datetime = DateTime.now
-
-    if self.paid_on
-      start_datetime = self.paid_on.utc
+    if due_date
+      DateTime.now.utc > due_date
+    else
+      false
     end
-    puts "Start datetime = #{start_datetime}"
-    end_datetime = start_datetime + urgency_minutes.minutes
-    puts "End datetime = #{end_datetime}"
-    end_datetime
   end
 
   def remaining_minutes
@@ -175,10 +165,27 @@ class Order < ApplicationRecord
     due
   end
 
+  def self.upcoming_orders(limit)
+      #Fetch all todo and in progress orders
+      #Order.where(:order_status_id => [1, 2]).all do |o|
+      #end
+
+
+      #results = Order.find_by_sql("select (now() - paid_on) as pending_time from orders order by pending_time asc limit #{limit}")
+      results = Order.select("id, key, topic, due_date, order_quality_id, order_status_id, paid_on, (due_date - now()) as pending_time").where("due_date is not null").limit(limit).order("pending_time asc")
+
+      puts "$$$$$$$$$$$$$$$$$$$$ Finished fetching upcoming orders! = #{results.to_json}"
+      return results
+  end
+
   private
 
   def remaining_seconds
-    end_datetime = end_date
+    if !due_date
+      return self.order_urgency.minutes*60
+    end
+
+    end_datetime = due_date
     puts "End datetime = #{end_datetime}"
     puts "Now datetime = #{DateTime.now.utc}"
     diff = (end_datetime.utc - DateTime.now.utc).to_i
@@ -186,4 +193,21 @@ class Order < ApplicationRecord
     diff
   end
 
+  def set_end_date
+    if self.due_date != nil
+      puts "End datetime already set"
+      return
+    end
+
+    urgency_minutes = self.order_urgency.minutes
+    puts "urgency (minutes) = #{urgency_minutes}"
+
+    if self.paid_on
+      start_datetime = self.paid_on.utc
+      puts "Start datetime = #{start_datetime}"
+      end_datetime = start_datetime + urgency_minutes.minutes
+      puts "End datetime = #{end_datetime}"
+      self.update_attribute(:due_date, end_datetime)
+    end
+  end
 end

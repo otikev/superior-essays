@@ -1,33 +1,50 @@
 <ul class="navbar-nav">
   <li class="nav-item">
-    <li class="nav-item">
       <%= link_to  admin_dashboard_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/admin/dashboard'}" do %>
         <i class="icon-home mr-2"></i>
         Dashboard
       <% end %>
     </li>
-    <%= link_to admin_orders_todo_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 1}" do %>
-      <i class="icon-list mr-2"></i>
-      Todo Orders
-    <% end %>
+  <li class="nav-item dropdown <%= "#{'active' if @order_status && (@order_status.id == 1 || @order_status.id == 2 || @order_status.id == 3)}" %>">
+    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
+      <i class="icon-cart2 mr-2"></i>
+      Orders
+    </a>
+    <div class="dropdown-menu">
+      <%= link_to admin_orders_todo_path, method: :get, :class => "dropdown-item #{'active' if @order_status && @order_status.id == 1}" do %>
+        <i class="icon-list mr-2"></i>
+        Todo
+      <% end %>
+      <%= link_to admin_orders_in_progress_path, method: :get, :class => "dropdown-item #{'active' if @order_status && @order_status.id == 2}" do %>
+        <i class="icon-play4 mr-2"></i>
+        In Progress
+      <% end %>
+      <%= link_to admin_orders_complete_path, method: :get, :class => "dropdown-item #{'active' if @order_status && @order_status.id == 3}" do %>
+        <i class="icon-checkmark mr-2"></i>
+        Completed
+      <% end %>
+    </div>
   </li>
-  <li class="nav-item">
-    <%= link_to admin_orders_in_progress_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 2}" do %>
-      <i class="icon-play4 mr-2"></i>
-      Orders In Progress
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to admin_orders_complete_path, method: :get, :class => "navbar-nav-link #{'active' if @order_status && @order_status.id == 3}" do %>
-      <i class="icon-checkmark mr-2"></i>
-      Completed Orders
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to  "#", method: :get, :class => "navbar-nav-link" do %>
-      <i class="icon-users mr-2"></i>
-      Writers
-    <% end %>
+
+  <li class="nav-item dropdown">
+    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
+      <i class="icon-users4 mr-2"></i>
+      Users
+    </a>
+    <div class="dropdown-menu">
+      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+        <i class="icon-user-plus mr-2"></i>
+        Admins
+      <% end %>
+      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+        <i class="icon-users mr-2"></i>
+        Writers
+      <% end %>
+      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+        <i class="icon-users mr-2"></i>
+        Clients
+      <% end %>
+    </div>
   </li>
 </ul>
 <ul class="navbar-nav ml-md-auto">

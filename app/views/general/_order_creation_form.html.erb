@@ -104,21 +104,21 @@
         var quality = parseInt($("#order_order_quality_id").val());
         var basePrice = 0;
         if(quality == 1){//standard
-            basePrice = <%= STANDARD_BASE_PRICE %>;
+            basePrice = <%= SEConstants::OrderBasePrice::STANDARD %>;
         }else if(quality == 2){//premium
-            basePrice = <%= PREMIUM_BASE_PRICE %>;
+            basePrice = <%= SEConstants::OrderBasePrice::PREMIUM %>;
         }else if(quality == 3){//platinum
-            basePrice = <%= PLATINUM_BASE_PRICE %>;
+            basePrice = <%= SEConstants::OrderBasePrice::PLATINUM %>;
         }
 
         if (level == 2){ //masters
-          basePrice = basePrice + <%= LEVEL_MASTERS_DELTA %>;
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::MASTERS %>;
         }else if (level == 3){ //college
-          basePrice = basePrice + <%= LEVEL_COLLEGE_DELTA %>;
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::COLLEGE %>;
         }else if (level == 4){ //university
-          basePrice = basePrice + <%= LEVEL_UNIVERSITY_DELTA %>;
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::UNIVERSITY %>;
         }else if (level == 5){ //phd
-          basePrice = basePrice + <%= LEVEL_PHD_DELTA %>;
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::PHD %>;
         }
 
         var pages = parseInt($("#order_pages").val());

@@ -53,9 +53,14 @@ class Order < ApplicationRecord
   belongs_to :academic_level
 
   has_many :messages, -> { order(created_at: :desc) }
-  has_many :resources
+  has_many :resources, -> { order(created_at: :desc) }
   has_many :client_resources, -> { where(resource_type_id: ResourceType.client.id) }, class_name: 'Resource'
   has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'
+  has_many :indicators, -> { order(created_at: :desc) }
+
+  after_create do
+    Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,self)
+  end
 
   before_save do
     if self.code == nil
@@ -64,21 +69,21 @@ class Order < ApplicationRecord
 
     base_price = 0
     if order_quality_id == 1
-      base_price = STANDARD_BASE_PRICE
+      base_price = SEConstants::OrderBasePrice::STANDARD
     elsif order_quality_id == 2
-      base_price = PREMIUM_BASE_PRICE
+      base_price = SEConstants::OrderBasePrice::PREMIUM
     elsif order_quality_id == 3
-      base_price = PLATINUM_BASE_PRICE
+      base_price = SEConstants::OrderBasePrice::PLATINUM
     end
 
     if academic_level_id == 2
-      base_price = base_price + LEVEL_MASTERS_DELTA
+      base_price = base_price + SEConstants::AcademicLevelDelta::MASTERS
     elsif academic_level_id == 3
-      base_price = base_price + LEVEL_COLLEGE_DELTA
+      base_price = base_price + SEConstants::AcademicLevelDelta::COLLEGE
     elsif academic_level_id == 4
-      base_price = base_price + LEVEL_UNIVERSITY_DELTA
+      base_price = base_price + SEConstants::AcademicLevelDelta::UNIVERSITY
     elsif academic_level_id == 5
-      base_price = base_price + LEVEL_PHD_DELTA
+      base_price = base_price + SEConstants::AcademicLevelDelta::PHD
     end
 
     self.price = (base_price+self.order_urgency_id-1)*self.pages
@@ -92,6 +97,7 @@ class Order < ApplicationRecord
     elsif self.completed_on == nil
       puts "Completing order!"
       self.completed_on = DateTime.now
+      Indicator.generate_order_signal(SEConstants::Signals::ORDER_COMPLETED,self)
     end
   end
 

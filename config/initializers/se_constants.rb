@@ -1,12 +1,29 @@
-STANDARD_BASE_PRICE = 13
-PREMIUM_BASE_PRICE = 15
-PLATINUM_BASE_PRICE = 17
 
-LEVEL_HIGHSCHOOL_DELTA = 0
-LEVEL_COLLEGE_DELTA = 2
-LEVEL_UNIVERSITY_DELTA = 3
-LEVEL_MASTERS_DELTA = 4
-LEVEL_PHD_DELTA = 5
 
 MESSAGE_TYPE_USER_MESSAGE = 1
 MESSAGE_TYPE_STATUS_CHANGE = 2
+
+module SEConstants
+
+    module Signals
+        USER_LOGIN = 1000
+        ORDER_CREATED = 2000
+        ORDER_PAID = 2001
+        ORDER_COMPLETED = 2002
+        ORDER_RETURNED = 2003
+    end
+
+    module AcademicLevelDelta
+        HIGHSCHOOL = 0
+        COLLEGE = 2
+        UNIVERSITY = 3
+        MASTERS = 4
+        PHD = 5
+    end
+
+    module OrderBasePrice
+        STANDARD = 13
+        PREMIUM = 15
+        PLATINUM = 17
+    end
+end

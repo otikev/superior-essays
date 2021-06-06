@@ -64,6 +64,7 @@ class OrdersController < ApplicationController
       order.paid = response.result.status == 'COMPLETED'
       order.paid_on = DateTime.now
       if order.save
+        Indicator.generate_order_signal(SEConstants::Signals::ORDER_PAID,order)
         return render :json => {:status => response.result.status}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe

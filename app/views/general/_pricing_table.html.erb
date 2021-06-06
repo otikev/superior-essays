@@ -16,9 +16,9 @@
                 <% for i in 0..9 %>
                     <tr>
                         <td><%= OrderUrgency.find(i+1).display %></td>
-                        <td>$<%= STANDARD_BASE_PRICE + i %></td>
-                        <td>$<%= PREMIUM_BASE_PRICE + i %></td>
-                        <td>$<%= PLATINUM_BASE_PRICE + i %></td>
+                        <td>$<%= SEConstants::OrderBasePrice::STANDARD + i %></td>
+                        <td>$<%= SEConstants::OrderBasePrice::PREMIUM + i %></td>
+                        <td>$<%= SEConstants::OrderBasePrice::PLATINUM + i %></td>
                     </tr>
                 <% end %>
             </tbody>

@@ -1,8 +1,3 @@
-
-
-MESSAGE_TYPE_USER_MESSAGE = 1
-MESSAGE_TYPE_STATUS_CHANGE = 2
-
 module SEConstants
 
     module Signals
@@ -27,3 +22,6 @@ module SEConstants
         PLATINUM = 17
     end
 end
+
+MESSAGE_TYPE_USER_MESSAGE = 1
+MESSAGE_TYPE_STATUS_CHANGE = 2

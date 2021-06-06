@@ -106,7 +106,7 @@ class OrdersController < ApplicationController
     order = Order.where(key: params[:order][:key]).first
     if order
       order.order_status_id = params[:order][:order_status_id].to_i
-      order.save
+      order.save!
     else
       not_found
     end

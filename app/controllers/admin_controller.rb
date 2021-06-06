@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :must_have_admin_user
 
-  def home
+  def dashboard
   end
 
   def orders_todo

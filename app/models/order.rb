@@ -93,6 +93,10 @@ class Order < ApplicationRecord
     end
 
     if self.order_status.id != 3 #complete
+      if self.completed_on != nil
+        #Order had been completed but now the status has changed back from 'Complete'
+        Indicator.generate_order_signal(SEConstants::Signals::ORDER_RETURNED,self)
+      end
       self.completed_on = nil
     elsif self.completed_on == nil
       puts "Completing order!"

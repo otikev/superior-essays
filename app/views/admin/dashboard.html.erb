@@ -76,8 +76,6 @@
             </div><br/>
             <div class="ml-auto">
               <span class="badge bg-success-400 ml-auto">Due date: <%= local_time(order.due_date) %></span>
-              <span class="badge bg-success-400 ml-auto"><%= order.order_status.name %></span>
-              <span class="badge bg-success-400 ml-auto">Quality: <%= order.order_quality.quality %></span>
             </div>
           </a>
         <% end %>

@@ -2,14 +2,14 @@
 #
 # Table name: messages
 #
-#  id         :integer          not null, primary key
-#  order_id   :integer
-#  user_id    :integer          default("0")
-#  message    :string
+#  id         :bigint           not null, primary key
 #  category   :integer
 #  key        :uuid
+#  message    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  order_id   :integer
+#  user_id    :integer          default(0)
 #
 
 require "test_helper"

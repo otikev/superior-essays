@@ -2,32 +2,33 @@
 #
 # Table name: orders
 #
-#  id                :integer          not null, primary key
-#  topic             :string
+#  id                :bigint           not null, primary key
+#  charts_count      :integer          default(0)
+#  code              :string
+#  completed_on      :datetime
+#  due_date          :datetime
 #  instructions      :text
 #  key               :uuid
-#  user_id           :integer          not null
+#  pages             :integer
+#  paid              :boolean          default(FALSE)
+#  paid_on           :datetime
+#  price             :integer
+#  slides_count      :integer          default(0)
+#  sources_count     :integer          default(0)
+#  spacing           :integer          default(1)
+#  token             :string
+#  topic             :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  academic_level_id :integer          default(1)
+#  english_type_id   :integer          default(1)
+#  order_quality_id  :integer
 #  order_status_id   :integer
 #  order_type_id     :integer
-#  code              :string
-#  paid              :boolean          default("false")
-#  token             :string
-#  price             :integer
-#  pages             :integer
-#  order_quality_id  :integer
 #  order_urgency_id  :integer
-#  sources_count     :integer          default("0")
-#  charts_count      :integer          default("0")
-#  slides_count      :integer          default("0")
-#  spacing           :integer          default("1")
-#  paper_format_id   :integer          default("1")
-#  english_type_id   :integer          default("1")
-#  academic_level_id :integer          default("1")
-#  paid_on           :datetime
-#  completed_on      :datetime
+#  paper_format_id   :integer          default(1)
 #  subject_id        :integer
+#  user_id           :bigint           not null
 #
 
 class Order < ApplicationRecord

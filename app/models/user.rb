@@ -2,16 +2,16 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  user_name  :string
-#  first_name :string
-#  last_name  :string
+#  id         :bigint           not null, primary key
+#  admin      :boolean          default(FALSE)
 #  email      :string
-#  enabled    :boolean          default("true")
+#  enabled    :boolean          default(TRUE)
+#  first_name :string
+#  key        :uuid
+#  last_name  :string
+#  user_name  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  key        :uuid
-#  admin      :boolean          default("false")
 #
 
 class User < ApplicationRecord

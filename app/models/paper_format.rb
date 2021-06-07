@@ -2,9 +2,9 @@
 #
 # Table name: paper_formats
 #
-#  id         :integer          not null, primary key
-#  name       :string
+#  id         :bigint           not null, primary key
 #  key        :uuid
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

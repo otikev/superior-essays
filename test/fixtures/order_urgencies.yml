@@ -2,9 +2,9 @@
 #
 # Table name: order_urgencies
 #
-#  id         :integer          not null, primary key
-#  urgency    :integer
+#  id         :bigint           not null, primary key
 #  unit       :string
+#  urgency    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

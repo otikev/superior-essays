@@ -2,7 +2,7 @@
 #
 # Table name: order_qualities
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  quality    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

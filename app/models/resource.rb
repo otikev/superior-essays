@@ -2,16 +2,16 @@
 #
 # Table name: resources
 #
-#  id                    :integer          not null, primary key
-#  order_id              :integer
-#  resource_type_id      :integer          default("1")
-#  name                  :string
-#  internal_resource_url :string
+#  id                    :bigint           not null, primary key
 #  description           :string
 #  file                  :string
+#  internal_resource_url :string
 #  key                   :uuid
+#  name                  :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  order_id              :integer
+#  resource_type_id      :integer          default(1)
 #
 
 

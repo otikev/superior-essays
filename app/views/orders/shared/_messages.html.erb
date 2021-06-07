@@ -45,6 +45,7 @@
     			<div class="font-size-sm text-muted mt-2"><%= local_time(message.created_at) %></div>
     		</div>
     	</li>
+      <% message.mark_as_read_for_user(@current_user) %>
     <% end %>
   <% end %>
 </ul>

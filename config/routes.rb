@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get
 
   match '/messages/create', to: 'messages#create', via: :post
+  match '/messages/unread', to: 'messages#unread', via: :get
 end

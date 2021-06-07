@@ -56,5 +56,4 @@ private
 	def columns
 		%w(order_statuses.name order_types.name topic code)
 	end
-
 end

@@ -1,0 +1,40 @@
+<div class="table-responsive">
+    <table class="table text-nowrap table-framed">
+        <tbody>
+            <tr class="table-active table-border-double">
+                <td colspan="2"><h2>Unread Messages</h2></td>
+            </tr>
+            <% if Message.unread_for_user(@current_user).count > 0 %>
+                <% Message.unread_for_user(@current_user).each do |message|%>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="mr-3">
+                                    <%= link_to orders_show_path(key: message.order.key), method: :get, :class => "btn bg-warning-400 rounded-round btn-icon btn-sm" do %>
+                                        <span class="letter-icon"><i class="icon-comment mr-2"></i></span>
+                                    <% end %>
+                                </div>
+                                <div>
+                                    <%= link_to orders_show_path(key: message.order.key), method: :get, :class => "text-default font-weight-semibold letter-icon-title" do %>
+                                        <%= message.order.topic %>
+                                    <% end %>
+                                    <div class="text-muted font-size-sm"><span class="badge badge-mark border-blue mr-1"></span> <%= message.order.code %> </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <%= link_to orders_show_path(key: message.order.key), method: :get, :class => "text-default" do %>
+                                <div class="font-weight-semibold"><%= truncate(message.message.html_safe, length:65) %></div>
+                                <span class="text-muted"><%= local_time(message.created_at) %></span>
+                            <% end %>
+                        </td>
+                    </tr>
+                <% end %>
+            <% else %>
+                <tr class="table-active table-border-double">
+                    <td colspan="2" class="text-center"><div class="dz-default dz-message mt-5 mb-5">You have no unread messages</div></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

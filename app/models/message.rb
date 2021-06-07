@@ -34,4 +34,20 @@ class Message < ApplicationRecord
       "#{created_at} : #{message}"
     end
   end
+
+  def self.unread_for_user(user)
+    #TODO: Cache this result to avoid unnecessarilly hitting the DB
+    unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and id not in (select message_id from read_messages where user_id = #{user.id}) order by id desc")
+  end
+
+  def mark_as_read_for_user(user)
+    if !is_read_for_user?(user)
+      ReadMessage.new(user_id: user.id, message_id: self.id).save
+    end
+  end
+
+  def is_read_for_user?(user)
+    ReadMessage.where(user_id: user.id, message_id: self.id).first != nil
+  end
+
 end

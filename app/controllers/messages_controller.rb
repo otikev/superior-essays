@@ -9,6 +9,10 @@ class MessagesController < ApplicationController
     redirect_to orders_show_path(key: message.order.key)
   end
 
+  def unread
+    @unread_messages = Message.unread_for_user(@current_user)
+  end
+  
   private
 
   def message_params

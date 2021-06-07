@@ -31,7 +31,7 @@
   				<ul class="navbar-nav">
             <li class="nav-item">
               <% if @current_user %>
-                <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+                <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
                   <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
                 <% end %>
               <% else %>
@@ -41,6 +41,17 @@
               <% end %>
   					</li>
             <% if @current_user %>
+              <li class="nav-item">
+                  <%= link_to '/pricing', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/pricing'}" do %>
+                      <span class="text-white-400"><i class="icon-list-unordered mr-1"></i> Pricing</span>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to messages_unread_path, method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/messages/unread'}" do %>
+                  <span><i class="icon-comment-discussion mr-2"></i> Messages</span>
+                  <span class="badge badge-pill bg-blue ml-auto"><%= Message.unread_for_user(@current_user).count %></span>
+                <% end %>
+              </li>
               <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
                   <span>
@@ -53,8 +64,6 @@
                   </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
-                  <div class="dropdown-divider"></div>
                   <%= link_to logout_path, class: "dropdown-item" do %>
                     <i class="icon-switch2"></i>Logout
                   <% end %>

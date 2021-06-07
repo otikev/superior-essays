@@ -37,7 +37,19 @@ class Message < ApplicationRecord
 
   def self.unread_for_user(user)
     #TODO: Cache this result to avoid unnecessarilly hitting the DB
-    unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and id not in (select message_id from read_messages where user_id = #{user.id}) order by id asc")
+    user_orders = ""
+    if user.admin?
+      unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
+        "id not in (select message_id from read_messages where user_id = #{user.id}) "+ # show messages I've not read
+        "order by id asc")
+    else
+      # TODO: Update this to apply to users assigned to the order (writers)
+      unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
+        "id not in (select message_id from read_messages where user_id = #{user.id}) and "+ # show messages I've not read
+        "order_id in (select order_id from orders where user_id = #{user.id}) "+ # Only include messages in orders that I created
+        "order by id asc")
+    end
+    unread_messages
   end
 
   def mark_as_read_for_user(user)

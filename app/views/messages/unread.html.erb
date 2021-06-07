@@ -2,7 +2,7 @@
     <table class="table text-nowrap table-framed">
         <tbody>
             <tr class="table-active table-border-double">
-                <td colspan="2"><h2>Unread Messages</h2></td>
+                <td colspan="3"><h2>Unread Messages</h2></td>
             </tr>
             <% if Message.unread_for_user(@current_user).count > 0 %>
                 <% Message.unread_for_user(@current_user).each do |message|%>
@@ -28,11 +28,18 @@
                                 <span class="text-muted"><%= local_time(message.created_at) %></span>
                             <% end %>
                         </td>
+                        <td>
+                            <% if message.user.admin? %>
+                                <span class="badge bg-success-400">Admin</span>
+                            <% else %>
+                                <span class="badge bg-danger-400">Client</span>
+                            <% end %>
+                        </td>
                     </tr>
                 <% end %>
             <% else %>
                 <tr class="table-active table-border-double">
-                    <td colspan="2" class="text-center"><div class="dz-default dz-message mt-5 mb-5">You have no unread messages</div></td>
+                    <td colspan="3" class="text-center"><div class="dz-default dz-message mt-5 mb-5">You have no unread messages</div></td>
                 </tr>
             <% end %>
         </tbody>

@@ -89,6 +89,16 @@ class OrdersController < ApplicationController
     if !@order # order not found!
       redirect_to root_path and return false
     end
+
+    # Only admins can see any order. If the current order does not belong to the 
+    # current user and the user is not an admin redirect to root
+    # TODO: Update this to apply to users assigned to the order (writers)
+    if !@current_user.admin? 
+      if @order.user_id != @current_user.id
+        redirect_to root_path and return false
+      end
+    end
+
   end
 
   def download_resource

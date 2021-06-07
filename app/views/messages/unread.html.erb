@@ -30,9 +30,9 @@
                         </td>
                         <td>
                             <% if message.user.admin? %>
-                                <span class="badge bg-success-400">Admin</span>
+                                <span class="badge bg-success-400">Admin <%= message.user.email %></span>
                             <% else %>
-                                <span class="badge bg-danger-400">Client</span>
+                                <span class="badge bg-danger-400">Client <%= message.user.email %></span>
                             <% end %>
                         </td>
                     </tr>

@@ -29,10 +29,18 @@
                             <% end %>
                         </td>
                         <td>
-                            <% if message.user.admin? %>
-                                <span class="badge bg-success-400">Admin <%= message.user.email %></span>
+                            <% if @current_user.admin? %>
+                                <% if message.user.admin? %>
+                                    <span class="badge bg-success-400">Admin <%= message.user.email %></span>
+                                <% else %>
+                                    <span class="badge bg-danger-400">Client <%= message.user.email %></span>
+                                <% end %>
                             <% else %>
-                                <span class="badge bg-danger-400">Client <%= message.user.email %></span>
+                                 <% if message.user.admin? %>
+                                    <span class="badge bg-success-400">Admin</span>
+                                <% else %>
+                                    <span class="badge bg-danger-400">Client</span>
+                                <% end %>
                             <% end %>
                         </td>
                     </tr>

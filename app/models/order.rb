@@ -96,17 +96,11 @@ class Order < ApplicationRecord
       self.price = self.price*2
     end
 
-    if self.order_status.id != 3 #complete
-      if self.completed_on != nil
-        #Order had been completed but now the status has changed back from 'Complete'
-        Indicator.generate_order_signal(SEConstants::Signals::ORDER_RETURNED,self)
-      end
-      self.completed_on = nil
-    elsif self.completed_on == nil
-      puts "Completing order!"
-      self.completed_on = DateTime.now
-      Indicator.generate_order_signal(SEConstants::Signals::ORDER_COMPLETED,self)
+    if self.order_status.id == 3 && self.completed_on == nil
+        self.completed_on = DateTime.now
     end
+
+    generate_appropriate_signal_if_applies
     set_end_date
   end
 
@@ -183,6 +177,24 @@ class Order < ApplicationRecord
   end
 
   private
+
+  def generate_appropriate_signal_if_applies
+    db_order = Order.where(id: id).first
+
+    if self.order_status_id == 4 # Closed
+      if db_order.order_status_id != 4
+        Indicator.generate_order_signal(SEConstants::Signals::ORDER_CLOSED,self)
+      end
+    elsif self.order_status_id == 2 # In progress
+      if db_order.order_status_id == 3 #complete
+        Indicator.generate_order_signal(SEConstants::Signals::ORDER_RETURNED,self)
+      end
+    elsif self.order_status_id == 3 # Complete
+        if db_order.completed_on == nil
+          Indicator.generate_order_signal(SEConstants::Signals::ORDER_COMPLETED,self)
+        end
+    end
+  end
 
   def remaining_seconds
     if !due_date

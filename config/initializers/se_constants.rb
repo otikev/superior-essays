@@ -6,6 +6,7 @@ module SEConstants
         ORDER_PAID = 2001
         ORDER_COMPLETED = 2002
         ORDER_RETURNED = 2003
+        ORDER_CLOSED = 2004
     end
 
     module AcademicLevelDelta

@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 col-md-offset-4 text-center">
+        <% if @order.is_reviewed? %>
+            <div class="mb-3">
+                <div class="form-group text-center text-muted content-divider">
+                                <span class="px-2">Please rate our work on this order</span>
+                            </div>
+
+                <div class="mt-2 mb-2 mt-sm-0">
+                <% @review.stars.times do %>
+                    <i class="icon-star-full2 font-size-base text-warning-300"></i>
+                <% end %>
+                </div>
+                <div class="mt-2 mb-2 mt-sm-0">
+                    <span><i class="icon-comment mr-2"></i></span>
+                </div>
+                <div class="mt-2 mb-3 mt-sm-0">
+                    <span><%= @review.message %></span>
+                </div>
+                
+            </div>
+        <% else %>
+            <% if @current_user.admin? %>
+                <div class="mt-2 mb-3 mt-sm-0">
+                    <span>Not yet reviewed by the client</span>
+                </div>
+            <% else %>
+                <%= form_for @review,  :url => url_for(:controller => 'orders', :action => 'review', ) do |form| %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <%= render 'general/error_messages', object: form.object %>
+
+                            <div class="form-group text-center text-muted content-divider">
+                                <span class="px-2">Please rate our work on this order</span>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <%= form.select(:stars, options_for_select([['5 - Very Good', 5], ['4 - Good', 4],['3 - Just OK', 3],['2 - Poor', 2],['1 - Very Poor', 1]]), {:prompt => 'Rate'},{class: "form-control", required: true}) %>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <%= form.text_area :message, placeholder: "Write a Review", class: "form-control"  , :required=>false%>
+                                </div>
+                            </div>
+                            <%= form.hidden_field :order_key, value: @order.key %>
+                            <%= button_tag(:class => "btn bg-info btn-block") do %>
+                            Post
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+
+        
+       
+    </div>
+    <div class="col-md-4"></div>
+</div>

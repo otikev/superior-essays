@@ -28,4 +28,12 @@ class AdminController < ApplicationController
       format.json { render json: AdminOrdersDatatable.new(view_context) }
     end
   end
+
+  def orders_closed
+    @order_status = OrderStatus.where(name: "Closed").first
+    respond_to do |format|
+      format.html
+      format.json { render json: AdminOrdersDatatable.new(view_context) }
+    end
+  end
 end

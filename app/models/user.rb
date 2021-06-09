@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :orders, -> { order(created_at: :desc) }
   has_many :messages, -> { order(created_at: :desc) }
   has_many :indicators, -> { order(created_at: :desc) }
+  has_many :reviews
 
   def self.from_omniauth(auth)
     _user = where(email: auth.info.email).first_or_initialize do |user|

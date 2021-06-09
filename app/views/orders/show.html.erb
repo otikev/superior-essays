@@ -1,3 +1,6 @@
+<% if @order.is_closed? %>
+ <%= render 'orders/shared/review'%>
+<% end %>
 
 <% if @order.paid? %>
   <% class_vals = "card border-left-3 border-left-success rounded-left-0" %>

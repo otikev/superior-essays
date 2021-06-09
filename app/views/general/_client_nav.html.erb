@@ -17,6 +17,10 @@
         <i class="icon-checkmark mr-2"></i>
         Completed
       <% end %>
+      <%= link_to client_orders_closed_path, method: :get, :class => "dropdown-item #{'active' if @order_status && @order_status.id == 4}" do %>
+        <i class="icon-lock5 mr-2"></i>
+        Closed
+      <% end %>
     </div>
   </li>
 </ul>

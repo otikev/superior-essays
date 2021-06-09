@@ -85,14 +85,20 @@ class OrdersController < ApplicationController
     @order = Order.where(key:ky).first
     @resource = Resource.new
     @message = Message.new
-
+    
     if !@order # order not found!
       redirect_to root_path and return false
     end
 
+    if @order.is_reviewed?
+      @review = Review.where(order_id: @order.id).first
+    else
+      @review = Review.new
+    end
+
     # Only admins can see any order. If the current order does not belong to the 
     # current user and the user is not an admin redirect to root
-    # TODO: Update this to apply to users assigned to the order (writers)
+    # TODO: Update this to apply to users assigned to the order (writers) and Support
     if !@current_user.admin? 
       if @order.user_id != @current_user.id
         redirect_to root_path and return false
@@ -110,6 +116,21 @@ class OrdersController < ApplicationController
     else
       not_found
     end
+  end
+
+  def review
+    order = Order.where(key: params[:review][:order_key]).first
+    if order
+      Review.new(
+        stars: params[:review][:stars].to_i, 
+        message: params[:review][:message], 
+        order_id: order.id, 
+        user_id: @current_user.id
+      ).save!
+    else
+      not_found
+    end
+    redirect_to orders_show_path(:key => order.key)
   end
 
   def update_status

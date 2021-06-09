@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_095506) do
+ActiveRecord::Schema.define(version: 2021_06_09_085113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,15 @@ ActiveRecord::Schema.define(version: 2021_06_07_095506) do
     t.string "description"
     t.string "file"
     t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "order_id"
+    t.integer "stars"
+    t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -42,6 +42,13 @@ class Order < ApplicationRecord
   has_one :paper_format
   has_one :english_type
   has_one :academic_level
+  has_one :review
+
+  has_many :messages, -> { order(created_at: :desc) }
+  has_many :resources, -> { order(created_at: :desc) }
+  has_many :client_resources, -> { where(resource_type_id: ResourceType.client.id) }, class_name: 'Resource'
+  has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'
+  has_many :indicators, -> { order(created_at: :desc) }
 
   belongs_to :subject
   belongs_to :user
@@ -53,11 +60,7 @@ class Order < ApplicationRecord
   belongs_to :english_type
   belongs_to :academic_level
 
-  has_many :messages, -> { order(created_at: :desc) }
-  has_many :resources, -> { order(created_at: :desc) }
-  has_many :client_resources, -> { where(resource_type_id: ResourceType.client.id) }, class_name: 'Resource'
-  has_many :business_resources, -> { where(resource_type_id: ResourceType.business.id) }, class_name: 'Resource'
-  has_many :indicators, -> { order(created_at: :desc) }
+ 
 
   after_create do
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,self)
@@ -107,12 +110,21 @@ class Order < ApplicationRecord
     set_end_date
   end
 
+  def is_closed?
+    self.order_status_id == 4
+  end
+
   def is_overdue?
     if due_date
       DateTime.now.utc > due_date
     else
       false
     end
+  end
+
+  def is_reviewed?
+    @review = Review.where(order_id: id).first
+    @review
   end
 
   def remaining_minutes
@@ -167,16 +179,7 @@ class Order < ApplicationRecord
   end
 
   def self.upcoming_orders(limit)
-      #Fetch all todo and in progress orders
-      #Order.where(:order_status_id => [1, 2]).all do |o|
-      #end
-
-
-      #results = Order.find_by_sql("select (now() - paid_on) as pending_time from orders order by pending_time asc limit #{limit}")
-      results = Order.select("id, key, topic, due_date, order_quality_id, order_status_id, paid_on, (due_date - now()) as pending_time").where("due_date is not null").limit(limit).order("pending_time asc")
-
-      puts "$$$$$$$$$$$$$$$$$$$$ Finished fetching upcoming orders! = #{results.to_json}"
-      return results
+      Order.select("id, key, topic, due_date, order_quality_id, order_status_id, paid_on, (due_date - now()) as pending_time").where("due_date is not null").limit(limit).order("pending_time asc")
   end
 
   private

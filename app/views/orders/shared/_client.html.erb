@@ -54,19 +54,21 @@
 <legend class="text-uppercase font-size-sm font-weight-bold">Actions</legend>
 <div class="row mb-3">
   <div class="col-lg-6">
-    <%= form_for @resource, :url => url_for(:controller => 'orders', :action => 'upload_resource' ) do |form| %>
-      <%= form.hidden_field :order_id, value: @order.id %>
-      <%= form.hidden_field :resource_type_id, value: ResourceType.client.id %>
-      <div class="row">
-        <div class="col-lg-9 col-md-8">
-          <%= form.file_field :file, class: "form-control", :required=>true %>
+    <% if @order.order_status.id != 4 %>
+      <%= form_for @resource, :url => url_for(:controller => 'orders', :action => 'upload_resource' ) do |form| %>
+        <%= form.hidden_field :order_id, value: @order.id %>
+        <%= form.hidden_field :resource_type_id, value: ResourceType.client.id %>
+        <div class="row">
+          <div class="col-lg-9 col-md-8">
+            <%= form.file_field :file, class: "form-control", :required=>true %>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <%= button_tag(:class => "btn bg-success") do %>
+            Upload file
+            <% end %>
+          </div>
         </div>
-        <div class="col-lg-3 col-md-4">
-          <%= button_tag(:class => "btn bg-success") do %>
-          Upload file
-          <% end %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
   <div class="col-lg-6">

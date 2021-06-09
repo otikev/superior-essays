@@ -16,16 +16,19 @@ Rails.application.routes.draw do
   match '/orders/capture_order', to: 'orders#capture_order', via: :post
   match '/orders/fetch', to: 'orders#fetch', via: :get
   match '/orders/show', to: 'orders#show', via: :get
+  match '/orders/review', to: 'orders#review', via: :post
 
   match '/client/home', to: 'client#home', via: :get
   match '/client/orders_todo', to: 'client#orders_todo', via: :get
   match '/client/orders_complete', to: 'client#orders_complete', via: :get
   match '/client/orders_in_progress', to: 'client#orders_in_progress', via: :get
+  match '/client/orders_closed', to: 'client#orders_closed', via: :get
 
   match '/admin/dashboard', to: 'admin#dashboard', via: :get
   match '/admin/orders_todo', to: 'admin#orders_todo', via: :get
   match '/admin/orders_complete', to: 'admin#orders_complete', via: :get
   match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get
+  match '/admin/orders_closed', to: 'admin#orders_closed', via: :get
 
   match '/messages/create', to: 'messages#create', via: :post
   match '/messages/unread', to: 'messages#unread', via: :get

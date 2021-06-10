@@ -41,15 +41,16 @@ class Message < ApplicationRecord
     user_orders = ""
     if user.admin?
       query = "SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
-      "id not in (select message_id from read_messages where user_id = #{user.id}) "+ # show messages I've not read
+      "id not in (select message_id as id from read_messages where user_id = #{user.id}) "+ # show messages I've not read
       "order by id asc"
       unread_messages = Message.find_by_sql(query)
     else
       # TODO: Update this to apply to users assigned to the order (writers)
-      query = "SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
-      "id not in (select message_id as id from read_messages where user_id = #{user.id}) and "+ # show messages I've not read
-      "order_id in (select order_id from orders where user_id = #{user.id}) "+ # Only include messages in orders that I created
-      "order by id asc"
+      query = "SELECT * FROM messages where order_id in (select id as order_id from orders where user_id = #{user.id}) " # Only messages in orders that i created
+      +"and user_id != #{user.id} " # dont show messages that I posted
+      +"and id not in (select message_id as id from read_messages where user_id = #{user.id}) " # show messages I've not read
+      +"order by id asc"
+
       unread_messages = Message.find_by_sql(query)
     end
     puts "***** #{query}"

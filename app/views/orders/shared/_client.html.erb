@@ -82,21 +82,20 @@
 </div>
 
 <% if !@order.paid? %>
-<script src="https://www.paypal.com/sdk/js?client-id=<%=@client_id%>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=<%=@client_id%>&currency=USD"></script>
 <script>
 paypal.Buttons({
   env: '<%= @env %>', // Valid values are sandbox and live.
   //env: 'live', // Valid values are sandbox and live.
   createOrder: async () => {
-      const config = {
+      const response = await fetch('/orders/create_order', {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({key: '<%= @order.key %>'})
-      }
-      const response = await fetch('/orders/create_order', config);
+      });
       const responseData = await response.json();
       return responseData.token;
   },

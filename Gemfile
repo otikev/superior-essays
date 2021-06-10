@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.1'
+ruby '2.7.3'
+gem 'rails', '~> 6.1.1'
 
 gem 'aws-sdk-s3', '~> 1'
 gem 'omniauth-oauth2'
@@ -12,7 +13,7 @@ gem 'local_time'
 gem 'openssl', '>=2.0.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.1'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server

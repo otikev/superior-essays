@@ -40,18 +40,19 @@ class OrdersController < ApplicationController
         }
       ]
     })
-
+    
     begin
       response = @client.execute(request)
       result = response.result
+      puts "Result = #{result}"
 
       order.token = result.id
       if order.save!
         return render :json => {:token => order.token}, :status => :ok
       end
-    rescue PayPalHttp::HttpError => ioe
-      puts ioe.status_code
-      puts ioe.headers["debug_id"]
+    rescue => exception
+      puts exception.backtrace
+      raise # always reraise
     end
   end
 
@@ -203,5 +204,7 @@ class OrdersController < ApplicationController
       environment = PayPal::LiveEnvironment.new @client_id, client_secret
     end
     @client = PayPal::PayPalHttpClient.new environment
+
+    puts "Paypal Client = #{@client.to_json}"
   end
 end

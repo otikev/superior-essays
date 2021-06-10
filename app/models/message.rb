@@ -36,19 +36,25 @@ class Message < ApplicationRecord
   end
 
   def self.unread_for_user(user)
+    puts "==============================="
     #TODO: Cache this result to avoid unnecessarilly hitting the DB
     user_orders = ""
     if user.admin?
-      unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
-        "id not in (select message_id from read_messages where user_id = #{user.id}) "+ # show messages I've not read
-        "order by id asc")
+      query = "SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
+      "id not in (select message_id from read_messages where user_id = #{user.id}) "+ # show messages I've not read
+      "order by id asc"
+      unread_messages = Message.find_by_sql(query)
     else
       # TODO: Update this to apply to users assigned to the order (writers)
-      unread_messages = Message.find_by_sql("SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
-        "id not in (select message_id from read_messages where user_id = #{user.id}) and "+ # show messages I've not read
-        "order_id in (select order_id from orders where user_id = #{user.id}) "+ # Only include messages in orders that I created
-        "order by id asc")
+      query = "SELECT * FROM messages where user_id != #{user.id} and "+ # dont show messages that I posted
+      "id not in (select message_id from read_messages where user_id = #{user.id}) and "+ # show messages I've not read
+      "order_id in (select order_id from orders where user_id = #{user.id}) "+ # Only include messages in orders that I created
+      "order by id asc"
+      unread_messages = Message.find_by_sql(query)
     end
+    puts "***** #{query}"
+    puts unread_messages.to_json
+    puts "==============================="
     unread_messages
   end
 

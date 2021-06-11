@@ -173,7 +173,8 @@ class Order < ApplicationRecord
   end
 
   def self.upcoming_orders(limit)
-      Order.select("id, key, topic, due_date, order_quality_id, order_status_id, paid_on, (due_date - now()) as pending_time").where("due_date is not null").limit(limit).order("pending_time asc")
+    # Upcoming orders should not contain closed orders
+      Order.select("id, key, topic, due_date, order_quality_id, order_status_id, paid_on, (due_date - now()) as pending_time").where("due_date is not null and order_status_id != 4").limit(limit).order("pending_time asc")
   end
 
   private

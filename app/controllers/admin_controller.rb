@@ -3,6 +3,10 @@ class AdminController < ApplicationController
 
   def dashboard
     @upcoming_orders = Order.upcoming_orders(10)
+    @todo_orders_count = Order.where(order_status_id: 1).count
+    @in_progress_orders_count = Order.where(order_status_id: 2).count
+    @complete_orders_count = Order.where(order_status_id: 3).count
+
   end
 
   def orders_todo

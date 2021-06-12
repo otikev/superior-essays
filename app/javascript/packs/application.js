@@ -16,6 +16,13 @@ window.Rails = Rails
 
 import 'bootstrap';
 import 'popper.js/dist/popper.js';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+am4core.useTheme(am4themes_animated);
+
+global.am4core=am4core
+global.am4charts=am4charts
 
 require("custom/app")
 require("custom/custom")

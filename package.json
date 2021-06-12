@@ -2,6 +2,7 @@
   "name": "superior_essays",
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.19",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",

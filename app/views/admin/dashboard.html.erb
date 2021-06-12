@@ -1,5 +1,10 @@
 <div class="row">
-  
+  <div class="col-md-12">
+    <div class="card card-body text-center">
+      <h6 class="font-weight-semibold mb-0 mt-1">Current Orders</h6>
+      <div id="chart-orders"></div>
+    </div>
+  </div>
   <div class="col-sm-6 col-xl-3">
 
     <div class="card card-body text-center">
@@ -7,26 +12,6 @@
       <div class="font-size-sm text-muted mb-3">April 21st, 2017</div>
 
       <div class="svg-center" id="donut_basic_details"><svg width="146" height="146"><g transform="translate(73,73)"><g class="d3-arc d3-slice-border" style="cursor: pointer;"><path d="M4.347496136973104e-15,71A71,71 0 0,1 -68.01725537439971,-20.363029522487416L-50.383152129184964,-15.0837255722129A52.59259259259259,52.59259259259259 0 0,0 3.2203675088689655e-15,52.59259259259259Z" style="fill: rgb(41, 182, 246);"></path></g><g class="d3-arc d3-slice-border" style="cursor: pointer;"><path d="M-68.01725537439971,-20.363029522487416A71,71 0 0,1 68.0172553743997,-20.36302952248744L50.38315212918496,-15.083725572212916A52.59259259259259,52.59259259259259 0 0,0 -50.383152129184964,-15.0837255722129Z" style="fill: rgb(102, 187, 106);"></path></g><g class="d3-arc d3-slice-border" style="cursor: pointer;"><path d="M68.0172553743997,-20.36302952248744A71,71 0 0,1 2.173748068486552e-14,71L1.6101837544344828e-14,52.59259259259259A52.59259259259259,52.59259259259259 0 0,0 50.38315212918496,-15.083725572212916Z" style="fill: rgb(239, 83, 80);" transform="translate(0,0)"></path></g><text class="half-donut-total d3-text opacity-50" text-anchor="middle" dy="-13">Total</text><text class="half-donut-count d3-text" text-anchor="middle" dy="14" style="font-size: 21px; font-weight: 500;">2,430</text></g></svg><ul class="chart-widget-legend"><li data-slice="0" style="border-bottom: 2px solid rgb(41, 182, 246); opacity: 1; transition: all 0.15s ease-in-out 0s;">Admins: <span>720</span></li><li data-slice="1" style="border-bottom: 2px solid rgb(102, 187, 106); opacity: 1; transition: all 0.15s ease-in-out 0s;">Writers: <span>990</span></li><li data-slice="2" style="border-bottom: 2px solid rgb(239, 83, 80); opacity: 1; transition: all 0.15s ease-in-out 0s;">Clients: <span>720</span></li></ul></div>
-    </div>
-     <div class="card card-body text-center">
-      <h6 class="font-weight-semibold mb-0 mt-1">Current Orders</h6>
-
-      <div class="svg-center" id="donut_basic_details">
-        <svg width="146" height="146">
-          <g transform="translate(73,73)">
-          <g class="d3-arc d3-slice-border" style="cursor: pointer;">
-            <path d="M4.347496136973104e-15,71A71,71 0 0,1 -68.01725537439971,-20.363029522487416L-50.383152129184964,-15.0837255722129A52.59259259259259,52.59259259259259 0 0,0 3.2203675088689655e-15,52.59259259259259Z" style="fill: rgb(41, 182, 246);"></path>
-          </g>
-          <g class="d3-arc d3-slice-border" style="cursor: pointer;">
-            <path d="M-68.01725537439971,-20.363029522487416A71,71 0 0,1 68.0172553743997,-20.36302952248744L50.38315212918496,-15.083725572212916A52.59259259259259,52.59259259259259 0 0,0 -50.383152129184964,-15.0837255722129Z" style="fill: rgb(102, 187, 106);"></path></g><g class="d3-arc d3-slice-border" style="cursor: pointer;"><path d="M68.0172553743997,-20.36302952248744A71,71 0 0,1 2.173748068486552e-14,71L1.6101837544344828e-14,52.59259259259259A52.59259259259259,52.59259259259259 0 0,0 50.38315212918496,-15.083725572212916Z" style="fill: rgb(239, 83, 80);" transform="translate(0,0)"></path></g><text class="half-donut-total d3-text opacity-50" text-anchor="middle" dy="-13">Total</text><text class="half-donut-count d3-text" text-anchor="middle" dy="14" style="font-size: 21px; font-weight: 500;"><%= @todo_orders_count +  @in_progress_orders_count +  @complete_orders_count %></text>
-          </g>
-        </svg>
-        <ul class="chart-widget-legend">
-          <li data-slice="0" style="border-bottom: 2px solid rgb(41, 182, 246); opacity: 1; transition: all 0.15s ease-in-out 0s;">Todo: <span><%= @todo_orders_count %></span></li>
-          <li data-slice="1" style="border-bottom: 2px solid rgb(102, 187, 106); opacity: 1; transition: all 0.15s ease-in-out 0s;">In Progress: <span><%= @in_progress_orders_count %></span></li>
-          <li data-slice="2" style="border-bottom: 2px solid rgb(239, 83, 80); opacity: 1; transition: all 0.15s ease-in-out 0s;">Completed: <span><%= @complete_orders_count %></span></li>
-        </ul>
-      </div>
     </div>
   </div>
   <div class="col-sm-6 col-xl-3">
@@ -95,3 +80,54 @@
     </div>
   </div>
 </div>
+
+
+
+<script>
+    $(document).ready(function () {
+      let chart = am4core.create("chart-orders", am4charts.PieChart);
+
+      chart.data = [{
+          "status": "To Do",
+          "value": <%= @todo_orders_count %>
+      }, {
+          "status": "In Progress",
+          "value": <%= @in_progress_orders_count %>
+      }, {
+          "status": "Complete",
+          "value": <%= @complete_orders_count %>
+      }];
+
+      chart.innerRadius = am4core.percent(50);
+      chart.startAngle = 180;
+      chart.endAngle = 360;
+      chart.radius = am4core.percent(70);
+      
+
+      let series = chart.series.push(new am4charts.PieSeries());
+      series.dataFields.value = "value";
+      series.dataFields.category = "status";
+
+      series.colors.list = [
+              am4core.color("#03adfc"),
+              am4core.color("#fc0303"),
+              am4core.color("#24fc03")
+            ];
+
+      series.slices.template.cornerRadius = 10;
+      series.slices.template.innerCornerRadius = 7;
+
+     
+      let fillModifier = new am4core.RadialGradientModifier();
+      fillModifier.brightnesses.push(-0.2, -0.2, 0, -0.3);
+      series.slices.template.fillModifier = fillModifier;
+
+      // this creates initial animation
+      series.hiddenState.properties.opacity = 1;
+      series.hiddenState.properties.endAngle = -90;
+      series.hiddenState.properties.startAngle = -90;
+
+
+      chart.legend = new am4charts.Legend();
+    });
+</script>

@@ -44,7 +44,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -76,17 +76,17 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.x.mail_from = %(Superior Essays <no-reply@superioressays.pro>)
+  config.x.mail_from = %(Superior Essays <support@superioressays.pro>)
   config.action_mailer.default_url_options = { host: 'superioressays.pro' }
   config.action_mailer.smtp_settings = { 
-    address: 'email-smtp.eu-west-1.amazonaws.com',
+    address: 'smtpout.europe.secureserver.net',
     user_name: ENV['SMTP_USERNAME'],
     password: ENV['SMTP_PASSWORD'],
-    port: 587, # Port 25 is throttled on AWS
+    port: 587,
     enable_starttls_auto: true,
     authentication: :login
   }
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'

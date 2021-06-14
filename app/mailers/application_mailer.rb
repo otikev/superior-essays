@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@superioressays.pro'
+  default from: 'support@superioressays.pro'
   layout 'mailer'
 end

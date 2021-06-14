@@ -1,8 +1,8 @@
 class SeMailer < ApplicationMailer
 
-    def test_email
-        puts "================= sending email ...."
-        mail(:to=>"oti.kevin@gmail.com", :subject=>"Amazon SES Test Email")
+    def login_email
+        @user = params[:user]
+        mail(:to=>"oti.kevin@gmail.com", :subject=>"User Login : Superior Essays")
     end
 
 end

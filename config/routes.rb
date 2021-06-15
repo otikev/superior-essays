@@ -29,7 +29,10 @@ Rails.application.routes.draw do
   match '/admin/orders_complete', to: 'admin#orders_complete', via: :get
   match '/admin/orders_in_progress', to: 'admin#orders_in_progress', via: :get
   match '/admin/orders_closed', to: 'admin#orders_closed', via: :get
-
+  match '/admin/users_clients', to: 'admin#users_clients', via: :get
+  match '/admin/users_writers', to: 'admin#users_writers', via: :get
+  match '/admin/users_admins', to: 'admin#users_admins', via: :get
+  
   match '/messages/create', to: 'messages#create', via: :post
   match '/messages/unread', to: 'messages#unread', via: :get
 end

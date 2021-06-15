@@ -8,6 +8,30 @@ class AdminController < ApplicationController
     @complete_orders_count = Order.where(order_status_id: 3).count
   end
 
+  def users_clients
+    @role = "client"
+    respond_to do |format|
+      format.html
+      format.json { render json: UsersDatatable.new(view_context) }
+    end
+  end
+
+  def users_writers
+    @role = "writer"
+    respond_to do |format|
+      format.html
+      format.json { render json: UsersDatatable.new(view_context) }
+    end
+  end
+
+  def users_admins
+    @role = "admin"
+    respond_to do |format|
+      format.html
+      format.json { render json: UsersDatatable.new(view_context) }
+    end
+  end
+
   def orders_todo
     @order_status = OrderStatus.where(name: "Todo").first
     respond_to do |format|

@@ -1,0 +1,26 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header header-elements-inline">
+        <h5 class="card-title">Admins</h5>
+      </div>
+      <table id="searchable" class='table table-striped' data-url="<%= admin_users_admins_path(:format => :json) %>">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Enabled</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%= render 'general/data_tables_scripts' %>

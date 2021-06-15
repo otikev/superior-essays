@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_09_195830) do
+ActiveRecord::Schema.define(version: 2021_06_15_170454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,16 @@ ActiveRecord::Schema.define(version: 2021_06_09_195830) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_vouchers", force: :cascade do |t|
+    t.uuid "key", default: -> { "uuid_generate_v4()" }
+    t.integer "user_id"
+    t.integer "voucher_id"
+    t.integer "order_id"
+    t.string "voucher_hash"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "user_name"
     t.string "first_name"
@@ -159,6 +169,12 @@ ActiveRecord::Schema.define(version: 2021_06_09_195830) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "key", default: -> { "uuid_generate_v4()" }
     t.boolean "admin", default: false
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.integer "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

@@ -36,7 +36,7 @@
       Users
     </a>
     <div class="dropdown-menu">
-      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+      <%= link_to admin_users_admins_path, method: :get, :class => "dropdown-item #{'active' if @role && @role == 'admin'}" do %>
         <i class="icon-user-plus mr-2"></i>
         Admins
       <% end %>
@@ -44,11 +44,11 @@
         <i class="icon-headset mr-2"></i>
         Support
       <% end %>
-      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+      <%= link_to admin_users_writers_path, method: :get, :class => "dropdown-item #{'active' if @role && @role == 'writer'}" do %>
         <i class="icon-users mr-2"></i>
         Writers
       <% end %>
-      <%= link_to "#", method: :get, :class => "dropdown-item" do %>
+      <%= link_to admin_users_clients_path, method: :get, :class => "dropdown-item #{'active' if @role && @role == 'client'}" do %>
         <i class="icon-users mr-2"></i>
         Clients
       <% end %>

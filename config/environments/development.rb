@@ -34,7 +34,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.x.mail_from = %(Superior Essays <support@superioressays.pro>)
-  config.action_mailer.default_url_options = { host: 'superioressays.pro' }
+  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
   config.action_mailer.smtp_settings = { 
     address: 'smtpout.europe.secureserver.net',
     user_name: ENV['SMTP_USERNAME'],
@@ -45,7 +45,7 @@ Rails.application.configure do
   }
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false
 

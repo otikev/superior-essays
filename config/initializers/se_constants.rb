@@ -22,6 +22,10 @@ module SEConstants
         PREMIUM = 15
         PLATINUM = 17
     end
+
+    module UserSettings
+        EMAIL_UPDATES = "email_updates"
+    end
 end
 
 MESSAGE_TYPE_USER_MESSAGE = 1

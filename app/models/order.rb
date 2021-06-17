@@ -64,6 +64,7 @@ class Order < ApplicationRecord
 
   after_create do
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,self)
+    SeMailer.with(order: self).order_created.deliver_now
   end
 
   before_save do

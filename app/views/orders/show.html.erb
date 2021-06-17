@@ -29,6 +29,7 @@
           <li>English Type: <%= @order.english_type.name %></li>
           <li>Academic Level: <%= @order.academic_level.name %></li>
           <li>Pages: <%= @order.pages %></li>
+          <li>Number of Sources: <%= @order.sources_count %></li>
           <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
           <li>Issued On: <span class="font-weight-semibold"><%= local_time(@order.created_at) %></span></li>
           <li>Paid On: <span class="font-weight-semibold"><%= @order.paid ? local_time(@order.paid_on) : "Unpaid" %></span></li>

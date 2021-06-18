@@ -11,6 +11,7 @@ gem 'dotenv-rails'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem 'local_time'
 gem 'openssl', '>=2.0.3'
+gem 'delayed_job_active_record'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 

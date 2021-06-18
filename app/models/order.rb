@@ -65,7 +65,7 @@ class Order < ApplicationRecord
   after_create do
     db_order = Order.where(id: id).first
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,db_order)
-    SeMailer.with(order: db_order).order_created.deliver_now
+    SeMailer.with(order: db_order).delay.order_created
   end
 
   before_save do

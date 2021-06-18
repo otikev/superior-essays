@@ -11,20 +11,20 @@ class SeMailer < ApplicationMailer
     def order_created
         puts "=============== order created email =================="
         @order = params[:order]
-
-        mail(:to => SUPPORT_EMAIL, :subject => "Order Created : #{@order.topic}")
-
-        admins = User.includes(:user_settings).where(admin: true).all
-        puts "all admins = #{admins.to_json}"
-        admins.each do |admin|
-            puts "############# Admin user #{admin.to_json}"
+        recipients = [SUPPORT_EMAIL]
+        User.includes(:user_settings).where(admin: true).all.each do |admin|
             email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
-            puts "###### Email settings = #{email_updates.to_json}"
             if email_updates.first.value == "true"
-                puts "##### send to email #{admin.email}"
-                mail(:to => admin.email, :subject => "Order Created : #{@order.topic}")
+                recipients.push(admin.email)
             end
         end
+        
+        puts "##### send to email #{recipients}"
+        mail(:bcc => recipients, :subject => "Order Created : #{@order.topic}")
         puts "======================================================"
+    end
+
+    def order_paid
+
     end
 end

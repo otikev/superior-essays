@@ -65,9 +65,10 @@ class Order < ApplicationRecord
   after_create do
     db_order = Order.where(id: id).first
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,db_order)
-    SeMailer.with(order: db_order).delay.order_created
+    send_order_creation_emails(db_order)
   end
 
+  
   before_save do
     if self.code == nil
       self.code = Utils.random_upcase_string(5)
@@ -180,6 +181,16 @@ class Order < ApplicationRecord
   end
 
   private
+
+  def send_order_creation_emails(db_order)
+    SeMailer.with(order: db_order, recipient: SEConstants::SUPPORT_EMAIL).delay.order_created
+    User.includes(:user_settings).where(admin: true).all.each do |admin|
+      email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+      if email_updates.first.value == "true"
+          SeMailer.with(order: db_order, recipient: admin.email).delay.order_created
+      end
+    end
+  end
 
   def generate_appropriate_signal_if_applies
     db_order = Order.where(id: id).first

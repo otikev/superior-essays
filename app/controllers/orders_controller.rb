@@ -66,6 +66,7 @@ class OrdersController < ApplicationController
       order.paid_on = DateTime.now
       if order.save
         Indicator.generate_order_signal(SEConstants::Signals::ORDER_PAID,order)
+        send_order_paid_emails(order)
         return render :json => {:status => response.result.status}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe
@@ -206,5 +207,15 @@ class OrdersController < ApplicationController
     @client = PayPal::PayPalHttpClient.new environment
 
     puts "Paypal Client = #{@client.to_json}"
+  end
+
+  def send_order_paid_emails(db_order)
+    SeMailer.with(order: db_order, recipient: SEConstants::SUPPORT_EMAIL).delay.order_paid
+    User.includes(:user_settings).where(admin: true).all.each do |admin|
+      email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+      if email_updates.first.value == "true"
+          SeMailer.with(order: db_order, recipient: admin.email).delay.order_paid
+      end
+    end
   end
 end

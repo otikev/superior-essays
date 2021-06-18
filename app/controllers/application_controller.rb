@@ -6,9 +6,7 @@ class ApplicationController < ActionController::Base
 
     puts "Session = #{session.to_json}"
     if session[:auth_token] && session[:auth_token].length > 0
-      puts "finding user..."
       @current_user = User.find_by!(key: session[:auth_token])
-      puts "User = #{@current_user.to_json}"
     end
   end
 
@@ -16,15 +14,11 @@ class ApplicationController < ActionController::Base
     if !@current_user
       puts "**************** User does not exist!"
       redirect_to root_path
-    else
-      puts "**************** User exists"
     end
   end
 
   def must_have_admin_user
-    if @current_user && @current_user.admin?
-      puts "**************** User exists"
-    else
+    if !@current_user || !@current_user.admin?
       puts "**************** User does not exist!"
       redirect_to root_path
     end

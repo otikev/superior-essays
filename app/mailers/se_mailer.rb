@@ -1,8 +1,6 @@
 class SeMailer < ApplicationMailer
     include ActionView::Helpers::UrlHelper
 
-    SUPPORT_EMAIL = "superioressayspro@gmail.com"
-
     def login_email
         @user = params[:user]
         mail(:to=>"oti.kevin@gmail.com", :subject=>"User Login : Superior Essays")
@@ -11,16 +9,10 @@ class SeMailer < ApplicationMailer
     def order_created
         puts "=============== order created email =================="
         @order = params[:order]
-        recipients = [SUPPORT_EMAIL]
-        User.includes(:user_settings).where(admin: true).all.each do |admin|
-            email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
-            if email_updates.first.value == "true"
-                recipients.push(admin.email)
-            end
-        end
+        recipient = params[:recipient]
         
-        puts "##### send to email #{recipients}"
-        mail(:bcc => recipients, :subject => "Order Created : #{@order.code} - #{@order.topic}")
+        puts "##### send to email #{recipient}"
+        mail(:to => recipient, :subject => "Order Created : #{@order.code} - #{@order.topic}")
         puts "======================================================"
     end
 

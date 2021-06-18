@@ -6,9 +6,7 @@ class SessionsController < ApplicationController
     @user.save!
 
     session[:auth_token] = @user.key
-
-    SeMailer.with(user: @user).login_email.deliver_later #TODO: delete once email is confirmed working
-
+    
     if @user.admin?
       redirect_to admin_dashboard_path
     else

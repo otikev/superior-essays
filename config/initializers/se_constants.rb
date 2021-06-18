@@ -26,6 +26,8 @@ module SEConstants
     module UserSettings
         EMAIL_UPDATES = "email_updates"
     end
+
+    SUPPORT_EMAIL = "superioressayspro@gmail.com"
 end
 
 MESSAGE_TYPE_USER_MESSAGE = 1

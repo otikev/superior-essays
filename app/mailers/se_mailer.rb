@@ -1,6 +1,8 @@
 class SeMailer < ApplicationMailer
     include ActionView::Helpers::UrlHelper
 
+    SUPPORT_EMAIL = "superioressayspro@gmail.com"
+
     def login_email
         @user = params[:user]
         mail(:to=>"oti.kevin@gmail.com", :subject=>"User Login : Superior Essays")
@@ -9,7 +11,12 @@ class SeMailer < ApplicationMailer
     def order_created
         puts "=============== order created email =================="
         @order = params[:order]
-        User.includes(:user_settings).where(admin: true).all.each do |admin|
+
+        mail(:to => SUPPORT_EMAIL, :subject => "Order Created : #{@order.topic}")
+
+        admins = User.includes(:user_settings).where(admin: true).all
+        puts "all admins = #{admins.to_json}"
+        admins.each do |admin|
             puts "############# Admin user #{admin.to_json}"
             email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
             puts "###### Email settings = #{email_updates.to_json}"
@@ -20,5 +27,4 @@ class SeMailer < ApplicationMailer
         end
         puts "======================================================"
     end
-
 end

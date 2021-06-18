@@ -15,4 +15,5 @@
         <li>Number of Sources: <%= @order.sources_count %></li>
         <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
     </ul>
+    <p>View the order <a href="<%=orders_show_url%>?key=<%= @order.key %>">here</a>.</p>
 </div>

@@ -76,7 +76,7 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.x.mail_from = %(Superior Essays <support@superioressays.pro>)
+  config.x.mail_from = %(Superior Essays Pro <support@superioressays.pro>)
   config.action_mailer.default_url_options = { host: 'superioressays.pro' }
   config.action_mailer.smtp_settings = { 
     address: 'smtpout.europe.secureserver.net',

@@ -1,0 +1,4 @@
+<div>
+    <p>Payment has been made for order : <%= "#{@order.code} - #{@order.topic}" %></p>
+    <p>View the order <a href="<%=orders_show_url%>?key=<%= @order.key %>">here</a>.</p>
+</div>

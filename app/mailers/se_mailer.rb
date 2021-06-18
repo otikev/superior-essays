@@ -20,11 +20,13 @@ class SeMailer < ApplicationMailer
         end
         
         puts "##### send to email #{recipients}"
-        mail(:bcc => recipients, :subject => "Order Created : #{@order.topic}")
+        mail(:bcc => recipients, :subject => "Order Created : #{@order.code} - #{@order.topic}")
         puts "======================================================"
     end
 
     def order_paid
-
+        @order = params[:order]
+        recipient = params[:recipient]
+        mail(:to => recipient, :subject => "Order Paid : #{@order.code} - #{@order.topic}")
     end
 end

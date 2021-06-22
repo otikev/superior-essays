@@ -7,18 +7,18 @@ class SeMailer < ApplicationMailer
     end
 
     def order_created
-        puts "=============== order created email =================="
         @order = params[:order]
         recipient = params[:recipient]
         
-        puts "##### send to email #{recipient}"
+        puts "##### send order created mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Created : #{@order.code} - #{@order.topic}")
-        puts "======================================================"
     end
 
     def order_paid
         @order = params[:order]
         recipient = params[:recipient]
+
+        puts "##### send order paid mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Paid : #{@order.code} - #{@order.topic}")
     end
 
@@ -26,12 +26,16 @@ class SeMailer < ApplicationMailer
         @order = params[:order]
         @resource = params[:resource]
         recipient = params[:recipient]
+
+        puts "##### send file uploaded mail to #{recipient}"
         mail(:to => recipient, :subject => "File Uploaded : #{@resource.file}")
     end
 
     def order_completed
         @order = params[:order]
         recipient = params[:recipient]
+
+        puts "##### send order completed mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Completed : #{@order.code} - #{@order.topic}")
     end
 

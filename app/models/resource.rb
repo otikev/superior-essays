@@ -12,6 +12,7 @@
 #  updated_at            :datetime         not null
 #  order_id              :integer
 #  resource_type_id      :integer          default(1)
+#  user_id               :integer
 #
 
 
@@ -21,10 +22,12 @@ class Resource < ApplicationRecord
 
   before_destroy :delete_s3_resource
 
+  has_one :user
   has_one :order
   has_one :resource_type
 
   belongs_to :order
+  belongs_to :user
   belongs_to :resource_type
 
   def get_file_from_s3
@@ -56,7 +59,7 @@ class Resource < ApplicationRecord
     resource
   end
 
-  def self.upload_to_s3(params)
+  def self.upload_to_s3(user_id, params)
     uploaded_io = params[:resource][:file]
 
     upload = Resource.new
@@ -86,6 +89,7 @@ class Resource < ApplicationRecord
 
     upload.file = key
     upload.internal_resource_url = obj.public_url
+    upload.user_id = user_id
     return upload
   end
 

@@ -165,11 +165,11 @@ class OrdersController < ApplicationController
       redirect_to root_path and return false
     end
 
-    accepted_formats = ['.pdf', '.doc', '.docx', '.txt']
+    accepted_formats = ['.pdf', '.doc', '.docx', '.txt', '.png', '.jpg', '.jpeg']
     uploaded_io = params[:resource][:file]
     extension = File.extname(uploaded_io.original_filename)
     if accepted_formats.include? extension.downcase
-      upload = Resource.upload_to_s3(params)
+      upload = Resource.upload_to_s3(@current_user.id,params)
       if !upload.save
         flash[:danger] = Utils.get_error_string(upload,'File not uploaded')
         redirect_to orders_show_path(:key => order.key) and return false
@@ -179,6 +179,7 @@ class OrdersController < ApplicationController
       redirect_to orders_show_path(:key => order.key) and return false
     end
 
+    send_resource_upload_emails(order,upload)
     redirect_to orders_show_path(:key => order.key)
   end
 
@@ -218,4 +219,34 @@ class OrdersController < ApplicationController
       end
     end
   end
+
+  def send_resource_upload_emails(order,resource)
+    #Email support
+    SeMailer.with(order: order, resource: resource, recipient: SEConstants::SUPPORT_EMAIL).delay.file_uploaded
+
+    if resource.user.admin?
+      #Email the order owner
+      email_updates = order.user.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+      if email_updates.first.value == "true"
+        SeMailer.with(order: order, resource: resource, recipient: order.user.email).delay.file_uploaded
+      end
+
+      #Email all admins except the admin that has uploaded the file
+      User.includes(:user_settings).where(admin: true).all.each do |admin|
+        email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+        if email_updates.first.value == "true" &&  admin.id != resource.user_id
+            SeMailer.with(order: order, resource: resource, recipient: admin.email).delay.file_uploaded
+        end
+      end
+    else
+      #Email all admins
+      User.includes(:user_settings).where(admin: true).all.each do |admin|
+        email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+        if email_updates.first.value == "true"
+            SeMailer.with(order: order, resource: resource, recipient: admin.email).delay.file_uploaded
+        end
+      end
+    end
+  end
+
 end

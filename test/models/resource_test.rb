@@ -12,6 +12,7 @@
 #  updated_at            :datetime         not null
 #  order_id              :integer
 #  resource_type_id      :integer          default(1)
+#  user_id               :integer
 #
 
 require "test_helper"

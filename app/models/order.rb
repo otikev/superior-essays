@@ -182,6 +182,25 @@ class Order < ApplicationRecord
 
   private
 
+  def send_order_completed_emails(order)
+    #Email support
+    SeMailer.with(order: order, recipient: SEConstants::SUPPORT_EMAIL).delay.order_completed
+
+    #Email the order owner
+    email_updates = order.user.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+    if email_updates.first.value == "true"
+      SeMailer.with(order: order, recipient: order.user.email).delay.order_completed
+    end
+
+    #Email all admins
+    User.includes(:user_settings).where(admin: true).all.each do |admin|
+      email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+      if email_updates.first.value == "true"
+          SeMailer.with(order: order, recipient: admin.email).delay.order_completed
+      end
+    end
+  end
+
   def send_order_creation_emails(db_order)
     SeMailer.with(order: db_order, recipient: SEConstants::SUPPORT_EMAIL).delay.order_created
     User.includes(:user_settings).where(admin: true).all.each do |admin|
@@ -206,6 +225,7 @@ class Order < ApplicationRecord
     elsif self.order_status_id == 3 # Complete
         if db_order.completed_on == nil
           Indicator.generate_order_signal(SEConstants::Signals::ORDER_COMPLETED,self)
+          send_order_completed_emails(db_order)
         end
     end
   end

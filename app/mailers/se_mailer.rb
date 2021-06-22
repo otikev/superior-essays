@@ -21,4 +21,18 @@ class SeMailer < ApplicationMailer
         recipient = params[:recipient]
         mail(:to => recipient, :subject => "Order Paid : #{@order.code} - #{@order.topic}")
     end
+
+    def file_uploaded
+        @order = params[:order]
+        @resource = params[:resource]
+        recipient = params[:recipient]
+        mail(:to => recipient, :subject => "File Uploaded : #{@resource.file}")
+    end
+
+    def order_completed
+        @order = params[:order]
+        recipient = params[:recipient]
+        mail(:to => recipient, :subject => "Order Completed : #{@order.code} - #{@order.topic}")
+    end
+
 end

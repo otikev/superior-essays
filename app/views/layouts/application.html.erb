@@ -31,6 +31,12 @@
 
   				<ul class="navbar-nav">
             <li class="nav-item">
+              <%= link_to "https://www.superioressays.pro/", method: :get, :class => "navbar-nav-link" do %>
+                <i class="icon-home7 mr-2"></i>
+                Home
+              <% end %>
+            </li>
+            <li class="nav-item">
               <% if @current_user %>
                 <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
                   <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>

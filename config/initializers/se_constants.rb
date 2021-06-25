@@ -7,6 +7,7 @@ module SEConstants
         ORDER_COMPLETED = 2002
         ORDER_RETURNED = 2003
         ORDER_CLOSED = 2004
+        EMAILS_QUEUED = 3000
     end
 
     module AcademicLevelDelta

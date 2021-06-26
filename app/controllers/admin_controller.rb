@@ -16,14 +16,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def users_writers
-    @role = "writer"
-    respond_to do |format|
-      format.html
-      format.json { render json: UsersDatatable.new(view_context) }
-    end
-  end
-
   def users_admins
     @role = "admin"
     respond_to do |format|

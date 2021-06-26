@@ -22,4 +22,15 @@ class Indicator < ApplicationRecord
     def self.generate_system_signal(signal_id)
         Indicator.new(signal_id: signal_id).save!
     end
+
+    def self.retrieve_order_data(days)
+        @created_orders_counts = Indicator.where("created_at >= ?", days.ago)
+        .where(signal_id: SEConstants::Signals::ORDER_CREATED)
+        .order("DATE(created_at)")
+        .group("DATE(created_at)")
+        .count
+
+        puts "@@@@@@@ Orders created = #{@created_orders_counts.to_json}"
+        @created_orders_counts
+    end
 end

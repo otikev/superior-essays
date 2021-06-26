@@ -206,8 +206,6 @@ class OrdersController < ApplicationController
       environment = PayPal::LiveEnvironment.new @client_id, client_secret
     end
     @client = PayPal::PayPalHttpClient.new environment
-
-    puts "Paypal Client = #{@client.to_json}"
   end
 
   def send_order_paid_emails(db_order)

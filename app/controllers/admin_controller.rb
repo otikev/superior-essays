@@ -6,6 +6,7 @@ class AdminController < ApplicationController
     @todo_orders_count = Order.where(order_status_id: 1).count
     @in_progress_orders_count = Order.where(order_status_id: 2).count
     @complete_orders_count = Order.where(order_status_id: 3).count
+    Indicator.retrieve_order_data(10.days)
   end
 
   def users_clients

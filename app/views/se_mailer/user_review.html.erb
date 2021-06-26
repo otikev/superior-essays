@@ -1,0 +1,8 @@
+<div>
+    <h2>Topic: <%= @order.topic %></h2>
+    <h2>Subject: <%= @order.subject.name %></h2>
+    <h2>Order Code: <%= @order.code %></h2>
+    <h2>Stars: <%= @review.stars %></h2>
+    <p>Review: <%= @review.message %></p>
+    <p>View the order <a href="<%=orders_show_url%>?key=<%= @order.key %>">here</a>.</p>
+</div>

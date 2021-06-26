@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   def fetch_logged_in_user
     @current_url = request.url
 
-    puts "Session = #{session.to_json}"
     if session[:auth_token] && session[:auth_token].length > 0
       @current_user = User.find_by!(key: session[:auth_token])
     end

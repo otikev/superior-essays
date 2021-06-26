@@ -18,4 +18,8 @@ class Indicator < ApplicationRecord
     def self.generate_order_signal(signal_id,order)
         Indicator.new(signal_id: signal_id, order_id: order.id).save!
     end
+
+    def self.generate_system_signal(signal_id)
+        Indicator.new(signal_id: signal_id).save!
+    end
 end

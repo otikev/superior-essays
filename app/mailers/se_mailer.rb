@@ -4,6 +4,7 @@ class SeMailer < ApplicationMailer
     def login_email
         @user = params[:user]
         mail(:to=>"oti.kevin@gmail.com", :subject=>"User Login : Superior Essays")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
     def order_created
@@ -12,6 +13,7 @@ class SeMailer < ApplicationMailer
         
         puts "##### send order created mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Created : #{@order.code} - #{@order.topic}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
     def order_paid
@@ -20,6 +22,7 @@ class SeMailer < ApplicationMailer
 
         puts "##### send order paid mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Paid : #{@order.code} - #{@order.topic}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
     def file_uploaded
@@ -29,6 +32,7 @@ class SeMailer < ApplicationMailer
 
         puts "##### send file uploaded mail to #{recipient}"
         mail(:to => recipient, :subject => "File Uploaded : #{@resource.file}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
     def order_completed
@@ -37,6 +41,17 @@ class SeMailer < ApplicationMailer
 
         puts "##### send order completed mail to #{recipient}"
         mail(:to => recipient, :subject => "Order Completed : #{@order.code} - #{@order.topic}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
+    end
+
+    def user_review
+        @review = params[:review]
+        @order = params[:order]
+        recipient = params[:recipient]
+
+        puts "##### send user review mail to #{recipient}"
+        mail(:to => recipient, :subject => "Client Review : #{@order.code} - #{@order.topic}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
 end

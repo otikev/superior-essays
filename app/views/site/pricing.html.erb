@@ -1,7 +1,7 @@
 <%= render 'general/pricing_table'%>
 
 <div class="text-center">
-<%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
-                  <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Place Order</span>
-                <% end %>
+<%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
+  <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Place Order</span>
+<% end %>
 </div>

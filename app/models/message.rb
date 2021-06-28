@@ -36,7 +36,6 @@ class Message < ApplicationRecord
   end
 
   def self.unread_for_user(user)
-    puts "==============================="
     #TODO: Cache this result to avoid unnecessarilly hitting the DB
     user_orders = ""
     if user.admin?
@@ -54,9 +53,6 @@ class Message < ApplicationRecord
 
       unread_messages = Message.find_by_sql(query)
     end
-    puts "***** #{query}"
-    puts unread_messages.to_json
-    puts "==============================="
     unread_messages
   end
 

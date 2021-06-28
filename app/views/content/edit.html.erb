@@ -1,0 +1,44 @@
+
+
+<div class="content d-flex justify-content-center align-items-center">
+  <div class="row">
+    <%= form_for @content,:html => {:class => 'signup-form'}, :url => url_for(:controller => 'content', :action => 'update' ) do |form| %>
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <h1 class="mb-0">Edit content</h1>
+                </div>
+
+                <%= render 'general/error_messages', object: form.object %>
+                
+                <%= form.hidden_field :key, value: @content.key %>
+
+                <div class="row">
+                    <label class="col-form-label text-left">Published:</label>
+                </div>
+                <div class="row mb-3">
+                    <%= form.select(:published, options_for_select([['Published', true], ['Unpublished', false]],@content.published), {class: "form-control"}) %>
+                </div>
+
+                <div class="row">
+                    <label class="col-form-label text-left">Question:</label>
+                </div>
+                <div class="row mb-3">
+                    <%= form.text_area :question, placeholder: "Question", class: "form-control" , :required=>true, rows: 3 %>
+                </div>
+
+                <div class="row">
+                    <label class="col-form-label text-left">Answer:</label>
+                </div>
+                <div class="row mb-3">
+                    <%= form.text_area :answer, placeholder: "Answer", class: "form-control"  , :required=>true, rows: 20 %>
+                </div>
+
+                <%= button_tag(:class => "btn bg-info btn-block") do %>
+                Update Content
+                <% end %>
+            </div>
+        </div>
+    <%end%>
+  </div>
+</div>

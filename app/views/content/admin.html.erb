@@ -1,0 +1,47 @@
+
+<div class="row">
+    <%= link_to '/content/new', method: :get, :class => "font-weight-semibold mb-3" do %>
+        <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-plus2"></i></b> New Content</span>
+    <% end %>
+</div>
+
+<% @contents.each do |content|%>
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h6 class="card-title"></h6>
+
+            <div class="header-elements">
+                <div class="list-icons">
+                    <%= link_to content_edit_path(key: content.key), method: :get, :class => "list-icons-item" do %>
+                        <span class="btn btn-success btn-labeled btn-labeled-left"><b><i class="icon-pencil7"></i></b> Edit Content</span>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <h2><%= simple_format(content.question) %></h2>
+            </div>
+            <div class="row">
+                <%= simple_format(truncate(content.answer, length: 300, omission: '... (more)')) %>
+            </div>
+        </div>
+        <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0 pb-3 ">
+            <ul class="list-inline list-inline-condensed mb-3 mb-sm-0">
+                <li class="list-inline-item">
+                    <% if content.published? %>
+                        <span class="badge bg-success">Published</span>
+                    <% else %>
+                        <span class="badge bg-danger">Unpublished</span>
+                    <% end %>
+                </li>
+            </ul>
+
+            <%= link_to '/orders/new', method: :get do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Plagiarism-Free Paper</span>
+            <% end %>
+        </div>
+    </div>
+<% end %>
+
+<%= will_paginate @contents %>

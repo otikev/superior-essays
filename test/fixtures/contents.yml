@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: contents
+#
+#  id         :bigint           not null, primary key
+#  answer     :text
+#  key        :uuid
+#  published  :boolean          default(FALSE)
+#  question   :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

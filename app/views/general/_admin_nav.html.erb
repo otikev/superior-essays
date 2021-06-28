@@ -1,10 +1,16 @@
 <ul class="navbar-nav">
   <li class="nav-item">
-      <%= link_to  admin_dashboard_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/admin/dashboard'}" do %>
-        <i class="icon-home mr-2"></i>
-        Dashboard
-      <% end %>
-    </li>
+    <%= link_to  admin_dashboard_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/admin/dashboard'}" do %>
+      <i class="icon-home mr-2"></i>
+      Dashboard
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to  content_admin_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/content/admin'}" do %>
+      <i class="icon-newspaper mr-2"></i>
+      Content
+    <% end %>
+  </li>
   <li class="nav-item dropdown <%= "#{'active' if @order_status && (@order_status.id == 1 || @order_status.id == 2 || @order_status.id == 3)}" %>">
     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
       <i class="icon-cart2 mr-2"></i>

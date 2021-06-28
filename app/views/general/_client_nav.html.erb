@@ -23,12 +23,6 @@
       <% end %>
     </div>
   </li>
-   <li class="nav-item">
-      <%= link_to  content_client_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/content/client'}" do %>
-        <i class="icon-newspaper mr-2"></i>
-        Content
-      <% end %>
-    </li>
     <li class="nav-item">
         <%= link_to '/pricing', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/pricing'}" do %>
             <span class="text-white-400"><i class="icon-list-unordered mr-1"></i> Pricing</span>

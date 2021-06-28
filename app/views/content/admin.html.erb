@@ -20,10 +20,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <h2><%= simple_format(content.question) %></h2>
-            </div>
-            <div class="row">
-                <%= simple_format(truncate(content.answer, length: 300, omission: '... (more)')) %>
+                <%= simple_format(content.question) %>
             </div>
         </div>
         <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0 pb-3 ">
@@ -36,10 +33,6 @@
                     <% end %>
                 </li>
             </ul>
-
-            <%= link_to '/orders/new', method: :get do %>
-                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Plagiarism-Free Paper</span>
-            <% end %>
         </div>
     </div>
 <% end %>

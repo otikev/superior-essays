@@ -26,6 +26,7 @@ gem 'webpacker', '~> 5.0'
 gem 'will_paginate', '~> 3.1.0'
 gem 'font-awesome-rails'
 gem 'paypal-checkout-sdk'
+gem 'friendly_id', '~> 5.4.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'

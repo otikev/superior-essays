@@ -7,6 +7,7 @@
 #  key        :uuid
 #  published  :boolean          default(FALSE)
 #  question   :text
+#  slug       :string
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -14,14 +15,13 @@
 #
 # Indexes
 #
-#  index_contents_on_title  (title) UNIQUE
+#  index_contents_on_slug  (slug) UNIQUE
 #
 class Content < ApplicationRecord
+    extend FriendlyId
+
     self.per_page = 10
     
     validates_uniqueness_of :title
-
-    def to_param
-        title
-    end
+    friendly_id :title, use: :slugged
 end

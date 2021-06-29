@@ -2,7 +2,9 @@
 <% @contents.each do |content|%>
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h6 class="card-title"><%= content.title %></h6>
+            <h6 class="card-title">
+                <%= link_to content.title, content_path(content) %>
+            </h6>
         </div>
         <div class="card-body">
             <%= simple_format content.question %>

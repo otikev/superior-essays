@@ -5,11 +5,9 @@ class ArchivesController < ApplicationController
     end
 
     def show
-        if params[:id]
-            @content = Content.find_by_name(params[:id])
-        else
-            @content = Content.order("created_at desc").first
-        end
+        @content = Content.friendly.find(params[:id])
+        @previous_content = Content.find_by_id(@content.id+1)
+        @next_content = Content.find_by_id(@content.id-1)
     end
 
 end

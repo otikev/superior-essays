@@ -43,5 +43,8 @@ Rails.application.routes.draw do
   match '/content/edit', to: 'content#edit', via: :get
 
   match '/archives/list', to: 'archives#list', via: :get
-  match '/archives/show', to: 'archives#show', via: :get
+  
+  scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
+    resources :contents, controller: 'archives', path: 'archives/show'
+  end
 end

@@ -35,10 +35,13 @@ Rails.application.routes.draw do
   match '/messages/create', to: 'messages#create', via: :post
   match '/messages/unread', to: 'messages#unread', via: :get
 
-  match '/content/client', to: 'content#client', via: :get
+ 
   match '/content/admin', to: 'content#admin', via: :get
   match '/content/new', to: 'content#new', via: :get
   match '/content/create', to: 'content#create', via: :post
   match '/content/update', to: 'content#update', via: :patch
   match '/content/edit', to: 'content#edit', via: :get
+
+  match '/archives/list', to: 'archives#list', via: :get
+  match '/archives/show', to: 'archives#show', via: :get
 end

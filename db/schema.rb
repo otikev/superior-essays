@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_27_182140) do
+ActiveRecord::Schema.define(version: 2021_06_29_210040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 2021_06_27_182140) do
     t.uuid "key", default: -> { "uuid_generate_v4()" }
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "title"
+    t.index ["title"], name: "index_contents_on_title", unique: true
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

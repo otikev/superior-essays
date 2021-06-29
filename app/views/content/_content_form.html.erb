@@ -8,6 +8,13 @@
             <%= render 'general/error_messages', object: form.object %>
 
             <div class="row">
+                <label class="col-form-label text-left">Title:</label>
+            </div>
+            <div class="row mb-3">
+                <%= form.text_field :title, placeholder: "Title", class: "form-control" , :required=>true %>
+            </div>
+
+            <div class="row">
                 <label class="col-form-label text-left">Question:</label>
             </div>
             <div class="row mb-3">
@@ -18,7 +25,7 @@
                 <label class="col-form-label text-left">Answer:</label>
             </div>
             <div class="row mb-3">
-                <%= form.text_area :answer, placeholder: "Answer", class: "form-control"  , :required=>true, rows: 20 %>
+                <%= form.text_area :answer, placeholder: "Answer", class: "form-control"  , :required=>false, rows: 20 %>
             </div>
 
             <%= button_tag(:class => "btn bg-info btn-block") do %>

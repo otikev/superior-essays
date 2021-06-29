@@ -1,6 +1,6 @@
 class ContentController < ApplicationController
 
-    before_action :must_have_admin_user, :only => [:create, :new, :admin, :edit, :update]
+    before_action :must_have_admin_user
 
     def edit
         ky = params[:key]
@@ -10,16 +10,13 @@ class ContentController < ApplicationController
     def admin
         @contents = Content.paginate(:page => params[:page]).order('id DESC')
     end
-    
-    def client
-        @contents = Content.where(:published => true).paginate(:page => params[:page]).order('id DESC')
-    end
 
     def update
         @content = Content.where(key: params[:content][:key]).first
         @content.question = params[:content][:question]
         @content.answer = params[:content][:answer]
         @content.published = params[:content][:published]
+        @content.title = params[:content][:title]
         @content.save!
         redirect_to content_admin_path
     end
@@ -35,12 +32,8 @@ class ContentController < ApplicationController
         @content = Content.new
     end
 
-    def show
-
-    end
-
     private
     def content_params
-        params.require(:content).permit(:question, :answer)
+        params.require(:content).permit(:title, :question, :answer)
     end
 end

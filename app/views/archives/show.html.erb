@@ -1,0 +1,24 @@
+ <div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title"><%= @content.title %></h6>
+    </div>
+    <div class="card-body">
+        <%= simple_format @content.question %>
+    </div>
+    <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
+        <ul class="list-inline list-inline-condensed mb-sm-0">
+            <li class="list-inline-item">
+                <span class="opacity-50"><%= local_time(@content.updated_at)%></span>
+            </li>
+        </ul>
+        <% if @current_user %>
+            <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Now</span>
+            <% end %>
+        <% else %>
+            <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Now</span>
+            <% end %>
+        <% end %>
+    </div>
+</div>

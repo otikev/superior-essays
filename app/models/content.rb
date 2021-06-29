@@ -12,5 +12,5 @@
 #  user_id    :integer
 #
 class Content < ApplicationRecord
-
+    self.per_page = 10
 end

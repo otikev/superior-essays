@@ -16,8 +16,6 @@ class ContentController < ApplicationController
     end
 
     def update
-        puts params
-
         @content = Content.where(key: params[:content][:key]).first
         @content.question = params[:content][:question]
         @content.answer = params[:content][:answer]

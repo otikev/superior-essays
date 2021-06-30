@@ -6,8 +6,8 @@ class ArchivesController < ApplicationController
 
     def show
         @content = Content.friendly.find(params[:id])
-        @previous_content = Content.find_by_id(@content.id+1)
-        @next_content = Content.find_by_id(@content.id-1)
+        puts "Current content = #{@content.id}"
+        @previous_content = @content.previous
+        @next_content = @content.next
     end
-
 end

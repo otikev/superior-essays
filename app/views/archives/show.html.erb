@@ -1,21 +1,23 @@
  <div class="card">
-    <div class="card-header header-elements-inline">
+    <div class="card-header header-elements-sm-inline">
         <h1 class="card-title"><%= @content.title %></h1>
         <div class="header-elements">
-            <div class="list-icons">
-               <div>
+            <ul class="pagination pagination-sm pagination-pager justify-content-between">
+                <li class="page-item">
                     <% if @previous_content %>
                         <%= link_to content_path(@previous_content), :class => "font-weight-semibold" do %>
-                            <span class="btn btn-success btn-labeled btn-labeled-left btn-sm"><b><i class="icon-previous2"></i></b> Previous</span>
+                            <span class="page-link"><b><i class="icon-previous2"></i></b> Previous</span>
                         <% end %>
                     <% end %>
+                </li>
+                <li class="page-item">
                     <% if @next_content %>
                         <%= link_to content_path(@next_content), :class => "font-weight-semibold" do %>
-                            <span class="btn btn-success btn-labeled btn-labeled-right btn-sm">Next <b><i class="icon-next2"></i></b> </span>
+                            <span class="page-link">Next <b><i class="icon-next2"></i></b> </span>
                         <% end %>
                     <% end %>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="card-body">

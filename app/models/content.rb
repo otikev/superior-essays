@@ -22,6 +22,5 @@ class Content < ApplicationRecord
 
     self.per_page = 10
     
-    validates_uniqueness_of :title
     friendly_id :title, use: :slugged
 end

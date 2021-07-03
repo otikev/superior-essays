@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback' => 'sessions#create'
   get 'logout' => 'sessions#logout'
 
+  match '/landing', to: 'landing#home', via: :get
   match '/pricing', to: 'site#pricing', via: :get
 
   match '/orders/new', to: 'orders#new', via: :get

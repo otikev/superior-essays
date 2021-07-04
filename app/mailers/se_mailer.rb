@@ -54,4 +54,11 @@ class SeMailer < ApplicationMailer
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
+    def contact_form
+        @contact = params[:contact]
+        recipient = params[:recipient]
+        mail(:to=> recipient, :subject=>"Contact Form : #{@contact.subject}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
+    end
+
 end

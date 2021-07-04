@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   match '/privacy', to: 'landing#privacy', via: :get
   match '/terms', to: 'landing#terms', via: :get
+  match '/contact', to: 'landing#contact', via: :post
 
   match '/pricing', to: 'site#pricing', via: :get
 

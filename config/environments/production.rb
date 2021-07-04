@@ -77,7 +77,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.x.mail_from = %(Superior Essays Pro <support@superioressays.pro>)
-  config.action_mailer.default_url_options = { host: 'orders.superioressays.pro' }
+  config.action_mailer.default_url_options = { host: 'www.superioressays.pro' }
   config.action_mailer.smtp_settings = { 
     address: 'smtpout.europe.secureserver.net',
     user_name: ENV['SMTP_USERNAME'],

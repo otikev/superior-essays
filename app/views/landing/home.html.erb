@@ -1,14 +1,46 @@
 <% provide(:title, 'Experts in writing | Delivering Quality Work Is Our Priority') %>
 <% provide(:description, 'The superior Essays Pro is delivering quality work is our priority and we strive to meet customers’ expectations without failure.') %>
-<% provide(:keywords, 'essays,Buy Essay,College Essay, Custom Essay Online, Cheap Essay Writing, Do Your Essay, Essay Writing Service, Order Essay,Top Essay Writing, research, books, writing, questions, term papers') %>
+<% provide(:keywords, 'Buy Assignment Online, Buy Research Paper, Write My Research Paper, Term Paper Help, Cheap Essay Writing Service, Superior Essay Papers, Essays,Buy Essay,College Essay, Custom Essay Online, Cheap Essay Writing, Do Your Essay, Order Essay,Top Essay Writing, research, books, writing, questions, term papers') %>
 <% provide(:author, 'Otikev') %>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <h1 class="logo mr-auto"><a href="/">Superior Essays <span>Pro</span></a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt=""></a>-->
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
       <h1>Welcome to Superior Essays <span>Pro</span></h1>
       <h2>Our 500+ writers are ready to help you with any subject and any deadline.</h2>
       <div class="d-flex">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        
+        <% if @current_user %>
+          <%= link_to '/orders/new', method: :get, :class => "btn-get-started font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
+            <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
+          <% end %>
+        <% else %>
+          <a href="#about" class="btn-get-started scrollto mr-3">Get Started</a>
+          <%= link_to '/auth/google_oauth2', method: :post, :class => "btn-get-started font-weight-semibold" do %>
+            Sign In
+          <% end %>
+        <% end %>
       </div>
     </div>
   </section><!-- End Hero -->
@@ -64,6 +96,7 @@
         <div class="section-title">
           <h2>About</h2>
           <h3>Find Out More <span>About Us</span></h3>
+          <p>We offer expert writing assistance to provide you with the correct work. Our 24/7 trustworthy support agents are always available to guide you through the process of getting your order done on time. We offer quality services to help students tackle their assignments easily.</p>
           <p>Delivering quality work is our priority</p>
         </div>
 
@@ -78,7 +111,6 @@
                 <div>
                   <h5>Why Choose Us?</h5>
                   <p>We have many expert writers in different fields. We focus on recruiting only competent writer with enough knowledge and experience to be a part of our team. Every writer has an obligation to pass the tests provided to be a part of our company. Some of the essential criteria we consider when assessing the skills of our potential experts includes academic qualification, excellent English knowledge, and a proven capacity to write an effective academic paper from scratch. Our support agents will be happy to answers any questions regarding our services and prices. We have desirable packages for every customer, including pleasant discounting options.</p>
-                  <p>We offer expert writing assistance to provide you with the correct work. Our 24/7 trustworthy support agents are always available to guide you through the process of getting your order done on time. We offer quality services to help students tackle their assignments easily.</p>
                 </div>
               </li>
             </ul>
@@ -97,7 +129,7 @@
           <div class="col-lg-3 col-md-6">
             <div class="count-box">
               <i class="icofont-simple-smile"></i>
-              <span data-toggle="counter-up">232</span>
+              <span data-toggle="counter-up">763</span>
               <p>Happy Clients</p>
             </div>
           </div>
@@ -105,8 +137,8 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
             <div class="count-box">
               <i class="icofont-document-folder"></i>
-              <span data-toggle="counter-up">521</span>
-              <p>Projects</p>
+              <span data-toggle="counter-up">3,052</span>
+              <p>Essays</p>
             </div>
           </div>
 
@@ -121,8 +153,8 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="icofont-users-alt-5"></i>
-              <span data-toggle="counter-up">15</span>
-              <p>Hard Workers</p>
+              <span data-toggle="counter-up">500</span>
+              <p>Writers</p>
             </div>
           </div>
 
@@ -280,15 +312,15 @@
               <h3>Standard</h3>
               <h4><sup>$</sup>13<span> deadline 10 days</span></h4>
               <ul>
-                <li><h4><sup>$</sup>14<span> deadline 7 days</span></h4></li>
-                <li><h4><sup>$</sup>15<span> deadline 5 days</span></li>
-                <li><h4><sup>$</sup>16<span> deadline 4 days</span></li>
-                <li><h4><sup>$</sup>17<span> deadline 3 days</span></li>
-                <li><h4><sup>$</sup>18<span> deadline 48 hours</span></li>
-                <li><h4><sup>$</sup>19<span> deadline 24 hours</span></li>
-                <li><h4><sup>$</sup>20<span> deadline 12 hours</span></li>
-                <li><h4><sup>$</sup>21<span> deadline 6 hours</span></li>
-                <li><h4><sup>$</sup>22<span> deadline 3 hours</span></li>
+                <li><h4><sup>$</sup>14<span>, 7 days</span></h4></li>
+                <li><h4><sup>$</sup>15<span>, 5 days</span></li>
+                <li><h4><sup>$</sup>16<span>, 4 days</span></li>
+                <li><h4><sup>$</sup>17<span>, 3 days</span></li>
+                <li><h4><sup>$</sup>18<span>, 48 hours</span></li>
+                <li><h4><sup>$</sup>19<span>, 24 hours</span></li>
+                <li><h4><sup>$</sup>20<span>, 12 hours</span></li>
+                <li><h4><sup>$</sup>21<span>, 6 hours</span></li>
+                <li><h4><sup>$</sup>22<span>, 3 hours</span></li>
               </ul>
               <div class="btn-wrap">
                 <a href="#" class="btn-buy">Place Order</a>
@@ -301,15 +333,15 @@
               <h3>Premium</h3>
               <h4><sup>$</sup>15<span> deadline 10 days</span></h4>
               <ul>
-                <li><h4><sup>$</sup>16<span> deadline 7 days</span></li>
-                <li><h4><sup>$</sup>17<span> deadline 5 days</span></li>
-                <li><h4><sup>$</sup>18<span> deadline 4 days</span></li>
-                <li><h4><sup>$</sup>19<span> deadline 3 days</span></li>
-                <li><h4><sup>$</sup>20<span> deadline 48 hours</span></li>
-                <li><h4><sup>$</sup>21<span> deadline 24 hours</span></li>
-                <li><h4><sup>$</sup>22<span> deadline 12 hours</span></li>
-                <li><h4><sup>$</sup>23<span> deadline 6 hours</span></li>
-                <li><h4><sup>$</sup>24<span> deadline 3 hours</span></li>
+                <li><h4><sup>$</sup>16<span>, 7 days</span></li>
+                <li><h4><sup>$</sup>17<span>, 5 days</span></li>
+                <li><h4><sup>$</sup>18<span>, 4 days</span></li>
+                <li><h4><sup>$</sup>19<span>, 3 days</span></li>
+                <li><h4><sup>$</sup>20<span>, 48 hours</span></li>
+                <li><h4><sup>$</sup>21<span>, 24 hours</span></li>
+                <li><h4><sup>$</sup>22<span>, 12 hours</span></li>
+                <li><h4><sup>$</sup>23<span>, 6 hours</span></li>
+                <li><h4><sup>$</sup>24<span>, 3 hours</span></li>
               </ul>
               <div class="btn-wrap">
                 <a href="#" class="btn-buy">Place Order</a>
@@ -319,19 +351,19 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="box">
-              <span class="advanced">Advanced</span>
+              <span class="advanced">Top</span>
               <h3>Platinum</h3>
               <h4><sup>$</sup>17<span> deadline 10 days</span></h4>
               <ul>
-                <li><h4><sup>$</sup>18<span> deadline 7 days</span></li>
-                <li><h4><sup>$</sup>19<span> deadline 5 days</span></li>
-                <li><h4><sup>$</sup>20<span> deadline 4 days</span></li>
-                <li><h4><sup>$</sup>21<span> deadline 3 days</span></li>
-                <li><h4><sup>$</sup>22<span> deadline 48 hours</span></li>
-                <li><h4><sup>$</sup>23<span> deadline 24 hours</span></li>
-                <li><h4><sup>$</sup>24<span> deadline 12 hours</span></li>
-                <li><h4><sup>$</sup>25<span> deadline 6 hours</span></li>
-                <li><h4><sup>$</sup>26<span> deadline 3 hours</span></li>
+                <li><h4><sup>$</sup>18<span>, 7 days</span></li>
+                <li><h4><sup>$</sup>19<span>, 5 days</span></li>
+                <li><h4><sup>$</sup>20<span>, 4 days</span></li>
+                <li><h4><sup>$</sup>21<span>, 3 days</span></li>
+                <li><h4><sup>$</sup>22<span>, 48 hours</span></li>
+                <li><h4><sup>$</sup>23<span>, 24 hours</span></li>
+                <li><h4><sup>$</sup>24<span>, 12 hours</span></li>
+                <li><h4><sup>$</sup>25<span>, 6 hours</span></li>
+                <li><h4><sup>$</sup>26<span>, 3 hours</span></li>
               </ul>
               <div class="btn-wrap">
                 <a href="#" class="btn-buy">Place Order</a>
@@ -435,14 +467,11 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Archives</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Pricing policy</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Revision policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/archives/list">Archives</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/terms">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/privacy">Privacy policy</a></li>
             </ul>
           </div>
 

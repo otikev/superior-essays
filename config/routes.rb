@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'site#home'
-  get 'auth/:provider/callback' => 'sessions#create'
+  get '/auth/:provider/callback' => 'sessions#create'
   get 'logout' => 'sessions#logout'
 
+  match '/privacy', to: 'landing#privacy', via: :get
+  match '/terms', to: 'landing#terms', via: :get
   match '/landing', to: 'landing#home', via: :get
+
   match '/pricing', to: 'site#pricing', via: :get
 
   match '/orders/new', to: 'orders#new', via: :get

@@ -21,6 +21,15 @@
                 </div>
 
                 <div class="row">
+                    <label class="col-form-label text-left">Public URL:</label>
+                </div>
+                <div class="row mb-3">
+                    <%= text_field_tag :public_url, content_url(@content) ,  class: "form-control font-weight-black" , :readonly => true %>
+                </div>
+
+                
+
+                <div class="row">
                     <label class="col-form-label text-left">Title:</label>
                 </div>
                 <div class="row mb-3">

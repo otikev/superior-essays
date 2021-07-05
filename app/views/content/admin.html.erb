@@ -8,7 +8,9 @@
 <% @contents.each do |content|%>
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h1 class="card-title"><%= content.title %></h1>
+            <h1 class="card-title">
+                <%= link_to content.title, content_path(content), class: "text-default", target: "_blank"%>
+            </h1>
 
             <div class="header-elements">
                 <div class="list-icons">

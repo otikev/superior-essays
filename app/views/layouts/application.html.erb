@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Superior Essays Pro</title>
+    <meta name="description" content="<%= yield(:description) %>">
+    <meta name="author" content="<%= yield(:author) %>">
+    <meta name="keywords" content="<%= yield(:keywords) %>">
+    <title>Superior Essays Pro | <%= yield(:title) %></title>
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag asset_path('favicon.ico') %>

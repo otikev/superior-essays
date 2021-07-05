@@ -23,36 +23,70 @@ class Indicator < ApplicationRecord
         Indicator.new(signal_id: signal_id).save!
     end
 
-    def self.retrieve_order_data(days)
-        created_orders_counts = Indicator.where("created_at >= ?", days.ago)
-        .where(signal_id: SEConstants::Signals::ORDER_CREATED)
-        .order("DATE(created_at)")
-        .group("DATE(created_at)")
-        .count
-
-        puts "@@@@@@@ Orders created = #{created_orders_counts.to_json}"
-        created_orders_counts
-
-        pivot_date = Date.today - days
+    def self.all_order_data(days)
+        created = retrieve_order_created_data(days)
+        paid = retrieve_order_paid_data(days)
+        completed = retrieve_order_completed_data(days)
+        closed = retrieve_order_closed_data(days)
 
         data = []
+        pivot_date = Date.today - days
+        num_of_days = Date.today - pivot_date
 
-        while pivot_date <= Date.today do
+        num_of_days.to_i.times do
             hash = Hash.new
-            hash["date"] = pivot_date
-            val = created_orders_counts.detect {|k,v| k == pivot_date }
-            if val
-                hash["value"] = val[1]
-            else
-                hash["value"] = 0
-            end
+            hash["date"] = pivot_date.strftime('%Y-%m-%d')
+
+            val = created.detect {|k,v| k == pivot_date }
+            hash["created"] = val ? val[1] : 0
+
+            val = paid.detect {|k,v| k == pivot_date }
+            hash["paid"] = val ? val[1] : 0
+
+            val = completed.detect {|k,v| k == pivot_date }
+            hash["completed"] = val ? val[1] : 0
+
+            val = closed.detect {|k,v| k == pivot_date }
+            hash["closed"] = val ? val[1] : 0
 
             data.push(hash)
             pivot_date = pivot_date + 1.day
         end
 
-
-        puts "@@@@@@@ Orders created data = #{data.to_json}"
         data
+    end
+
+    private
+
+    def self.retrieve_order_created_data(days)
+        records = Indicator.where("created_at >= ?", days.ago)
+        .where(signal_id: SEConstants::Signals::ORDER_CREATED)
+        .order("DATE(created_at)")
+        .group("DATE(created_at)")
+        .count
+    end
+
+    def self.retrieve_order_paid_data(days)
+        records = Indicator.where("created_at >= ?", days.ago)
+        .where(signal_id: SEConstants::Signals::ORDER_PAID)
+        .order("DATE(created_at)")
+        .group("DATE(created_at)")
+        .count
+    end
+
+    def self.retrieve_order_completed_data(days)
+        records = Indicator.where("created_at >= ?", days.ago)
+        .where(signal_id: SEConstants::Signals::ORDER_COMPLETED)
+        .order("DATE(created_at)")
+        .group("DATE(created_at)")
+        .count
+    end
+
+    def self.retrieve_order_closed_data(days)
+        records = Indicator.where("created_at >= ?", days.ago)
+        .where(signal_id: SEConstants::Signals::ORDER_CLOSED)
+        .order("DATE(created_at)")
+        .group("DATE(created_at)")
+        .count
     end
 end

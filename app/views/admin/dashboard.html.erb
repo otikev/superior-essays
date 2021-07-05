@@ -5,6 +5,16 @@
       <div id="chart-orders"></div>
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-body text-center">
+      <h6 class="font-weight-semibold mb-0 mt-1">Last 10 days</h6>
+      <div id="chart-orders-trend"></div>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="col-sm-6 col-xl-3">
 
     <div class="card card-body text-center">
@@ -84,7 +94,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    function orderStatusChart(){
       let chart = am4core.create("chart-orders", am4charts.PieChart);
 
       chart.data = [{
@@ -129,5 +139,52 @@
 
 
       chart.legend = new am4charts.Legend();
+    }
+
+    function orderTrendsChart(){
+      let chart = am4core.create("chart-orders-trend", am4charts.XYChart);
+      chart.paddingRight = 20;
+
+      let data = []
+      <% @created_orders_data.each do |i| %>
+        data.push({date:"<%= i["date"]%>",  value:<%= i["value"]%>});
+      <% end %>
+
+      chart.data = data;
+
+      // Set input format for the dates
+      chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+
+      let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.renderer.grid.template.location = 0;
+
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.tooltip.disabled = true;
+      valueAxis.renderer.minWidth = 35;
+
+      let series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.dateX = "date";
+      series.dataFields.valueY = "value";
+      series.tooltipText = "{valueY} created";
+      series.strokeWidth = 3;
+      series.tooltip.pointerOrientation = "vertical";
+      series.tooltip.background.fillOpacity = 0.5;
+
+      let bullet = series.bullets.push(new am4charts.CircleBullet());
+      bullet.circle.strokeWidth = 2;
+      bullet.circle.radius = 4;
+      bullet.circle.fill = am4core.color("#fff");
+
+      let bullethover = bullet.states.create("hover");
+      bullethover.properties.scale = 1.3;
+
+      chart.cursor = new am4charts.XYCursor();
+      chart.cursor.snapToSeries = series;
+      chart.cursor.xAxis = dateAxis;
+    }
+
+    $(document).ready(function () {
+     orderStatusChart();
+     orderTrendsChart();
     });
 </script>

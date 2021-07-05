@@ -32,5 +32,27 @@ class Indicator < ApplicationRecord
 
         puts "@@@@@@@ Orders created = #{created_orders_counts.to_json}"
         created_orders_counts
+
+        pivot_date = Date.today - days
+
+        data = []
+
+        while pivot_date <= Date.today do
+            hash = Hash.new
+            hash["date"] = pivot_date
+            val = created_orders_counts.detect {|k,v| k == pivot_date }
+            if val
+                hash["value"] = val[1]
+            else
+                hash["value"] = 0
+            end
+
+            data.push(hash)
+            pivot_date = pivot_date + 1.day
+        end
+
+
+        puts "@@@@@@@ Orders created data = #{data.to_json}"
+        data
     end
 end

@@ -24,7 +24,7 @@ private
 	end
 
 	def count
-		User.count
+		raw_fetch.count
 	end
 
 	def total_entries
@@ -41,8 +41,7 @@ private
 			search_string << "lower(#{term}) like :search"
 		end
 
-		_role = @view.instance_variable_get(:@role)
-		users = User.where(admin: _role == "admin").order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
+		users = raw_fetch.order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
 		if params[:search].present?
 			users = users.where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
 		end
@@ -51,5 +50,10 @@ private
 
 	def columns
 		%w(first_name last_name email)
+	end
+
+	def raw_fetch
+		_role = @view.instance_variable_get(:@role)
+		User.where(admin: _role == "admin")
 	end
 end

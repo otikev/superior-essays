@@ -25,7 +25,7 @@ private
 	end
 
 	def count
-		Order.count
+		raw_fetch.count
 	end
 
 	def total_entries
@@ -42,10 +42,7 @@ private
 			search_string << "lower(#{term}) like :search"
 		end
 
-		_user_id = @view.instance_variable_get(:@current_user).id
-		_order_status_id = @view.instance_variable_get(:@order_status).id
-
-		orders = Order.where(user_id: _user_id, order_status_id: _order_status_id).order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
+		orders = raw_fetch.order("#{sort_column} #{sort_direction}").page(page).per_page(per_page)
 
 		if params[:search].present?
 			orders = orders.joins([:user, :order_status, :order_type]).where(search_string.join(' or '), search: "%#{params[:search][:value].downcase}%")
@@ -55,5 +52,11 @@ private
 
 	def columns
 		%w(order_statuses.name order_types.name topic code)
+	end
+
+	def raw_fetch
+		_user_id = @view.instance_variable_get(:@current_user).id
+		_order_status_id = @view.instance_variable_get(:@order_status).id
+		Order.where(user_id: _user_id, order_status_id: _order_status_id)
 	end
 end

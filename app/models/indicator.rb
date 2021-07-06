@@ -33,7 +33,7 @@ class Indicator < ApplicationRecord
         pivot_date = Date.today - days
         num_of_days = Date.today - pivot_date
 
-        num_of_days.to_i.times do
+        (num_of_days.to_i+1).times do
             hash = Hash.new
             hash["date"] = pivot_date.strftime('%Y-%m-%d')
 

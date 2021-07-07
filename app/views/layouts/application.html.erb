@@ -113,20 +113,6 @@
   						<span class="navbar-text">
   							Delivering quality work is our priority
   						</span>
-
-  						<ul class="navbar-nav ml-lg-auto">
-                <li class="nav-item">
-                 <% if @current_user %>
-                    <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold" do %>
-                      <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
-                    <% end %>
-                  <% else %>
-                    <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
-                      <span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Place Order</span>
-                    <% end %>
-                  <% end %>
-                  </li>
-  						</ul>
   					</div>
   				</div>
   				<!-- /footer -->

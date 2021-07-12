@@ -37,10 +37,11 @@ Rails.application.routes.draw do
   match '/admin/orders_closed', to: 'admin#orders_closed', via: :get
   match '/admin/users_clients', to: 'admin#users_clients', via: :get
   match '/admin/users_admins', to: 'admin#users_admins', via: :get
+  match '/admin/user', to: 'admin#user', via: :get
+  match '/admin/assign_voucher', to: 'admin#assign_voucher', via: :post
   
   match '/messages/create', to: 'messages#create', via: :post
   match '/messages/unread', to: 'messages#unread', via: :get
-
  
   match '/content/admin', to: 'content#admin', via: :get
   match '/content/new', to: 'content#new', via: :get
@@ -49,7 +50,6 @@ Rails.application.routes.draw do
   match '/content/edit', to: 'content#edit', via: :get
 
   match '/archives/list', to: 'archives#list', via: :get
-  
   scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
     resources :contents, controller: 'archives', path: 'archives/show'
   end

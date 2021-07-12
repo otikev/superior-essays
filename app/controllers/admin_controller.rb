@@ -56,4 +56,24 @@ class AdminController < ApplicationController
       format.json { render json: AdminOrdersDatatable.new(view_context) }
     end
   end
+
+  def user
+    @user = User.where(key:params[:key]).first
+    @user_voucher = UserVoucher.new
+    @user_voucher.user_id = @user.id
+  end
+
+  def assign_voucher
+    @user_voucher = UserVoucher.new(user_voucher_params)
+    @user_voucher.save!
+    user = User.where(id: @user_voucher.user_id).first
+    redirect_to admin_user_path(:key => user.key)
+    flash[:success] = "Voucher created"
+  end
+
+  private
+
+  def user_voucher_params
+    params.require(:user_voucher).permit(:user_id, :voucher_id)
+  end
 end

@@ -1,0 +1,15 @@
+<%= form_for @user_voucher, :url => url_for(:controller => 'admin', :action => 'assign_voucher', ) do |form| %>
+    <div class="card mb-0">
+        <div class="card-body">
+            <%= form.hidden_field :user_id, value: @user_voucher.user_id %>
+
+            <div class="form-group row">
+                <%= form.collection_select :voucher_id, Voucher.all, :id, :value, {prompt: "Select Discount (%)"}, class: "form-control"  , :required=>true%>
+            </div>
+
+            <%= button_tag(:class => "btn bg-success btn-block") do %>
+            Assign Discount
+            <% end %>
+        </div>
+    </div>
+<%end%>

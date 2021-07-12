@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card border-left-3 border-left-success rounded-left-0">
+            <div class="card-body">
+                <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                    <div>
+                        <h6 class="font-weight-semibold"><%= "#{@user.first_name} #{@user.last_name}" %></h6>
+                    </div>
+
+                    <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+                        <h6 class="font-weight-semibold"><%= @user.email %></h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                <span>
+                    <span class="badge badge-mark border-danger mr-2"></span>
+                    Member Since:
+                    <span class="font-weight-semibold"><%= local_time(@user.created_at) %></span>
+                </span>
+
+                <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
+                    <li class="list-inline-item">
+                        <a href="#" class="text-default"><i class="icon-eye8"></i></a>
+                    </li>
+                    <li class="list-inline-item dropdown">
+                        <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="icon-printer"></i> Print invoice</a>
+                            <a href="#" class="dropdown-item"><i class="icon-file-download"></i> Download invoice</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="icon-file-plus"></i> Edit invoice</a>
+                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove invoice</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-left-3 border-left-success rounded-left-0">
+            <div class="card-body">
+                <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                    <div>
+                        <h6 class="font-weight-semibold">Discount</h6>
+                    </div>
+                </div>
+                <%= render 'voucher_form'%>
+            </div>
+        </div>
+    </div>
+</div>

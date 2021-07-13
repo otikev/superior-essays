@@ -6,6 +6,7 @@
 #  charts_count      :integer          default(0)
 #  code              :string
 #  completed_on      :datetime
+#  discount          :float            default(0.0)
 #  due_date          :datetime
 #  instructions      :text
 #  key               :uuid

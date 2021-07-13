@@ -6,6 +6,7 @@
 #  charts_count      :integer          default(0)
 #  code              :string
 #  completed_on      :datetime
+#  discount          :float            default(0.0)
 #  due_date          :datetime
 #  instructions      :text
 #  key               :uuid
@@ -43,6 +44,7 @@ class Order < ApplicationRecord
   has_one :english_type
   has_one :academic_level
   has_one :review
+  has_one :user_voucher
 
   has_many :messages, -> { order(created_at: :desc) }
   has_many :resources, -> { order(created_at: :desc) }
@@ -67,6 +69,7 @@ class Order < ApplicationRecord
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,db_order)
     send_order_creation_emails(db_order)
     link_voucher_if_exists(db_order)
+    apply_discount_if_exists(db_order)
   end
   
   before_save do
@@ -105,7 +108,6 @@ class Order < ApplicationRecord
 
     generate_appropriate_signal_if_applies
     set_end_date
-    apply_discount_if_exists
   end
 
   def is_closed?
@@ -135,6 +137,10 @@ class Order < ApplicationRecord
     diff = (remaining_minutes/60).to_i
     puts "Difference(hours) = #{diff}"
     diff
+  end
+
+  def discounted_price
+    (self.price - self.discount).round(2)
   end
 
   def spacing_text
@@ -183,22 +189,19 @@ class Order < ApplicationRecord
 
   private
 
-  def apply_discount_if_exists
-    user_voucher = user.get_user_voucher
+  def apply_discount_if_exists(order)
+    user_voucher = order.user_voucher
     if user_voucher
       voucher = user_voucher.voucher
-      puts "Voucher exists, applying #{voucher.value}% discount on $#{self.price}"
+      puts "Voucher exists, applying #{voucher.value}% discount on $#{order.price}"
       
       if voucher.value == 100 #fully paid by voucher
-        self.paid = true
-        self.paid_on = DateTime.now
-        self.price = 0
+        order.paid = true
+        order.paid_on = DateTime.now
       else
-        discount = voucher.value/100.0
-        raw_final_price = self.price - discount*price
-        self.price = raw_final_price.round(2)
-        puts "final price = $#{self.price}"
+        order.discount = ((voucher.value/100.0)*price).round(2)
       end
+      order.save!
     end
   end
 

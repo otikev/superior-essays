@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
         {
           :amount => {
             :currency_code => 'USD',
-            :value => order.price.to_s
+            :value => order.discounted_price
           }
         }
       ]

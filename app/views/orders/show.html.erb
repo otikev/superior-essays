@@ -41,7 +41,13 @@
         </ul>
       </div>
       <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
-        <h6 class="font-weight-semibold">Price: $<%= @order.price%></h6>
+        <h5 class="font-weight-semibold">Price: $<%= @order.price%></h5>
+
+        <% if @order.user_voucher %>
+          <h5 class="font-weight-semibold text-danger">Discount <%= @order.user_voucher.voucher.value %>% : $<%= @order.discounted_price%></h5>
+        <% end %>
+
+        
         <ul class="list list-unstyled mb-0">
           <li>Order Status: <span class="font-weight-semibold"><%= @order.order_status.name %></span></li>
           <li>

@@ -14,9 +14,11 @@
 class UserVoucher < ApplicationRecord
     has_one :user
     has_one :voucher
+    has_one :order
 
     belongs_to :user
     belongs_to :voucher
+    belongs_to :order, optional: true
 
     validate :no_unused_user_vouchers_for_user, :on => :create
 

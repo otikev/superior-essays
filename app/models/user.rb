@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :indicators, -> { order(created_at: :desc) }
   has_many :reviews
   has_many :user_settings
+  has_many :user_vouchers, -> { order(created_at: :desc) }
 
   after_create do
     UserSetting.generate(self)

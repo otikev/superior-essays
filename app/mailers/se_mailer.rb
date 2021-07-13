@@ -61,4 +61,13 @@ class SeMailer < ApplicationMailer
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
+    def user_voucher
+        @user_voucher = params[:user_voucher]
+        recipient = params[:recipient]
+
+        puts "##### send user voucher mail to #{recipient}"
+        mail(:to => recipient, :subject => "#{@user_voucher.voucher.value}% DISCOUNT ON YOUR NEXT ORDER!")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
+    end
+
 end

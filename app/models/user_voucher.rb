@@ -12,4 +12,33 @@
 #  voucher_id   :integer
 #
 class UserVoucher < ApplicationRecord
+    has_one :user
+    has_one :voucher
+
+    belongs_to :user
+    belongs_to :voucher
+
+    validate :no_unused_user_vouchers, :on => :create
+
+    after_create do
+        db_record = UserVoucher.where(id: id).first
+        send_order_creation_emails(db_record)
+    end
+
+    def used?
+        order_id != nil
+    end
+
+    private
+
+    def no_unused_user_vouchers
+        unused_vouchers = user.user_vouchers.where(order_id: nil).count
+        if unused_vouchers > 0
+            errors.add(:discount, "User has unused vouchers")
+        end
+    end
+
+    def send_order_creation_emails(db_record)
+        SeMailer.with(user_voucher: db_record, recipient: user.email).delay.order_created
+    end
 end

@@ -45,10 +45,28 @@
             <div class="card-body">
                 <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                     <div>
-                        <h6 class="font-weight-semibold">Discount</h6>
+                        <h6 class="font-weight-semibold">Discounts</h6>
                     </div>
                 </div>
                 <%= render 'voucher_form'%>
+               
+                <ul class="media-list mt-3">
+                    <% @user.user_vouchers.each do |uv|%>
+                        <li class="media">
+                            <div class="mr-3">
+                                <span class="btn bg-transparent <%= uv.used? ? "border-success text-success" : "border-danger text-danger" %>  rounded-round border-2 btn-icon">
+                                    <i class="icon-cash3"></i>
+                                </span>
+                            </div>
+
+                            <div class="media-body">
+                                <%= uv.voucher.value%>% discount
+                                <div class="font-size-sm"><%= uv.used? ? "Used" : "Unused" %></div>
+                                <div class="text-muted font-size-sm">Created on <%= local_time(uv.created_at) %></div>
+                            </div>
+                        </li>
+                    <% end %>
+                </ul>
             </div>
         </div>
     </div>

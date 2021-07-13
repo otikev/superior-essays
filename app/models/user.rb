@@ -36,4 +36,11 @@ class User < ApplicationRecord
     _user
   end
 
+  def has_unused_vouchers?
+    get_user_voucher != nil
+  end
+
+  def get_user_voucher
+    user_vouchers.where(order_id: nil).first
+  end
 end

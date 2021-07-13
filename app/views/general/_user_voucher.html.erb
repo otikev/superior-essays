@@ -1,0 +1,9 @@
+<% if @current_user && @current_user.has_unused_vouchers? %>
+    <div class="mb-3">
+        <div class="card card-body border-top-success">
+            <div >
+                <h6 class="m-0"> You have an unused <b><%= @current_user.get_user_voucher.voucher.value %>% discount</b> for your next order.</h6>
+            </div>
+        </div>
+    </div>
+<% end %>

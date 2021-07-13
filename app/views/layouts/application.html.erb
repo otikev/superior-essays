@@ -86,8 +86,9 @@
         	</div>
         <% end %>
   		<!-- Page content -->
+      
   		<div class="page-content">
-
+      
   			<!-- Main content -->
   			<div class="content-wrapper">
 
@@ -95,6 +96,7 @@
 
   				<!-- Content area -->
   				<div class="content">
+            <%= render 'general/user_voucher'%>
             <% flash.each do |key, value| %>
               <% if value.is_a?(String) %>
                 <div class="text-center alert alert-<%= key %> ">

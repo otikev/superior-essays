@@ -1,8 +1,17 @@
 <% if @current_user && @current_user.has_unused_vouchers? %>
+    <% user_voucher = @current_user.get_user_voucher %>
     <div class="mb-3">
-        <div class="card card-body border-top-success">
-            <div >
-                <h6 class="m-0"> You have an unused <b><%= @current_user.get_user_voucher.voucher.value %>% discount</b> for your next order.</h6>
+        <div class="card card-body border-top-orange ">
+            <div class="media justify-content-center">
+                <div class="mr-3">
+                    <span class="btn bg-transparent border-orange text-orange rounded-round border-2 btn-icon">
+                        <i class="icon-cash3"></i>
+                    </span>
+                </div>
+                <div class="media-body">
+                    <h6 class="m-0"> You have an unused <b><%= user_voucher.voucher.value %>% discount</b> for your next order</h6>
+                    <div class="text-muted font-size-sm">Awarded on <%= local_time(user_voucher.created_at) %></div>
+                </div>
             </div>
         </div>
     </div>

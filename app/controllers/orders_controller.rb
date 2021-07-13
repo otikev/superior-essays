@@ -6,6 +6,10 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    user_voucher = @current_user.get_user_voucher
+    if user_voucher
+      @voucher = user_voucher.voucher
+    end
   end
 
   def create
@@ -14,13 +18,7 @@ class OrdersController < ApplicationController
     @order.order_status = OrderStatus.where(name: "Todo").first
     @order.save!
 
-    if @order.price == params[:total_price].to_i
-      puts "**** backend and frontend pricing is the same"
-    else
-      puts "!!!! backend pricing differs from frontend pricing!"
-    end
-
-    flash[:notice] = "Order successfully created."
+    flash[:success] = "Order successfully created."
     redirect_to client_orders_todo_path
   end
 

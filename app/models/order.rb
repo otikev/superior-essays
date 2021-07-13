@@ -12,7 +12,7 @@
 #  pages             :integer
 #  paid              :boolean          default(FALSE)
 #  paid_on           :datetime
-#  price             :integer
+#  price             :float
 #  slides_count      :integer          default(0)
 #  sources_count     :integer          default(0)
 #  spacing           :integer          default(1)
@@ -66,8 +66,8 @@ class Order < ApplicationRecord
     db_order = Order.where(id: id).first
     Indicator.generate_order_signal(SEConstants::Signals::ORDER_CREATED,db_order)
     send_order_creation_emails(db_order)
+    link_voucher_if_exists(db_order)
   end
-
   
   before_save do
     if self.code == nil
@@ -105,6 +105,7 @@ class Order < ApplicationRecord
 
     generate_appropriate_signal_if_applies
     set_end_date
+    apply_discount_if_exists
   end
 
   def is_closed?
@@ -181,6 +182,34 @@ class Order < ApplicationRecord
   end
 
   private
+
+  def apply_discount_if_exists
+    user_voucher = user.get_user_voucher
+    if user_voucher
+      voucher = user_voucher.voucher
+      puts "Voucher exists, applying #{voucher.value}% discount on $#{self.price}"
+      
+      if voucher.value == 100 #fully paid by voucher
+        self.paid = true
+        self.paid_on = DateTime.now
+        self.price = 0
+      else
+        discount = voucher.value/100.0
+        raw_final_price = self.price - discount*price
+        self.price = raw_final_price.round(2)
+        puts "final price = $#{self.price}"
+      end
+    end
+  end
+
+  def link_voucher_if_exists(order)
+    user_voucher = user.get_user_voucher
+    if user_voucher
+      user_voucher.order_id = order.id
+      user_voucher.save!
+      puts "Voucher exists, linking..."
+    end
+  end
 
   def send_order_completed_emails(order)
     #Email support

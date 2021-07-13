@@ -86,6 +86,7 @@
                 </div>
             </div>
             <div class="form-group row alert alert-success">
+                
                 <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Price:</h1>
                 <div class="col-lg-7">
                     <div class="form-group form-group-feedback form-group-feedback-left">
@@ -95,6 +96,18 @@
                         </div>
                     </div>
                 </div>
+                <% if @voucher %>
+                    <div class="row"></div>
+                    <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discounted Price:</h1>
+                    <div class="col-lg-7">
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <%= text_field_tag :discount,0, placeholder: "Topic", class: "form-control font-weight-black" , :readonly => true %>
+                            <div class="form-control-feedback">
+                                <i class="icon-coin-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
             </div>
             <%= button_tag(:class => "btn bg-info btn-block") do %>
             Create Order
@@ -142,6 +155,15 @@
         $("#total_price").prop('readonly', false);
         $("#total_price").val(totalPrice);
         $("#total_price").prop('readonly', true);
+
+        <% if @voucher %>
+            var discount = <%= @voucher.value %>;
+
+            var finalPrice = totalPrice - (discount/100)*totalPrice;
+            $("#discount").prop('readonly', false);
+            $("#discount").val(finalPrice.toFixed(2));
+            $("#discount").prop('readonly', true);
+        <% end %>
     }
 
     $(document).ready(function () {

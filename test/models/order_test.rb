@@ -12,7 +12,7 @@
 #  pages             :integer
 #  paid              :boolean          default(FALSE)
 #  paid_on           :datetime
-#  price             :integer
+#  price             :float
 #  slides_count      :integer          default(0)
 #  sources_count     :integer          default(0)
 #  spacing           :integer          default(1)

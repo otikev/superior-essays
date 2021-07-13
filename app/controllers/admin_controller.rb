@@ -65,11 +65,12 @@ class AdminController < ApplicationController
 
   def assign_voucher
     @user_voucher = UserVoucher.new(user_voucher_params)
-    if @user_voucher.save!
+    if @user_voucher.save
       flash[:success] = "Voucher created"
+    else
+      flash[:danger] = @user_voucher.errors.full_messages[0]
     end
-    user = User.where(id: @user_voucher.user_id).first
-    redirect_to admin_user_path(:key => user.key)
+    redirect_to admin_user_path(:key => @user_voucher.user.key)
   end
 
   private

@@ -198,9 +198,8 @@ class Order < ApplicationRecord
       if voucher.value == 100 #fully paid by voucher
         order.paid = true
         order.paid_on = DateTime.now
-      else
-        order.discount = ((voucher.value/100.0)*price).round(2)
       end
+      order.discount = ((voucher.value/100.0)*price).round(2)
       order.save!
     end
   end

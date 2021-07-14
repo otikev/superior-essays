@@ -1,10 +1,16 @@
 
+<div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+    <div>
+        <h1><%= @type_name %></h1>
+    </div>
 
-<h1><%= @type_name %></h1>
-<div class="mb-3">
-    <%= link_to '/content/new', method: :get, :class => "font-weight-semibold mb-3" do %>
-        <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-plus2"></i></b> New Content</span>
-    <% end %>
+    <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+        <div class="mb-3">
+            <%= link_to '/content/new', method: :get, :class => "font-weight-semibold mb-3" do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-plus2"></i></b> New Content</span>
+            <% end %>
+        </div>
+    </div>
 </div>
 
 <ul class="nav nav-tabs nav-tabs-highlight">

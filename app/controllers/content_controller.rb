@@ -14,7 +14,7 @@ class ContentController < ApplicationController
         if !params[:published]
             @published = true
         end
-        
+
         @type_name = ""
 
         if @type == SEConstants::ContentType::ARCHIVE
@@ -36,7 +36,6 @@ class ContentController < ApplicationController
         @content.question = params[:content][:question]
         @content.answer = params[:content][:answer]
         @content.published = params[:content][:published]
-        @content.content_type = params[:content][:content_type]
         @content.title = params[:content][:title]
         @content.save!
         flash[:success] = "Content successfully updated"
@@ -47,6 +46,7 @@ class ContentController < ApplicationController
         @content = Content.new(content_params)
         @content.user_id = @current_user.id
         @content.save!
+        @content.reload
         flash[:success] = "Content successfully created"
         redirect_to content_edit_path(key: @content.key)
     end

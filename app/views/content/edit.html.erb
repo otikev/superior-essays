@@ -14,13 +14,6 @@
                 <%= form.hidden_field :key, value: @content.key %>
 
                 <div class="row">
-                    <label class="col-form-label text-left">Content Type:</label>
-                </div>
-                <div class="row mb-3">
-                    <%= form.select(:content_type, options_for_select([['Archive', SEConstants::ContentType::ARCHIVE], ['Sample', SEConstants::ContentType::SAMPLE]],@content.content_type), {class: "form-control"}) %>
-                </div>
-
-                <div class="row">
                     <label class="col-form-label text-left">Published:</label>
                 </div>
                 <div class="row mb-3">

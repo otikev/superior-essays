@@ -21,7 +21,7 @@
 class Content < ApplicationRecord
     extend FriendlyId
 
-    self.per_page = 3
+    self.per_page = 10
     
     friendly_id :title, use: :slugged
 

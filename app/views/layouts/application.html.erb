@@ -4,6 +4,10 @@
     <meta name="description" content="<%= yield(:description) %>">
     <meta name="author" content="<%= yield(:author) %>">
     <meta name="keywords" content="<%= yield(:keywords) %>">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Superior Essays Pro | <%= yield(:title) %></title>
     
     <%= csrf_meta_tags %>
@@ -27,6 +31,11 @@
             <%= image_tag('logo_small.png', size: "50x50", alt: "Superior Essays") %>
   				</a>
   			</div>
+        <div class="d-md-none">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+            <i class="icon-tree5"></i>
+          </button>
+        </div>
   			<div class="collapse navbar-collapse" id="navbar-mobile">
 
           <div class="ml-md-3 mr-md-auto">
@@ -75,24 +84,33 @@
   		</div>
   		<!-- /main navbar -->
       <% if @current_user %>
-        <div class="navbar navbar-expand-md navbar-light mt-1">
-        		<div class="navbar-collapse collapse" id="navbar-n-avigation">
-                <% if @current_user.admin? %>
-                  <%= render 'general/admin_nav'%>
-                <% else %>
-                  <%= render 'general/client_nav'%>
-                <% end %>
-        		</div>
-        	</div>
-        <% end %>
+            <div class="navbar navbar-expand-md navbar-light mt-1">
+              <div class="text-center d-md-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle collapsed" data-toggle="collapse" data-target="#navbar-navigation" aria-expanded="false">
+                  <i class="icon-unfold mr-2"></i>
+                  Navigation
+                </button>
+              </div>
+              <div class="navbar-collapse collapse" id="navbar-navigation">
+                    <% if @current_user.admin? %>
+                      <%= render 'general/admin_nav'%>
+                    <% else %>
+                      <%= render 'general/client_nav'%>
+                    <% end %>
+              </div>
+            </div>
+      <% end %>
+            
   		<!-- Page content -->
       
   		<div class="page-content">
-      
+        
   			<!-- Main content -->
   			<div class="content-wrapper">
 
   				<!-- Page header here -->
+          
+          <!-- /Page header here -->
 
   				<!-- Content area -->
   				<div class="content">
@@ -107,7 +125,6 @@
             <%= yield %>
   				</div>
   				<!-- /content area -->
-
 
   				<!-- Footer -->
   				<div class="navbar navbar-expand-lg navbar-light">

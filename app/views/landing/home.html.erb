@@ -138,7 +138,7 @@ updates.</p>
           <div class="col-lg-3 col-md-6">
             <div class="count-box">
               <i class="icofont-simple-smile"></i>
-              <span data-toggle="counter-up">763</span>
+              <span data-toggle="counter-up"><%= number_with_delimiter(@clients_count) %></span>
               <p>Happy Clients</p>
             </div>
           </div>
@@ -146,7 +146,7 @@ updates.</p>
           <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
             <div class="count-box">
               <i class="icofont-document-folder"></i>
-              <span data-toggle="counter-up">3,052</span>
+              <span data-toggle="counter-up"><%= number_with_delimiter(@orders_count) %></span>
               <p>Essays</p>
             </div>
           </div>
@@ -154,7 +154,7 @@ updates.</p>
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="icofont-live-support"></i>
-              <span data-toggle="counter-up">1,463</span>
+              <span data-toggle="counter-up"><%= number_with_delimiter(@support_hours_count) %></span>
               <p>Hours Of Support</p>
             </div>
           </div>

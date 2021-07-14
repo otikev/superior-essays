@@ -2,16 +2,17 @@
 #
 # Table name: contents
 #
-#  id         :bigint           not null, primary key
-#  answer     :text
-#  key        :uuid
-#  published  :boolean          default(FALSE)
-#  question   :text
-#  slug       :string
-#  title      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  id           :bigint           not null, primary key
+#  answer       :text
+#  content_type :integer
+#  key          :uuid
+#  published    :boolean          default(FALSE)
+#  question     :text
+#  slug         :string
+#  title        :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :integer
 #
 # Indexes
 #

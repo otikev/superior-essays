@@ -1,0 +1,37 @@
+<% @contents.each do |content|%>
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h1 class="card-title">
+                <%= link_to content.title, content_path(content), class: "text-default", target: "_blank"%>
+            </h1>
+
+            <div class="header-elements">
+                <div class="list-icons">
+                    <%= link_to content_edit_path(key: content.key), method: :get, :class => "list-icons-item" do %>
+                        <span class="btn btn-success btn-labeled btn-labeled-left"><b><i class="icon-pencil7"></i></b> Edit Content</span>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+           <%= simple_format content.question %>
+        </div>
+        <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0 pb-3 ">
+            <ul class="list-inline list-inline-condensed mb-3 mb-sm-0">
+                <li class="list-inline-item">
+                    <span class="opacity-50">Updated : <%= local_time(content.updated_at)%></span>
+                </li>
+                <li class="list-inline-item">
+                    <% if content.published? %>
+                        <span class="badge bg-success">Published</span>
+                    <% else %>
+                        <span class="badge bg-danger">Unpublished</span>
+                    <% end %>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+<% end %>
+
+<%= will_paginate @contents %>

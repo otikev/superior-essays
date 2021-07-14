@@ -1,40 +1,31 @@
 
-<div class="row">
+
+<h1><%= @type_name %></h1>
+<div class="mb-3">
     <%= link_to '/content/new', method: :get, :class => "font-weight-semibold mb-3" do %>
         <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-plus2"></i></b> New Content</span>
     <% end %>
 </div>
 
-<% @contents.each do |content|%>
-    <div class="card">
-        <div class="card-header header-elements-inline">
-            <h1 class="card-title">
-                <%= link_to content.title, content_path(content), class: "text-default", target: "_blank"%>
-            </h1>
+<ul class="nav nav-tabs nav-tabs-highlight">
+    <li class="nav-item">
+        <%= link_to content_admin_path(type: @type, published: true), method: :get, :class => "nav-link #{'active' if @published }" do %>
+            <span class="badge badge-success badge-pill mr-2">
+            <%= @total_published_content %>
+            </span>
+            Published
+        <% end %>
+    </li>
+    <li class="nav-item">
+        <%= link_to content_admin_path(type: @type, published: false), method: :get, :class => "nav-link #{'active' if !@published }" do %>
+            <span class="badge badge-danger badge-pill mr-2">
+            <%= @total_unpublished_content %>
+            </span>
+            Unpublished
+        <% end %>
+    </li>
+</ul>
 
-            <div class="header-elements">
-                <div class="list-icons">
-                    <%= link_to content_edit_path(key: content.key), method: :get, :class => "list-icons-item" do %>
-                        <span class="btn btn-success btn-labeled btn-labeled-left"><b><i class="icon-pencil7"></i></b> Edit Content</span>
-                    <% end %>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-           <%= simple_format content.question %>
-        </div>
-        <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0 pb-3 ">
-            <ul class="list-inline list-inline-condensed mb-3 mb-sm-0">
-                <li class="list-inline-item">
-                    <% if content.published? %>
-                        <span class="badge bg-success">Published</span>
-                    <% else %>
-                        <span class="badge bg-danger">Unpublished</span>
-                    <% end %>
-                </li>
-            </ul>
-        </div>
-    </div>
-<% end %>
-
-<%= will_paginate @contents %>
+<div class="tab-content">
+    <%= render 'content_list'%>
+</div>

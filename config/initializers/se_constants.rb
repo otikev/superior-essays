@@ -24,6 +24,11 @@ module SEConstants
         PLATINUM = 17
     end
 
+    module ContentType
+        ARCHIVE = 1
+        SAMPLE = 2
+    end
+
     module UserSettings
         EMAIL_UPDATES = "email_updates"
     end

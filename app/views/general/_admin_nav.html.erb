@@ -5,12 +5,24 @@
       Dashboard
     <% end %>
   </li>
-  <li class="nav-item">
-    <%= link_to  content_admin_path, method: :get, :class => "navbar-nav-link #{'active' if request.path == '/content/admin'}" do %>
+
+  <li class="nav-item dropdown <%= "#{'active' if request.path == '/content/admin'}" %>">
+    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
       <i class="icon-newspaper mr-2"></i>
       Content
-    <% end %>
+    </a>
+    <div class="dropdown-menu">
+      <%= link_to content_admin_path(type: SEConstants::ContentType::ARCHIVE), method: :get, :class => "dropdown-item #{'active' if request.query_parameters['type'] == SEConstants::ContentType::ARCHIVE.to_s}" do %>
+        <i class="icon-newspaper mr-2"></i>
+        Archive
+      <% end %>
+      <%= link_to  content_admin_path(type: SEConstants::ContentType::SAMPLE), method: :get, :class => "dropdown-item #{'active' if request.query_parameters['type'] == SEConstants::ContentType::SAMPLE.to_s}" do %>
+        <i class="icon-newspaper mr-2"></i>
+        Sample
+      <% end %>
+    </div>
   </li>
+
   <li class="nav-item dropdown <%= "#{'active' if @order_status && (@order_status.id == 1 || @order_status.id == 2 || @order_status.id == 3)}" %>">
     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
       <i class="icon-cart2 mr-2"></i>

@@ -7,7 +7,7 @@
 
   <url>
     <loc><%= root_url %></loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc><%= archives_list_url %></loc>
@@ -17,7 +17,7 @@
   <% Content.where(:published => true).find_each do |content| %>
       <url>
         <loc><%= content_url(content) %></loc>
-        <changefreq>weekly</changefreq>
+        <changefreq>daily</changefreq>
         <lastmod><%= content.updated_at.strftime('%Y-%m-%d') %></lastmod>
       </url>
   <% end %>

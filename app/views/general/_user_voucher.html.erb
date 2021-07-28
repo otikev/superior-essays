@@ -9,7 +9,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <h6 class="m-0"> You have an unused <b><%= user_voucher.voucher.value %>% discount</b> for your next order</h6>
+                    <h6 class="m-0"><b><%= @current_user.first_name %></b>, you have an unused <b><%= user_voucher.voucher.value %>% discount</b> for your next order</h6>
                     <div class="text-muted font-size-sm">Awarded on <%= local_time(user_voucher.created_at) %></div>
                 </div>
             </div>

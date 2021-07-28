@@ -27,6 +27,7 @@
     </div>
     <div class="card-body">
         <%= simple_format @content.question %>
+        
     </div>
     <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
         <ul class="list-inline list-inline-condensed mb-sm-0">
@@ -36,12 +37,16 @@
         </ul>
         <% if @current_user %>
             <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
-                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Now</span>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
             <% end %>
         <% else %>
             <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
-                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Order Now</span>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
             <% end %>
         <% end %>
     </div>
+        <div class="card-body">
+            <h2 class="card-title">Solution</h2>
+            <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+        </div>
 </div>

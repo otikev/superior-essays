@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if @user.admin?
       redirect_to admin_dashboard_path
     else
-      redirect_to client_orders_todo_path
+      redirect_to orders_new_path
     end
   end
 

@@ -1,0 +1,113 @@
+
+<%= form_for :calculator do |form| %>
+    <div class="card mb-0">
+        <div class="card-body">
+        <legend class="font-weight-semibold">Prices start from $13</legend>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Academic Level:</label>
+                <div class="col-lg-7">
+                    <%= form.collection_select :academic_level_id, AcademicLevel.all, :id, :name, {prompt: "Select Level" , :selected =>1}, class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spacing:</label>
+                <div class="col-lg-7">
+                    <%= form.select(:spacing, options_for_select([['Single Spaced - 550 words', 1], ['Double Spaced - 275 words', 2]]), {:prompt => 'Select Spacing', :selected =>1},{class: "form-control"}) %>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Quality:</label>
+                <div class="col-lg-7">
+                    <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Deadline:</label>
+                <div class="col-lg-7">
+                    <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-5 col-form-label text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pages:</label>
+                <div class="col-lg-7">
+                    <%= form.number_field :pages, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 text-right">
+                    <div class="box featured">
+                        <h1 id="calculated_price" class="display-4 font-weight-bold" >$0</h1>
+                        <div class="btn-wrap">
+                            <% if @current_user %>
+                                <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
+                                    <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+                                <% end %>
+                            <% else %>
+                                <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                                    <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+                                <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%end%>
+
+<script>
+    function calculate(){
+        var level = parseInt($("#calculator_academic_level_id").val());
+        var spacing = parseInt($("#calculator_spacing").val());
+        var quality = parseInt($("#calculator_order_quality_id").val());
+        var basePrice = 0;
+        if(quality == 1){//standard
+            basePrice = <%= SEConstants::OrderBasePrice::STANDARD %>;
+        }else if(quality == 2){//premium
+            basePrice = <%= SEConstants::OrderBasePrice::PREMIUM %>;
+        }else if(quality == 3){//platinum
+            basePrice = <%= SEConstants::OrderBasePrice::PLATINUM %>;
+        }
+
+        if (level == 2){ //masters
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::MASTERS %>;
+        }else if (level == 3){ //college
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::COLLEGE %>;
+        }else if (level == 4){ //university
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::UNIVERSITY %>;
+        }else if (level == 5){ //phd
+          basePrice = basePrice + <%= SEConstants::AcademicLevelDelta::PHD %>;
+        }
+
+        var pages = parseInt($("#calculator_pages").val());
+
+        var totalPrice = (basePrice+parseInt($("#calculator_order_urgency_id").val())-1)*pages;
+
+        if(isNaN(totalPrice)){
+            totalPrice = 0;
+        }
+
+        if(spacing == 1){
+            totalPrice = totalPrice*2;
+        }
+        $("#calculated_price").html("$"+totalPrice);
+    }
+
+    $(document).ready(function () {
+        $("body").on('change','#calculator_academic_level_id', function() {
+            calculate();
+        });
+        $("body").on('change','#calculator_order_urgency_id', function() {
+            calculate();
+        });
+        $("body").on('change','#calculator_pages', function() {
+            calculate();
+        });
+        $("body").on('change','#calculator_order_quality_id', function() {
+            calculate();
+        });
+        $("body").on('change','#calculator_spacing', function() {
+            calculate();
+        });
+    });
+</script>

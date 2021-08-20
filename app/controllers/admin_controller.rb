@@ -73,6 +73,33 @@ class AdminController < ApplicationController
     redirect_to admin_user_path(:key => @user_voucher.user.key)
   end
 
+  def enable_user
+    @user = User.where(key:params[:key]).first
+    @user.enabled = true
+    @user.save!
+    flash[:success] = "User enabled"
+    redirect_to admin_user_path(:key => @user.key)
+  end
+
+  def disable_user
+    @user = User.where(key:params[:key]).first
+
+    if @user.key == @current_user.key
+      flash[:warning] = "You cannot disable yourself!"
+      redirect_to admin_user_path(:key => @user.key) and return false
+    end
+
+    if @user.email == "oti.kevin@gmail.com"
+      flash[:warning] = "You cannot disable this user!"
+      redirect_to admin_user_path(:key => @user.key) and return false
+    end
+
+    @user.enabled = false
+    @user.save!
+    flash[:success] = "User disabled"
+    redirect_to admin_user_path(:key => @user.key)
+  end
+
   private
 
   def user_voucher_params

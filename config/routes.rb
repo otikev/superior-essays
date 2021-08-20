@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   match '/admin/users_admins', to: 'admin#users_admins', via: :get
   match '/admin/user', to: 'admin#user', via: :get
   match '/admin/assign_voucher', to: 'admin#assign_voucher', via: :post
+  match '/disable_user', to: 'admin#disable_user', via: :post
+  match '/enable_user', to: 'admin#enable_user', via: :post
   
   match '/messages/create', to: 'messages#create', via: :post
   match '/messages/unread', to: 'messages#unread', via: :get

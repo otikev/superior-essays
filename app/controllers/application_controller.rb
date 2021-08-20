@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
     if session[:auth_token] && session[:auth_token].length > 0
       @current_user = User.find_by!(key: session[:auth_token])
     end
+
+    if @current_user && !@current_user.enabled
+      session[:auth_token] = nil
+      redirect_to root_path and return false
+    end
   end
 
   def must_have_user

@@ -5,6 +5,7 @@ private
 	def data
 		users.map do |user|
 			[].tap do |column|
+				column << user.id
 				column << user.email
 				column << user.first_name
 				column << user.last_name

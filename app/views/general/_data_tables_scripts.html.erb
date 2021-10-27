@@ -3,9 +3,10 @@
 	$("#searchable").DataTable({
       	processing: true,
       	serverSide: true,
+		bSort : false,
       	ajax: $("#searchable").data('url'),
       	language: {
-      		search: "Filter:",
+      		search: "Search:",
       		searchPlaceholder: "Type to filter...",
       		paginate: {
       			previous: '<span>&larr;</span>',

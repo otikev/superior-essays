@@ -14,9 +14,6 @@
       <div class="row">
         <div class="col-md-6">
           <fieldset>
-
-           
-
             <div class="form-group row">
               <label class="col-lg-3 col-form-label">Order Type:</label>
               <div class="col-lg-9">
@@ -48,7 +45,7 @@
             <div class="form-group row">
               <label class="col-lg-3 col-form-label">Spacing:</label>
               <div class="col-lg-9">
-                <%= form.select(:spacing, options_for_select([['Single Spaced - 550 words', 1], ['Double Spaced - 275 words', 2]]), {:prompt => 'Select Spacing', :selected =>1},{class: "form-control"}) %>
+                <%= form.select(:spacing, options_for_select([['Single Spaced - 550 words', 1], ['Double Spaced - 275 words', 2]],2), {:prompt => 'Select Spacing'},{class: "form-control"}) %>
               </div>
             </div>
 
@@ -76,7 +73,7 @@
             <div class="form-group row">
               <label class="col-lg-3 col-form-label">Pages:</label>
               <div class="col-lg-9">
-                <%= form.number_field :pages, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
+                <%= form.number_field :pages, :value => 1, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
               </div>
             </div>
           </fieldset>
@@ -200,6 +197,8 @@
     }
 
     $(document).ready(function () {
+        calculate();  //calculate the default amount when the page loads
+        
         $("body").on('change','#order_academic_level_id', function() {
             calculate();
         });

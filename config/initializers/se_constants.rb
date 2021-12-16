@@ -1,12 +1,18 @@
 module SEConstants
 
     module Signals
+        #User signals
         USER_LOGIN = 1000
+        USER_SIGNUP = 1001
+
+        #Order signals
         ORDER_CREATED = 2000
         ORDER_PAID = 2001
         ORDER_COMPLETED = 2002
         ORDER_RETURNED = 2003
         ORDER_CLOSED = 2004
+
+        #System signals
         EMAILS_QUEUED = 3000
     end
 

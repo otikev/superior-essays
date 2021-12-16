@@ -24,6 +24,7 @@ class User < ApplicationRecord
 
   after_create do
     UserSetting.generate(self)
+    Indicator.generate_user_signal(SEConstants::Signals::USER_SIGNUP,self)
   end
 
   def self.from_omniauth(auth)

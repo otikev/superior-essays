@@ -56,6 +56,48 @@ class Indicator < ApplicationRecord
         data
     end
 
+    def self.user_login_data(days)
+        login = retrieve_data(days, SEConstants::Signals::USER_LOGIN)
+
+        data = []
+        pivot_date = Date.today - days
+        num_of_days = Date.today - pivot_date
+
+        (num_of_days.to_i+1).times do
+            hash = Hash.new
+            hash["date"] = pivot_date.strftime('%Y-%m-%d')
+
+            val = login.detect {|k,v| k == pivot_date }
+            hash["login"] = val ? val[1] : 0
+
+            data.push(hash)
+            pivot_date = pivot_date + 1.day
+        end
+        
+        data
+    end
+
+    def self.user_signup_data(days)
+        signup = retrieve_data(days, SEConstants::Signals::USER_SIGNUP)
+
+        data = []
+        pivot_date = Date.today - days
+        num_of_days = Date.today - pivot_date
+
+        (num_of_days.to_i+1).times do
+            hash = Hash.new
+            hash["date"] = pivot_date.strftime('%Y-%m-%d')
+
+            val = signup.detect {|k,v| k == pivot_date }
+            hash["signup"] = val ? val[1] : 0
+
+            data.push(hash)
+            pivot_date = pivot_date + 1.day
+        end
+
+        data
+    end
+
     private
 
     def self.retrieve_data(days, signal)

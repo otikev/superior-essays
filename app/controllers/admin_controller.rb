@@ -6,7 +6,7 @@ class AdminController < ApplicationController
     @todo_orders_count = Order.where(order_status_id: 1).count
     @in_progress_orders_count = Order.where(order_status_id: 2).count
     @complete_orders_count = Order.where(order_status_id: 3).count
-    @all_order_data = Indicator.all_order_data(10.days)
+    @all_order_data = Indicator.all_order_data(90.days)
     @user_login_data = Indicator.user_login_data(90.days)
     @user_signup_data = Indicator.user_signup_data(90.days)
     @system_emails_data = Indicator.system_emails_data(90.days)

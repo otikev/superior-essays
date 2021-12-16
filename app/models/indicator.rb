@@ -98,6 +98,27 @@ class Indicator < ApplicationRecord
         data
     end
 
+    def self.system_emails_data(days)
+        email = retrieve_data(days, SEConstants::Signals::EMAILS_QUEUED)
+
+        data = []
+        pivot_date = Date.today - days
+        num_of_days = Date.today - pivot_date
+
+        (num_of_days.to_i+1).times do
+            hash = Hash.new
+            hash["date"] = pivot_date.strftime('%Y-%m-%d')
+
+            val = email.detect {|k,v| k == pivot_date }
+            hash["email"] = val ? val[1] : 0
+
+            data.push(hash)
+            pivot_date = pivot_date + 1.day
+        end
+
+        data
+    end
+
     private
 
     def self.retrieve_data(days, signal)

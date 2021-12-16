@@ -31,6 +31,14 @@
   </div>
 </div>
 <div class="row">
+  <div class="col-md-12">
+    <div class="card card-body text-center">
+      <h6 class="font-weight-semibold mb-0 mt-1">System Emails, last 90 days</h6>
+      <div id="chart-email-trend"></div>
+    </div>
+  </div>
+</div>
+<div class="row">
 
   <div class="col-sm-12 col-xl-6">
     <div class="card">
@@ -135,7 +143,7 @@
       var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.minGridDistance = 50;
 
-      chart = createAxisAndSeries(chart, "signup", "Signups", false, 0.3);
+      chart = createAxisAndSeries(chart, "signup", "Signups", false, 0.3, false);
 
       // Add legend
       chart.legend = new am4charts.Legend();
@@ -167,7 +175,39 @@
       var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.minGridDistance = 50;
 
-      chart = createAxisAndSeries(chart, "login", "Logins", false, 0.3);
+      chart = createAxisAndSeries(chart, "login", "Logins", false, 0.3, false);
+      
+      // Add legend
+      chart.legend = new am4charts.Legend();
+
+      // Add cursor
+      chart.cursor = new am4charts.XYCursor();
+    }
+
+    function systemEmailTrendsChart(){
+      var chart = am4core.create("chart-email-trend", am4charts.XYChart);
+      chart.paddingRight = 20;
+      chart.colors.list = [
+        am4core.color("#fc0303")
+      ];
+
+      //Generate data
+      let chartData = []
+
+      <% @system_emails_data.each do |data| %>
+        chartData.push({
+          date: new Date("<%= data["date"]%>"),
+          email: <%= data["email"]%>
+        });
+      <% end %>
+
+      chart.data = chartData;
+
+      // Create axes
+      var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.renderer.minGridDistance = 50;
+
+      chart = createAxisAndSeries(chart, "email", "Emails", false, 0.3, false);
       
       // Add legend
       chart.legend = new am4charts.Legend();
@@ -205,10 +245,10 @@
       var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.minGridDistance = 50;
 
-      chart = createAxisAndSeries(chart, "created", "Created", false, 0);
-      chart = createAxisAndSeries(chart, "paid", "Paid", false, 0);
-      chart = createAxisAndSeries(chart, "completed", "Completed", true, 0);
-      chart = createAxisAndSeries(chart, "closed", "Closed", true, 0);
+      chart = createAxisAndSeries(chart, "created", "Created", false, 0, true);
+      chart = createAxisAndSeries(chart, "paid", "Paid", false, 0, true);
+      chart = createAxisAndSeries(chart, "completed", "Completed", true, 0, true);
+      chart = createAxisAndSeries(chart, "closed", "Closed", true, 0, true);
 
       // Add legend
       chart.legend = new am4charts.Legend();
@@ -217,7 +257,7 @@
       chart.cursor = new am4charts.XYCursor();
     }
 
-    function createAxisAndSeries(chart, field, name, opposite, fillOpacity) {
+    function createAxisAndSeries(chart, field, name, opposite, fillOpacity, useBullet) {
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
       if(chart.yAxes.indexOf(valueAxis) != 0){
@@ -237,13 +277,15 @@
       
       var interfaceColors = new am4core.InterfaceColorSet();
       
-      var bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.strokeWidth = 2;
-      bullet.circle.radius = 4;
-      bullet.circle.fill = am4core.color("#fff");
+      if(useBullet){
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
 
-      let bullethover = bullet.states.create("hover");
-      bullethover.properties.scale = 1.3;
+        let bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+      }
       
       valueAxis.renderer.line.strokeOpacity = 1;
       valueAxis.renderer.line.strokeWidth = 2;
@@ -258,5 +300,6 @@
      allOrderTrendsChart();
      userSignupTrendsChart();
      userLoginTrendsChart();
+     systemEmailTrendsChart();
     });
 </script>

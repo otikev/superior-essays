@@ -9,6 +9,7 @@ class AdminController < ApplicationController
     @all_order_data = Indicator.all_order_data(10.days)
     @user_login_data = Indicator.user_login_data(90.days)
     @user_signup_data = Indicator.user_signup_data(90.days)
+    @system_emails_data = Indicator.system_emails_data(90.days)
   end
 
   def users_clients

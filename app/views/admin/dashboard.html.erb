@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card card-body text-center">
-      <h6 class="font-weight-semibold mb-0 mt-1">Orders trend, Last 90 days</h6>
+      <h6 class="font-weight-semibold mb-0 mt-1">Orders created, Last 90 days</h6>
       <div id="chart-orders-trend"></div>
     </div>
   </div>
@@ -220,10 +220,7 @@
       var chart = am4core.create("chart-orders-trend", am4charts.XYChart);
       chart.paddingRight = 20;
       chart.colors.list = [
-        am4core.color("#fc0303"),
-        am4core.color("#03adfc"),
-        am4core.color("#24fc03"),
-        am4core.color("#fcc603")
+        am4core.color("#fc0303")
       ];
 
       //Generate data
@@ -232,10 +229,7 @@
       <% @all_order_data.each do |data| %>
         chartData.push({
           date: new Date("<%= data["date"]%>"),
-          created: <%= data["created"]%>,
-          paid: <%= data["paid"]%>,
-          completed: <%= data["completed"]%>,
-          closed: <%= data["closed"]%>
+          created: <%= data["created"]%>
         });
       <% end %>
 
@@ -245,10 +239,7 @@
       var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.minGridDistance = 50;
 
-      chart = createAxisAndSeries(chart, "created", "Created", false, 0, true);
-      chart = createAxisAndSeries(chart, "paid", "Paid", false, 0, true);
-      chart = createAxisAndSeries(chart, "completed", "Completed", true, 0, true);
-      chart = createAxisAndSeries(chart, "closed", "Closed", true, 0, true);
+      chart = createAxisAndSeries(chart, "created", "Created", false, 0.3, false);
 
       // Add legend
       chart.legend = new am4charts.Legend();

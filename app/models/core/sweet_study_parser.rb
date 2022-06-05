@@ -17,10 +17,10 @@ class Core::SweetStudyParser
         FIELDS.each { |field|
             parse field
         }
+        puts "******************* FINISHED **********************"
     end
 
     def parse field
-        puts "*****************************************************"
         scrapper = Core::Spider.new(url+field)
         response = scrapper.fetch
         doc = Nokogiri::HTML(response)
@@ -31,7 +31,6 @@ class Core::SweetStudyParser
         questions = []
 
         for index in 5 ... uls.size
-            puts "============================================"
             ul = uls[index]
             lis = ul.xpath("li")
             lis.each { |li|
@@ -58,7 +57,7 @@ class Core::SweetStudyParser
                 question["question"] = _question
                 puts "***************"
                 puts question["link"]
-                puts "No attachments"
+                puts "Found No attachments"
                 puts "***************"
                 if !exists?(question["link"])
                     no_attachments.push(question)

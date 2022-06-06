@@ -8,10 +8,8 @@ class Core::Spider
     end
 
     def fetch
-        response = RestClient.get url
-        puts "**** Response ****"
-        puts "code : #{response.code}"
-        puts "******************"
+         #response = RestClient.get url
+        response = RestClient::Resource.new(url,:verify_ssl => true).get
         response.body
     end
 end

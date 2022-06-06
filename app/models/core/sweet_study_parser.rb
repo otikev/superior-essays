@@ -58,11 +58,15 @@ class Core::SweetStudyParser
                 puts "***************"
                 puts question["link"]
                 puts "Found No attachments"
-                puts "***************"
+                
                 if !exists?(question["link"])
+                    puts "Adding to DB..."
                     no_attachments.push(question)
                     break if no_attachments.length >= 3
+                else
+                    puts "Already exists in DB, Skipping..."
                 end
+                puts "***************"
             end
         }
 

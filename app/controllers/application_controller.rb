@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :fetch_logged_in_user
 
   def fetch_logged_in_user
+    puts "fetching logged in user..."
     @current_url = request.url
 
     if session[:auth_token] && session[:auth_token].length > 0

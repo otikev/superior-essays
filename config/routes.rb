@@ -53,6 +53,9 @@ Rails.application.routes.draw do
   match '/content/update', to: 'content#update', via: :patch
   match '/content/edit', to: 'content#edit', via: :get
 
+  match '/agent/question/exists', to: 'agent#question_exists', via: :get
+  match '/agent/question/create', to: 'agent#question_create', via: :post
+
   match '/archives/list', to: 'archives#list', via: :get
   scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
     resources :contents, controller: 'archives', path: 'archives/show'

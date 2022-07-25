@@ -14,4 +14,3 @@
 # Crono.perform(TestJob).every 2.days, at: '15:30'
 #
 # Time is in UTC
-Crono.perform(DailyJob).every 1.day, at: {hour: 14, min: 20}

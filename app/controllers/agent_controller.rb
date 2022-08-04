@@ -1,6 +1,7 @@
 class AgentController < ApplicationController
     skip_before_action :fetch_logged_in_user
     skip_before_action :verify_authenticity_token
+    before_action :validate_agent_token
 
     def question_exists
         link = params[:url]
@@ -23,5 +24,18 @@ class AgentController < ApplicationController
         @content.save!
 
         render plain: 'Created'
+    end
+
+    private
+    def validate_agent_token
+        header_token = request.headers["HTTP_SE_AGENT_TOKEN"]
+        env_token = ENV["SE_AGENT_TOKEN"]
+
+        if header_token != env_token
+            puts "Invalid agent token"
+            render plain: 'unauthorised', :status => :unauthorized
+        else
+            puts "Agent token is valid"
+        end
     end
 end

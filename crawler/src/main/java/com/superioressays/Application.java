@@ -5,6 +5,7 @@ import com.superioressays.sweetStudy.Network;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Timer;
 
 /**
  * Created by otikev on 05-Jul-2022
@@ -13,16 +14,21 @@ import java.util.Scanner;
 public class Application {
 
     public static void main(String[] args) {
-        Crawler crawler = new Crawler();
+
         try {
             Network.notifyStart(getHostName());
+
+            Crawler crawler = new Crawler();
             crawler.start(getHostName());
+
+            while (true) {
+            }//Do not terminate app
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static String getHostName() {
+    public static String getHostName() {
         try {
             String hostname = "unknown";
             String os = System.getProperty("os.name").toLowerCase();

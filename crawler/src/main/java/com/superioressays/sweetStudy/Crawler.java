@@ -1,5 +1,6 @@
 package com.superioressays.sweetStudy;
 
+import com.superioressays.Scheduler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -51,6 +52,7 @@ public class Crawler {
                         parse(field);
                     }
                     Network.notifyBatchComplete(hostname);
+                    Scheduler.schedule();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

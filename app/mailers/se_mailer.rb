@@ -70,4 +70,17 @@ class SeMailer < ApplicationMailer
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
+    def agent_started
+        recipient = params[:recipient]
+        @host_name = params[:host]
+        mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot started at #{Time.now.inspect}")
+    end
+
+    def new_content_notification
+        recipient = params[:recipient]
+        @content = params[:content]
+        @host_name = params[:host]
+        @recipient_name = params[:recipient_name]
+        mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot created content for your review")
+    end
 end

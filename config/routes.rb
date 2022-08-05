@@ -55,6 +55,8 @@ Rails.application.routes.draw do
 
   match '/agent/question/exists', to: 'agent#question_exists', via: :get
   match '/agent/question/create', to: 'agent#question_create', via: :post
+  match '/agent/start', to: 'agent#start', via: :post
+  match '/agent/batch_complete', to: 'agent#batch_complete', via: :post
 
   match '/archives/list', to: 'archives#list', via: :get
   scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do

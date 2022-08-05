@@ -6,6 +6,7 @@
 #  answer       :text
 #  content_type :integer
 #  key          :uuid
+#  notified     :boolean          default(FALSE)
 #  published    :boolean          default(FALSE)
 #  question     :text
 #  slug         :string

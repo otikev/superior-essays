@@ -6,6 +6,7 @@
 #  answer       :text
 #  content_type :integer
 #  key          :uuid
+#  notified     :boolean          default(FALSE)
 #  published    :boolean          default(FALSE)
 #  question     :text
 #  slug         :string
@@ -21,6 +22,7 @@
 #
 class Content < ApplicationRecord
     extend FriendlyId
+    require 'base64'
 
     self.per_page = 10
     
@@ -42,5 +44,33 @@ class Content < ApplicationRecord
 
     def self.total_items(content_type, is_published)
         Content.where("content_type = ? and published = ?", content_type, is_published).count
+    end
+
+    def decode_source
+        if base64?(source)
+            decoded = Base64.decode64(source)
+        else
+            decoded = source
+        end
+        decoded
+    end
+
+    def self.bot_creation_email_notification(host)
+        new_contents = Content.where("notified = ? and source != null").order('id ASC').all
+        
+        if new_contents && new_contents.count > 0
+            User.includes(:user_settings).where(admin: true).all.each do |admin|
+                email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+                if email_updates.first.value == "true"
+                    SeMailer.with(content: new_contents,recipient: admin.email, recipient_name: admin.first_name, host: params[:host]).delay.new_content_notification
+                    new_contents.update_all(notified: true)
+                end
+              end
+        end
+    end
+
+    private
+    def base64?(value)
+        value.is_a?(String) && Base64.strict_encode64(Base64.decode64(value)) == value
     end
 end

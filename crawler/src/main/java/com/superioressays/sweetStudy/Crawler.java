@@ -19,7 +19,7 @@ public class Crawler {
 
     String[] FIELDS = new String[]{"/fields/engineering", "/fields/chemistry"};
 
-    public void start() {
+    public void start(String hostname) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -27,6 +27,7 @@ public class Crawler {
                     for (String field : FIELDS) {
                         parse(field);
                     }
+                    Network.notifyBatchComplete(hostname);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

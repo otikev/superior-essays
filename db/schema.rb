@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_05_215310) do
+ActiveRecord::Schema.define(version: 2022_08_05_170546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2022_06_05_215310) do
     t.string "slug"
     t.integer "content_type"
     t.string "source"
+    t.boolean "notified", default: false
     t.index ["slug"], name: "index_contents_on_slug", unique: true
   end
 

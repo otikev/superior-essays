@@ -15,15 +15,55 @@ public class Network {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
-    static final String AGENT_HEADER_VALUE = "";
+    static final String AGENT_HEADER_VALUE = "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables";
 
-    static String baseUrl = "https://www.superioressays.pro/";
-    //static String baseUrl = "http://localhost:5000/";
+    //static String baseUrl = "https://www.superioressays.pro/";
+    static String baseUrl = "http://localhost:5000/";
 
     static OkHttpClient client = new OkHttpClient();
 
     private static String getAbsoluteUrl(String endpoint) {
         return baseUrl + endpoint;
+    }
+
+    public static boolean notifyBatchComplete(String hostname) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("host", hostname);
+        String json = jsonObject.toString();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .url(getAbsoluteUrl("/agent/batch_complete"))
+                .post(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 200) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean notifyStart(String hostname) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("host", hostname);
+        String json = jsonObject.toString();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .url(getAbsoluteUrl("/agent/start"))
+                .post(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 200) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static boolean createQuestion(Question question) throws IOException {

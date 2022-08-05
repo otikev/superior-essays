@@ -3,6 +3,17 @@ class AgentController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :validate_agent_token
 
+    def start
+        SeMailer.with(recipient: "oti.kevin@gmail.com", host: params[:host]).delay.agent_started
+        render plain: 'OK'
+    end
+
+    def batch_complete
+        puts "batch complete *****"
+        Content.bot_creation_email_notification(host)
+        render plain: 'OK'
+    end
+
     def question_exists
         link = params[:url]
         @content = Content.where(source: link).first
@@ -30,6 +41,10 @@ class AgentController < ApplicationController
     def validate_agent_token
         header_token = request.headers["HTTP_SE_AGENT_TOKEN"]
         env_token = ENV["SE_AGENT_TOKEN"]
+
+        if !env_token
+            env_token = "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables"
+        end
 
         if header_token != env_token
             puts "Invalid agent token"

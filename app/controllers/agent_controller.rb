@@ -4,13 +4,19 @@ class AgentController < ApplicationController
     before_action :validate_agent_token
 
     def start
+        puts "******************"
+        puts params
+        puts "******************"
         SeMailer.with(recipient: "oti.kevin@gmail.com", host: params[:host]).delay.agent_started
         render plain: 'OK'
     end
 
     def batch_complete
+        puts "******************"
+        puts params
+        puts "******************"
         puts "batch complete *****"
-        Content.bot_creation_email_notification(host)
+        Content.bot_creation_email_notification(params[:host])
         render plain: 'OK'
     end
 

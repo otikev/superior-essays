@@ -15,10 +15,10 @@ public class Network {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
-    static final String AGENT_HEADER_VALUE = "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables";
+    static final String AGENT_HEADER_VALUE = "";
 
-    //static String baseUrl = "https://www.superioressays.pro/";
-    static String baseUrl = "http://localhost:5000/";
+    static String baseUrl = "https://www.superioressays.pro/";
+    //static String baseUrl = "http://localhost:5000/";
 
     static OkHttpClient client = new OkHttpClient();
 

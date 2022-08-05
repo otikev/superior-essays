@@ -56,7 +56,7 @@ class Content < ApplicationRecord
     end
 
     def self.bot_creation_email_notification(host)
-        new_contents = Content.where("notified = ? and source != null").order('id ASC').all
+        new_contents = Content.where("notified = ? and source is not null").order('id ASC').all
         
         if new_contents && new_contents.count > 0
             User.includes(:user_settings).where(admin: true).all.each do |admin|

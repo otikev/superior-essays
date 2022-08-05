@@ -6,8 +6,8 @@ Hi <%= @recipient_name %>,
 
 The Bot has created and published the content below.
 
-<% @content.all.each do |c| %>
-    <p>Created <a href="<%=archives_show_url%>/<%= c.slug %>"><%= c.title %></a> : <a href="<%=content_edit_url%>?key=<%= c.key %>">Edit</a> </p>
+<% @content.each do |c| %>
+    <p>Created : <a href="<%=content_edit_url%>?key=<%= c.key %>"><%= c.title %></a> </p>
     <p>Source : <%= c.decode_source %></p>
 <% end %>
 

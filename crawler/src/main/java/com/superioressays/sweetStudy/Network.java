@@ -15,10 +15,10 @@ public class Network {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
-    static final String AGENT_HEADER_VALUE = "";
+    static final String AGENT_HEADER_VALUE = "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables";
 
-    static String baseUrl = "https://www.superioressays.pro/";
-    //static String baseUrl = "http://localhost:5000/";
+    //static String baseUrl = "https://www.superioressays.pro/";
+    static String baseUrl = "http://localhost:5000/";
 
     static OkHttpClient client = new OkHttpClient();
 
@@ -34,7 +34,7 @@ public class Network {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
-                .url(getAbsoluteUrl("/agent/batch_complete"))
+                .url(getAbsoluteUrl("agent/batch_complete"))
                 .post(body)
                 .build();
 
@@ -54,7 +54,7 @@ public class Network {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
-                .url(getAbsoluteUrl("/agent/start"))
+                .url(getAbsoluteUrl("agent/start"))
                 .post(body)
                 .build();
 

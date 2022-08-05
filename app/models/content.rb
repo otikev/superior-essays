@@ -56,14 +56,19 @@ class Content < ApplicationRecord
     end
 
     def self.bot_creation_email_notification(host)
-        new_contents = Content.where("notified = ? and source is not null").order('id ASC').all
-        
-        if new_contents && new_contents.count > 0
+
+        new_contents = Content.where("notified = false and source is not null").order('id ASC').all
+
+        puts "#### new content count = #{new_contents.length}"
+        if new_contents.length > 0
             User.includes(:user_settings).where(admin: true).all.each do |admin|
                 email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
                 if email_updates.first.value == "true"
-                    SeMailer.with(content: new_contents,recipient: admin.email, recipient_name: admin.first_name, host: params[:host]).delay.new_content_notification
-                    new_contents.update_all(notified: true)
+                    SeMailer.with(content: new_contents,recipient: admin.email, recipient_name: admin.first_name, host: host).delay.new_content_notification
+                    new_contents.each do |c| 
+                        c.notified = true
+                        c.save!
+                    end
                 end
               end
         end

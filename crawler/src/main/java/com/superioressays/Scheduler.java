@@ -1,6 +1,7 @@
 package com.superioressays;
 
 import com.superioressays.sweetStudy.Crawler;
+import org.apache.log4j.Logger;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -14,6 +15,7 @@ import static com.superioressays.Application.getHostName;
  */
 
 public class Scheduler {
+    private static final Logger logger = Logger.getLogger(Scheduler.class);
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public static void schedule() {
@@ -21,17 +23,18 @@ public class Scheduler {
         ScheduledFuture<?> countdown = scheduler.schedule(new Runnable() {
             @Override
             public void run() {
-                System.out.println("**** Scheduled run executing ******");
+                logger.info("**** Scheduled run executing ******");
                 Crawler crawler = new Crawler();
                 crawler.start(getHostName());
             }
         }, 6, TimeUnit.HOURS);
+        logger.info("Scheduled next run");
 
         while (!countdown.isDone()) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(),e);
             }
         }
         scheduler.shutdown();

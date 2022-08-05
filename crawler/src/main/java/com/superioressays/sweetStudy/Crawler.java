@@ -1,6 +1,7 @@
 package com.superioressays.sweetStudy;
 
 import com.superioressays.Scheduler;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 public class Crawler {
-
+    private static final Logger logger = Logger.getLogger(Crawler.class);
     String url = "https://www.sweetstudy.com";
 
     String[] FIELDS = new String[]{
@@ -61,7 +62,7 @@ public class Crawler {
     }
 
     private void parse(String field) throws IOException {
-        System.out.println("Parsing field : "+field);
+        logger.info("Parsing field : " + field);
 
         Document doc = Jsoup.connect(url + field).get();
         Elements section = doc.getElementsByTag("section");
@@ -101,7 +102,7 @@ public class Crawler {
                 //no attachments
                 boolean exists = Network.questionExists(question.targetUrl);
                 if (exists) {
-                    System.out.println("Already exists in DB, Skipping...");
+                    logger.info("Already exists in DB, Skipping...");
                 } else {
                     noAttachments.add(question);
                     if (noAttachments.size() >= 3) {
@@ -114,7 +115,7 @@ public class Crawler {
         // Post the questions
         for (Question question : noAttachments) {
             boolean success = Network.createQuestion(question);
-            System.out.println("Success = " + String.valueOf(success).toUpperCase() + " : " + question.targetUrl);
+            logger.info("Success = " + String.valueOf(success).toUpperCase() + " : " + question.targetUrl);
         }
     }
 }

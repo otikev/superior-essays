@@ -14,9 +14,25 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.15.1'
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
     implementation 'org.json:json:20220320'
+    implementation 'org.apache.logging.log4j:log4j-api:2.18.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.18.0'
+    implementation 'com.lmax:disruptor:4.0.0.RC1'
+    implementation 'log4j:apache-log4j-extras:1.2.17'
+
+
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.superioressays.Application"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 test {

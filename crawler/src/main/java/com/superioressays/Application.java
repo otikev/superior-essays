@@ -34,12 +34,12 @@ public class Application {
             String os = System.getProperty("os.name").toLowerCase();
 
             if (os.contains("win")) {
-                System.out.println("Windows computer name through env:\"" + System.getenv("COMPUTERNAME") + "\"");
+                //System.out.println("Windows computer name through env:\"" + System.getenv("COMPUTERNAME") + "\"");
                 System.out.println("Windows computer name through exec:\"" + execReadToString("hostname") + "\"");
                 hostname = execReadToString("hostname");
             } else if (os.contains("nix") || os.contains("nux") || os.contains("mac os x")) {
-                System.out.println("Unix-like computer name through env:\"" + System.getenv("HOSTNAME") + "\"");
-                System.out.println("Unix-like computer name through exec:\"" + execReadToString("hostname") + "\"");
+                //System.out.println("Unix-like computer name through env:\"" + System.getenv("HOSTNAME") + "\"");
+                //System.out.println("Unix-like computer name through exec:\"" + execReadToString("hostname") + "\"");
                 System.out.println("Unix-like computer name through /etc/hostname:\"" + execReadToString("cat /etc/hostname") + "\"");
                 hostname = execReadToString("cat /etc/hostname");
             }

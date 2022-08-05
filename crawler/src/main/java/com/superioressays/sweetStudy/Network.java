@@ -1,7 +1,9 @@
 package com.superioressays.sweetStudy;
 
 import com.squareup.okhttp.*;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
+
 
 import java.io.IOException;
 import java.util.Base64;
@@ -11,7 +13,7 @@ import java.util.Base64;
  */
 
 public class Network {
-
+    private static final Logger logger = Logger.getLogger(Network.class);
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
@@ -40,7 +42,7 @@ public class Network {
 
         Response response = client.newCall(request).execute();
         try (ResponseBody responseBody = response.body()) {
-            System.out.println("Server response : " + responseBody.string());
+            logger.info("Server response : " + responseBody.string());
         }
         if (response.code() == 200) {
             return true;
@@ -63,7 +65,7 @@ public class Network {
 
         Response response = client.newCall(request).execute();
         try (ResponseBody responseBody = response.body()) {
-            System.out.println("Server response : " + responseBody.string());
+            logger.info("Server response : " + responseBody.string());
         }
         if (response.code() == 200) {
             return true;
@@ -90,7 +92,7 @@ public class Network {
         Response response = client.newCall(request).execute();
 
         try (ResponseBody responseBody = response.body()) {
-            System.out.println("Server response : " + responseBody.string());
+            logger.info("Server response : " + responseBody.string());
         }
 
         if (response.code() == 200) {
@@ -112,7 +114,7 @@ public class Network {
             boolean exists = false;
             try (ResponseBody responseBody = response.body()) {
                 String body = responseBody.string();
-                System.out.println("Server response : " + body);
+                logger.info("Server response : " + body);
                 if (body.equals("true")) {
                     exists = true;
                 } else if (body.equals("false")) {

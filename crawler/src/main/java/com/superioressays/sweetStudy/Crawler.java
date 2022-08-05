@@ -17,7 +17,30 @@ public class Crawler {
 
     String url = "https://www.sweetstudy.com";
 
-    String[] FIELDS = new String[]{"/fields/engineering", "/fields/chemistry"};
+    String[] FIELDS = new String[]{
+            "/fields/applied-sciences",
+            "/fields/biology",
+            "/fields/business-finance",
+            "/fields/computer-science",
+            "/fields/earth-science-geography",
+            "/fields/earth-science-geology",
+            "/fields/education",
+            "/fields/english",
+            "/fields/environmental-science",
+            "/fields/government",
+            "/fields/history",
+            "/fields/human-resource-management",
+            "/fields/information-systems",
+            "/fields/law",
+            "/fields/literature",
+            "/fields/nursing",
+            "/fields/physics",
+            "/fields/political-science",
+            "/fields/psychology",
+            "/fields/reading",
+            "/fields/science",
+            "/fields/social-science"
+    };
 
     public void start(String hostname) {
         new Thread(new Runnable() {
@@ -36,12 +59,13 @@ public class Crawler {
     }
 
     private void parse(String field) throws IOException {
+        System.out.println("Parsing field : "+field);
+
         Document doc = Jsoup.connect(url + field).get();
         Elements section = doc.getElementsByTag("section");
         Elements divs = section.get(0).select("> div");
-        ;
         Elements uls = divs.get(0).select("> ul");
-        System.out.println("Elements");
+
         if (uls.size() < 5) {
             throw new RuntimeException("Invalid element count");
         }

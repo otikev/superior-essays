@@ -16,7 +16,6 @@ public class Application {
         Crawler crawler = new Crawler();
         try {
             Network.notifyStart(getHostName());
-            //Network.notifyBatchComplete(getHostName());
             crawler.start(getHostName());
         } catch (Exception e) {
             e.printStackTrace();

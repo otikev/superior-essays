@@ -1,6 +1,5 @@
 class SeMailer < ApplicationMailer
     include ActionView::Helpers::UrlHelper
-    include LocalTimeHelper
 
     def login_email
         @user = params[:user]
@@ -74,8 +73,8 @@ class SeMailer < ApplicationMailer
     def agent_started
         recipient = params[:recipient]
         @host_name = params[:host]
-        
         mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot started at #{Time.now.round.utc}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
     def new_content_notification
@@ -84,5 +83,6 @@ class SeMailer < ApplicationMailer
         @host_name = params[:host]
         @recipient_name = params[:recipient_name]
         mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot created content for your review @ #{Time.now.round.utc}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 end

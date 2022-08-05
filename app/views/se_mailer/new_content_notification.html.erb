@@ -4,11 +4,12 @@ Hi <%= @recipient_name %>,
 </p>
 <p>
 
-The Bot has created and published the content below.
+The Superior Essays Bot has created and published the content below.
 
 <% @content.each do |c| %>
     <p>Created : <a href="<%=content_edit_url%>?key=<%= c.key %>"><%= c.title %></a> </p>
     <p>Source : <%= c.decode_source %></p>
+    <hr/>
 <% end %>
 
 <p>

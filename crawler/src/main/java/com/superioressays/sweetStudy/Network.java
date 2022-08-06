@@ -17,10 +17,10 @@ public class Network {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
-    static final String AGENT_HEADER_VALUE = "";
+    static final String AGENT_HEADER_VALUE = "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables";
 
-    static String baseUrl = "https://www.superioressays.pro/";
-    //static String baseUrl = "http://localhost:5000/";
+    //static String baseUrl = "https://www.superioressays.pro/";
+    static String baseUrl = "http://localhost:5000/";
 
     static OkHttpClient client = new OkHttpClient();
 
@@ -41,9 +41,7 @@ public class Network {
                 .build();
 
         Response response = client.newCall(request).execute();
-        try (ResponseBody responseBody = response.body()) {
-            logger.info("Server response : " + responseBody.string());
-        }
+        response.body().close();
         if (response.code() == 200) {
             return true;
         } else {
@@ -56,17 +54,16 @@ public class Network {
         jsonObject.put("host", hostname);
         String json = jsonObject.toString();
 
+        String url = getAbsoluteUrl("agent/start");
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
-                .url(getAbsoluteUrl("agent/start"))
+                .url(url)
                 .post(body)
                 .build();
 
         Response response = client.newCall(request).execute();
-        try (ResponseBody responseBody = response.body()) {
-            logger.info("Server response : " + responseBody.string());
-        }
+        response.body().close();
         if (response.code() == 200) {
             return true;
         } else {
@@ -91,9 +88,7 @@ public class Network {
 
         Response response = client.newCall(request).execute();
 
-        try (ResponseBody responseBody = response.body()) {
-            logger.info("Server response : " + responseBody.string());
-        }
+        response.body().close();
 
         if (response.code() == 200) {
             return true;
@@ -114,7 +109,6 @@ public class Network {
             boolean exists = false;
             try (ResponseBody responseBody = response.body()) {
                 String body = responseBody.string();
-                logger.info("Server response : " + body);
                 if (body.equals("true")) {
                     exists = true;
                 } else if (body.equals("false")) {
@@ -123,7 +117,7 @@ public class Network {
             }
             return exists;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.trace(e);
         }
         return false;
     }

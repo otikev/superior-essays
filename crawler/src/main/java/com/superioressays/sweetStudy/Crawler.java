@@ -62,7 +62,9 @@ public class Crawler {
     }
 
     private void parse(String field) throws IOException {
+        logger.info("#########################################################");
         logger.info("Parsing field : " + field);
+        logger.info("#########################################################");
 
         Document doc = Jsoup.connect(url + field).get();
         Elements section = doc.getElementsByTag("section");
@@ -101,9 +103,7 @@ public class Crawler {
             if (attachments.isEmpty()) {
                 //no attachments
                 boolean exists = Network.questionExists(question.targetUrl);
-                if (exists) {
-                    logger.info("Already exists in DB, Skipping...");
-                } else {
+                if (!exists) {
                     noAttachments.add(question);
                     if (noAttachments.size() >= 3) {
                         break;
@@ -115,7 +115,7 @@ public class Crawler {
         // Post the questions
         for (Question question : noAttachments) {
             boolean success = Network.createQuestion(question);
-            logger.info("Success = " + String.valueOf(success).toUpperCase() + " : " + question.targetUrl);
+            logger.info("Question posted = " + String.valueOf(success).toUpperCase() + " : " + question.targetUrl);
         }
     }
 }

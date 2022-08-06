@@ -23,7 +23,9 @@ public class Scheduler {
         ScheduledFuture<?> countdown = scheduler.schedule(new Runnable() {
             @Override
             public void run() {
+                logger.info("***********************************");
                 logger.info("**** Scheduled run executing ******");
+                logger.info("***********************************");
                 Crawler crawler = new Crawler();
                 crawler.start(getHostName());
             }
@@ -37,6 +39,5 @@ public class Scheduler {
                 logger.error(e.getMessage(),e);
             }
         }
-        scheduler.shutdown();
     }
 }

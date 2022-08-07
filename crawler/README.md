@@ -8,3 +8,15 @@ Execute the jar file from this project directory
 ```aidl
 java $JAVA_OPTS -jar build/libs/SECrawler-1.0-SNAPSHOT.jar
 ```
+
+## Docker
+
+Build
+```
+docker build -t secrawler .
+```
+
+Run
+```
+sudo docker run secrawler
+```

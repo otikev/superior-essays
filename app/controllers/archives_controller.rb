@@ -5,7 +5,7 @@ class ArchivesController < ApplicationController
     end
 
     def show
-        @content = Content.where(:content_type => SEConstants::ContentType::ARCHIVE).friendly.find(params[:id])
+        @content = Content.where(:published => true, :content_type => SEConstants::ContentType::ARCHIVE).friendly.find(params[:id])
         @previous_content = @content.previous
         @next_content = @content.next
     end

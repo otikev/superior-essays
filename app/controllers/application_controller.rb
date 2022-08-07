@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   before_action :fetch_logged_in_user
+  
 
   def fetch_logged_in_user
     puts "fetching logged in user..."
@@ -28,4 +30,9 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def render_not_found
+    render :file => "#{Rails.root}/public/error_404.html",  :status => 404
+  end
+
 end

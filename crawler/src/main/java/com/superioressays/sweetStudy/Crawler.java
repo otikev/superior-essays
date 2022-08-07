@@ -50,7 +50,11 @@ public class Crawler {
             public void run() {
                 try {
                     for (String field : FIELDS) {
-                        parse(field);
+                        try{
+                            parse(field);
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                     Network.notifyBatchComplete(hostname);
                     Scheduler.schedule();

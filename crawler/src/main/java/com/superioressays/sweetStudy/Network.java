@@ -17,7 +17,7 @@ public class Network {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     static final String AGENT_HEADER = "SE_AGENT_TOKEN";
-    static final String AGENT_HEADER_VALUE = "";
+    static final String AGENT_TOKEN = System.getenv("SE_AGENT_TOKEN") == null ? "randomvaluefortestthatisusedwhenthereisnotokensetintheenvironmentvariables" : System.getenv("SE_AGENT_TOKEN");
 
     static String baseUrl = "https://www.superioressays.pro/";
     //static String baseUrl = "http://localhost:5000/";
@@ -35,7 +35,7 @@ public class Network {
 
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .addHeader(AGENT_HEADER, AGENT_TOKEN)
                 .url(getAbsoluteUrl("agent/batch_complete"))
                 .post(body)
                 .build();
@@ -57,7 +57,7 @@ public class Network {
         String url = getAbsoluteUrl("agent/start");
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .addHeader(AGENT_HEADER, AGENT_TOKEN)
                 .url(url)
                 .post(body)
                 .build();
@@ -81,7 +81,7 @@ public class Network {
 
         RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .addHeader(AGENT_HEADER, AGENT_TOKEN)
                 .url(getAbsoluteUrl("agent/question/create"))
                 .post(requestBody)
                 .build();
@@ -100,7 +100,7 @@ public class Network {
     public static boolean questionExists(String url) throws IOException {
         String encodedString = Base64.getEncoder().encodeToString(url.getBytes());
         Request request = new Request.Builder()
-                .addHeader(AGENT_HEADER, AGENT_HEADER_VALUE)
+                .addHeader(AGENT_HEADER, AGENT_TOKEN)
                 .url(getAbsoluteUrl("agent/question/exists?url=" + encodedString))
                 .build();
 

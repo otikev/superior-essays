@@ -1,5 +1,7 @@
-FROM  amazoncorretto:11
+FROM gradle:7.4-jdk11
 MAINTAINER  Kevin Otieno <oti.kevin@gmail.com>
-WORKDIR /application
-COPY build/libs/SECrawler-1.0-SNAPSHOT.jar ./
-CMD ["java", "-jar", "SECrawler-1.0-SNAPSHOT.jar"]
+RUN mkdir /project
+COPY . /project
+WORKDIR /project
+RUN gradle build
+CMD ["java", "-jar", "build/libs/SECrawler-1.0-SNAPSHOT.jar"]

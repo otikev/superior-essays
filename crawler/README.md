@@ -13,10 +13,10 @@ java $JAVA_OPTS -jar build/libs/SECrawler-1.0-SNAPSHOT.jar
 
 Build
 ```
-docker build -t secrawler .
+docker build -t secrawler:latest .
 ```
 
 Run
 ```
-sudo docker run secrawler
+sudo docker run --env SE_AGENT_TOKEN={value} secrawler
 ```

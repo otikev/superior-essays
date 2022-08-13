@@ -90,7 +90,7 @@ class SeMailer < ApplicationMailer
         @order = params[:order]
         @recipient = params[:recipient]
 
-        puts "##### send new message email to #{recipient}"
+        puts "##### send new message email to #{@recipient.email}"
         mail(:to => @recipient.email, :subject => "New message on order #{@order.code}")
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end

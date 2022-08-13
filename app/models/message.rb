@@ -74,7 +74,7 @@ class Message < ApplicationRecord
       User.includes(:user_settings).where(admin: true).all.each do |admin|
         email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
         if email_updates.first.value == "true"
-            SeMailer.with(order: order, recipient: admin.email).delay.new_message
+            SeMailer.with(order: order, recipient: admin).delay.new_message
         end
       end
     else

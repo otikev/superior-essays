@@ -27,46 +27,36 @@
     </div>
     <div class="card-body">
         <%= simple_format @content.question %>
-        
     </div>
     <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
         <ul class="list-inline list-inline-condensed mb-sm-0">
             <li class="list-inline-item">
-                <span class="opacity-50"><%= local_time(@content.updated_at)%></span>
+                <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span>
             </li>
         </ul>
-        <% if @current_user %>
-            <%= link_to '/orders/new', method: :get, :class => "navbar-nav-link font-weight-semibold #{'active' if request.path == '/orders/new'}" do %>
-                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
-            <% end %>
-        <% else %>
-            <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
-                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
-            <% end %>
-        <% end %>
     </div>
-    <div class="col-lg-12 text-center mt-1 mb-1">
-        <%= image_tag('deadline.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100') %>
-        <%= image_tag('plagiarism-free.png', class: "img-responsive", alt: "Plagiarism free", :size => '150x150', :style => "margin-right: 50px; margin-left: 50px;") %>
-        <%= image_tag('discount.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100', :style => "margin-right: 50px;") %>
-        <%= image_tag('paypal.png', class: "img-responsive", alt: "Paypal payments", :size => '200x100') %>
-    </div>
+    
         <div class="card-body">
-            <h2 class="card-title">Solution</h2>
-            <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+            <% if @current_user %>
+                <%= link_to orders_new_path(:content_key => @content.key), method: :get do %>
+                    <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg mb-3"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+                <% end %>
+                <%= link_to orders_new_path(:content_key => @content.key), method: :get do %>
+                    <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+                <% end %>
+            <% else %>
+                <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                    <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+                <% end %>
+                <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                    <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="col-lg-12 text-center mt-1 mb-1">
+            <%= image_tag('deadline.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100') %>
+            <%= image_tag('plagiarism-free.png', class: "img-responsive", alt: "Plagiarism free", :size => '150x150', :style => "margin-right: 50px; margin-left: 50px;") %>
+            <%= image_tag('discount.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100', :style => "margin-right: 50px;") %>
+            <%= image_tag('paypal.png', class: "img-responsive", alt: "Paypal payments", :size => '200x100') %>
         </div>
 </div>
-
-<h2>Pricing Calculator</h2>
-
- <div class="row">
-    <div class="col-lg-12">
-        <%= render 'calculator'%>
-    </div>
-    <!--<div class="col-lg-12 text-center mt-5 mb-5">
-        <%= image_tag('deadline.png', class: "img-responsive", alt: "beat the deadline", :size => '198x198') %>
-        <%= image_tag('plagiarism-free.png', class: "img-responsive", alt: "Plagiarism free", :size => '198x198', :style => "margin-right: 50px; margin-left: 50px;") %>
-        <%= image_tag('discount.png', class: "img-responsive", alt: "beat the deadline", :size => '198x198') %>
-    </div>-->
- </div>
-

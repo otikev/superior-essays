@@ -5,14 +5,25 @@ class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:create_order,:capture_order]
 
   def new
+    content_key = params[:content_key] #The archive content to make an order for, if it's provided
     @order = Order.new
     user_voucher = @current_user.get_user_voucher
     if user_voucher
       @voucher = user_voucher.voucher
     end
+
+    @content = nil
+
+    if content_key
+      @content = Content.where(:key => content_key).first
+    end
+
   end
 
   def create
+    puts "*****************"
+    puts params
+    puts "*****************"
     @order = Order.new(order_params)
     @order.user_id = @current_user.id
     @order.order_status = OrderStatus.where(name: "Todo").first
@@ -54,6 +65,35 @@ class OrdersController < ApplicationController
     end
   end
 
+  def show
+    ky = params[:key]
+    @order = Order.where(key:ky).first
+    @resource = Resource.new
+    @message = Message.new
+    
+    if !@order # order not found!
+      redirect_to root_path and return false
+    end
+
+    @content = Content.where(:id => @order.content_id).first
+
+    if @order.is_reviewed?
+      @review = Review.where(order_id: @order.id).first
+    else
+      @review = Review.new
+    end
+
+    # Only admins can see any order. If the current order does not belong to the 
+    # current user and the user is not an admin redirect to root
+    # TODO: Update this to apply to users assigned to the order (writers) and Support
+    if !@current_user.admin? 
+      if @order.user_id != @current_user.id
+        redirect_to root_path and return false
+      end
+    end
+
+  end
+
   # PAYPAL CAPTURE ORDER
   def capture_order
     request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new params[:token]
@@ -78,33 +118,6 @@ class OrdersController < ApplicationController
       format.html
       format.json { render json: OrdersDatatable.new(view_context) }
     end
-  end
-
-  def show
-    ky = params[:key]
-    @order = Order.where(key:ky).first
-    @resource = Resource.new
-    @message = Message.new
-    
-    if !@order # order not found!
-      redirect_to root_path and return false
-    end
-
-    if @order.is_reviewed?
-      @review = Review.where(order_id: @order.id).first
-    else
-      @review = Review.new
-    end
-
-    # Only admins can see any order. If the current order does not belong to the 
-    # current user and the user is not an admin redirect to root
-    # TODO: Update this to apply to users assigned to the order (writers) and Support
-    if !@current_user.admin? 
-      if @order.user_id != @current_user.id
-        redirect_to root_path and return false
-      end
-    end
-
   end
 
   def download_resource
@@ -191,7 +204,7 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:order_type_id, :topic, :instructions,
       :order_quality_id, :order_urgency_id, :pages, :academic_level_id,
-      :english_type_id, :paper_format_id, :spacing, :subject_id, :sources_count)
+      :english_type_id, :paper_format_id, :spacing, :subject_id, :sources_count,:content_id)
   end
 
   def paypal_init

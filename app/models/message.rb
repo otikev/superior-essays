@@ -21,6 +21,7 @@ class Message < ApplicationRecord
   belongs_to :order
   belongs_to :user
 
+  after_create :new_message_notification
 
   def feed_display
     if category == MESSAGE_TYPE_USER_MESSAGE
@@ -64,6 +65,23 @@ class Message < ApplicationRecord
 
   def is_read_for_user?(user)
     ReadMessage.where(user_id: user.id, message_id: self.id).first != nil
+  end
+
+  private
+  def new_message_notification
+    if self.order.user_id == self.user_id
+      #message from client, notify all admins
+      User.includes(:user_settings).where(admin: true).all.each do |admin|
+        email_updates = admin.user_settings.where(name: SEConstants::UserSettings::EMAIL_UPDATES)
+        if email_updates.first.value == "true"
+            SeMailer.with(order: order, recipient: admin.email).delay.new_message
+        end
+      end
+    else
+      #message from admin/support, notify client
+      SeMailer.with(order: order, recipient: order.user).delay.new_message
+    end
+    
   end
 
 end

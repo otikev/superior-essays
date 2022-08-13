@@ -1,6 +1,9 @@
 {
   "name": "superior_essays",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.19",
     "@rails/actioncable": "^6.0.0",

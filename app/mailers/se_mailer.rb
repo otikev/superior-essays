@@ -73,7 +73,7 @@ class SeMailer < ApplicationMailer
     def agent_started
         recipient = params[:recipient]
         @host_name = params[:host]
-        mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot started at #{Time.now.round.utc}")
+        mail(:to=> recipient, :subject=>"Bot started at #{Time.now.round.utc}")
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 
@@ -82,7 +82,16 @@ class SeMailer < ApplicationMailer
         @content = params[:content]
         @host_name = params[:host]
         @recipient_name = params[:recipient_name]
-        mail(:to=> recipient, :subject=>"Superior Essays Pro : Bot created content for your review @ #{Time.now.round.utc}")
+        mail(:to=> recipient, :subject=>"Bot created content for your review @ #{Time.now.round.utc}")
+        Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
+    end
+
+    def new_message
+        @order = params[:order]
+        @recipient = params[:recipient]
+
+        puts "##### send new message email to #{@recipient.email}"
+        mail(:to => @recipient.email, :subject => "New message on order #{@order.code}")
         Indicator.generate_system_signal(SEConstants::Signals::EMAILS_QUEUED)
     end
 end

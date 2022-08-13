@@ -2,7 +2,7 @@
 <li class="nav-item dropdown <%= "#{'active' if @order_status && (@order_status.id == 1 || @order_status.id == 2 || @order_status.id == 3)}" %>">
     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
       <i class="icon-cart2 mr-2"></i>
-      Orders
+      My Orders
     </a>
     <div class="dropdown-menu">
       <%= link_to client_orders_todo_path, method: :get, :class => "dropdown-item #{'active' if @order_status && @order_status.id == 1}" do %>

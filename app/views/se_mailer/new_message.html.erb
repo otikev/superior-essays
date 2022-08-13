@@ -1,0 +1,16 @@
+
+
+<div>
+    <p>
+    Hi <%= @recipient.first_name %>,
+    </p>
+
+    <h2>You have a new message on order <%= @order.code %></h2>
+
+    <p>View the message <a href="<%=orders_show_url%>?key=<%= @order.key %>">here</a>.</p>
+    <br/>
+
+    <p>
+    The Superior Essays Pro team.</b>
+    </p>
+</div>

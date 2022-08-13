@@ -22,6 +22,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  academic_level_id :integer          default(1)
+#  content_id        :integer
 #  english_type_id   :integer          default(1)
 #  order_quality_id  :integer
 #  order_status_id   :integer

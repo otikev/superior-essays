@@ -22,6 +22,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  academic_level_id :integer          default(1)
+#  content_id        :integer
 #  english_type_id   :integer          default(1)
 #  order_quality_id  :integer
 #  order_status_id   :integer
@@ -129,13 +130,11 @@ class Order < ApplicationRecord
 
   def remaining_minutes
     diff = (remaining_seconds/60).to_i
-    puts "Difference(minutes) = #{diff}"
     diff
   end
 
   def remaining_hours
     diff = (remaining_minutes/60).to_i
-    puts "Difference(hours) = #{diff}"
     diff
   end
 
@@ -155,7 +154,6 @@ class Order < ApplicationRecord
 
   def remaining_time_text
     mins = remaining_minutes
-    puts "mins(all) = #{(mins).abs}"
     days = (mins).abs/1440
     remaining_mins = (mins).abs%1440
     hours = remaining_mins/60

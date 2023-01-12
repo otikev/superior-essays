@@ -36,8 +36,22 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  host = 'localhost:5000'
+
+  config.x.mail_from = %(Superior Essays Pro <support@superioressays.pro>)
+  config.action_mailer.default_url_options = { host: 'http://localhost:5000' }
+  config.action_mailer.smtp_settings = { 
+    address: 'smtpout.europe.secureserver.net',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    port: 587,
+    enable_starttls_auto: true,
+    authentication: :login
+  }
+  
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.perform_deliveries = false
 
   config.action_mailer.perform_caching = false
 
@@ -67,4 +81,6 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+
 end

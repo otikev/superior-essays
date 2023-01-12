@@ -167,6 +167,8 @@ GEM
     minitest (5.17.0)
     msgpack (1.6.0)
     multi_xml (0.6.0)
+    net-http (0.3.2)
+      uri
     net-imap (0.3.4)
       date
       net-protocol
@@ -295,6 +297,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
+    uri (0.12.0)
     version_gem (1.1.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -337,6 +340,7 @@ DEPENDENCIES
   listen (~> 3.2)
   local_time
   mimemagic (~> 0.3.10)
+  net-http
   nokogiri
   omniauth-google-oauth2
   omniauth-oauth2

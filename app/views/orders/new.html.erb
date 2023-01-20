@@ -39,7 +39,11 @@
           <% if @content %>
             <%= form.hidden_field :content_id, value: @content.id %>
           <% end %>
-          
+          <div class="col-lg-12 text-center mt-1 mb-1">
+              <%= image_tag('deadline.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100') %>
+              <%= image_tag('plagiarism-free.png', class: "img-responsive", alt: "Plagiarism free", :size => '150x150', :style => "margin-right: 50px; margin-left: 50px;") %>
+              <%= image_tag('paypal.png', class: "img-responsive", alt: "Paypal payments", :size => '200x100') %>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <legend class="font-weight-semibold mt-3">Enter your order details below</legend>

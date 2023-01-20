@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   match '/privacy', to: 'landing#privacy', via: :get
   match '/terms', to: 'landing#terms', via: :get
   match '/contact', to: 'landing#contact', via: :post
-
-  match '/pricing', to: 'site#pricing', via: :get
+  match '/archives', to: 'landing#archives', via: :get
+  scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
+    resources :contents, controller: 'landing', path: 'archives/show'
+  end
 
   match '/orders/new', to: 'orders#new', via: :get
   match '/orders/create', to: 'orders#create', via: :post
@@ -58,8 +60,5 @@ Rails.application.routes.draw do
   match '/agent/start', to: 'agent#start', via: :post
   match '/agent/batch_complete', to: 'agent#batch_complete', via: :post
 
-  match '/archives/list', to: 'archives#list', via: :get
-  scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
-    resources :contents, controller: 'archives', path: 'archives/show'
-  end
+
 end

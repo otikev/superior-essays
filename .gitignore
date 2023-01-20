@@ -38,3 +38,4 @@ yarn-debug.log*
 db/.DS_Store
 superior-essays.code-workspace
 .env
+yarn.lock # we are using npm for dependencies

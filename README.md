@@ -5,7 +5,7 @@
 Bundle install  
 Create database  
 Run migrations  
-yarn install  
+npm install  
 
 
 * Environment Variables

@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   require "base64"
+  layout 'www'
 
   before_action :must_have_user, :paypal_init
   skip_before_action :verify_authenticity_token, :only => [:create_order,:capture_order]

@@ -50,9 +50,9 @@ public class Crawler {
             public void run() {
                 try {
                     for (String field : FIELDS) {
-                        try{
+                        try {
                             parse(field);
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -96,7 +96,7 @@ public class Crawler {
             }
         }
 
-        //Fetch the first 3 questions that have no attachments
+        //Fetch the first 3 questions that have no attachments and meets the content size threshold
         List<Question> noAttachments = new ArrayList<>();
         for (Question question : questions) {
             Document _doc = Jsoup.connect(question.targetUrl).get();
@@ -108,10 +108,13 @@ public class Crawler {
                 //no attachments
                 boolean exists = Network.questionExists(question.targetUrl);
                 if (!exists) {
-                    noAttachments.add(question);
-                    if (noAttachments.size() >= 3) {
-                        break;
+                    if (question.description.length() >= 500) {
+                        noAttachments.add(question);
+                        if (noAttachments.size() >= 3) {
+                            break;
+                        }
                     }
+
                 }
             }
         }

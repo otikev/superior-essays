@@ -5,18 +5,44 @@
     <nav class="nav-menu d-none d-lg-block">
       <ul>
         
-          <li class=<%= (defined?(page) && page == 'home') ? "active" : "" %>><a href="/">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li class=<%= (defined?(page) &&  page == 'archives') ? "active" : "" %> > <a href="/archives">Archives</a></li>
-
           <% if @current_user %>
+            <li>
+              <%= link_to client_orders_todo_path, method: :get do %>
+                Todo
+              <% end %>
+            </li>
+            <li>
+              <%= link_to client_orders_in_progress_path, method: :get do %>
+                In Progress
+              <% end %>
+            </li>
+            <li>
+              <%= link_to client_orders_complete_path, method: :get do %>
+                Completed
+              <% end %>
+            </li>
+            <li>
+              <%= link_to client_orders_closed_path, method: :get do %>
+                Closed
+              <% end %>
+            </li>
+            <li class=<%= (defined?(page) &&  page == 'archives') ? "active" : "" %> > <a href="/archives">Archives</a></li>
+            <li>
+              <%= link_to messages_unread_path, method: :get do %>
+                Messages
+                <span>(<%= Message.unread_for_user(@current_user).count %>)</span>
+              <% end %>
+            </li>
             <span class="ml-5 mr-1 btn-labeled btn-labeled-left"> <%= @current_user.first_name %></span>
             <%= link_to logout_path, method: :get do %>
               <span class="btn btn-primary btn-labeled btn-labeled-left btn-sm small">Sign out</span>
             <% end %>
           <% else %>
+            <li class=<%= (defined?(page) && page == 'home') ? "active" : "" %>><a href="/">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li class=<%= (defined?(page) &&  page == 'archives') ? "active" : "" %> > <a href="/archives">Archives</a></li>
             <%= link_to '/auth/google_oauth2', method: :post do %>
               <span class="btn btn-primary btn-labeled btn-labeled-left btn-sm ml-5 small">Sign in</span>
             <% end %>

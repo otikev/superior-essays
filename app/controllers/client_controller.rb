@@ -1,5 +1,6 @@
 class ClientController < ApplicationController
   before_action :must_have_user
+  #layout 'www'
 
   def home
 

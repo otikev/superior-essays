@@ -8,22 +8,7 @@
           <% if @current_user %>
             <li>
               <%= link_to client_orders_todo_path, method: :get do %>
-                Todo
-              <% end %>
-            </li>
-            <li>
-              <%= link_to client_orders_in_progress_path, method: :get do %>
-                In Progress
-              <% end %>
-            </li>
-            <li>
-              <%= link_to client_orders_complete_path, method: :get do %>
-                Completed
-              <% end %>
-            </li>
-            <li>
-              <%= link_to client_orders_closed_path, method: :get do %>
-                Closed
+                Orders
               <% end %>
             </li>
             <li class=<%= (defined?(page) &&  page == 'archives') ? "active" : "" %> > <a href="/archives">Archives</a></li>
@@ -47,7 +32,6 @@
               <span class="btn btn-primary btn-labeled btn-labeled-left btn-sm ml-5 small">Sign in</span>
             <% end %>
           <% end %>
-       
       </ul>
     </nav><!-- .nav-menu -->
   </div>

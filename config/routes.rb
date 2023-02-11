@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   match '/orders/review', to: 'orders#review', via: :post
 
   match '/client/home', to: 'client#home', via: :get
+  match '/client/orders', to: 'client#orders', via: :get
   match '/client/orders_todo', to: 'client#orders_todo', via: :get
   match '/client/orders_complete', to: 'client#orders_complete', via: :get
   match '/client/orders_in_progress', to: 'client#orders_in_progress', via: :get

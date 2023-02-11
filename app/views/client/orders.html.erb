@@ -1,0 +1,35 @@
+<%= render 'general/header_nav', page: "orders" %>
+
+<section></section>
+
+<main id="main">
+
+<section id="archive" class="archive">
+  <div class="container">
+
+    <% @orders.each do |order|%>
+        <div class="card">
+            <div class="card-header header-elements-inline">
+            <%=  order.topic %>
+            </div>
+            <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0 mt-1">
+                <ul class="list-inline list-inline-condensed mb-sm-0">
+                    <li class="list-inline-item">
+                        <span class="opacity-50"><%= local_time(order.created_at, '%B %e, %Y')%></span>
+                    </li>
+                </ul>
+                <span> <%=  order.code %> </span>
+                <span> <%=  order.order_status.name %> </span>
+                <% if order.paid? %>
+					<span class="badge bg-success badge-pill">Paid</span>
+				<% else %>
+					<span class="badge bg-warning badge-pill">Payment Pending</span>
+				<% end %>
+                <%= link_to orders_show_path(:key => order.key), method: :get do %>
+                    <span class="btn btn-primary btn-labeled btn-labeled-left btn-sm small">View</span>
+                <% end %>
+            </div>
+        </div><br/>
+    <% end %>
+  </div>
+</section>

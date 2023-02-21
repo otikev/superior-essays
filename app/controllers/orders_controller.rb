@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
     @order.save!
 
     flash[:success] = "Order successfully created."
-    redirect_to client_orders_todo_path
+    redirect_to client_orders_path
   end
 
   def create_order

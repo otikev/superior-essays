@@ -1,195 +1,174 @@
-<% if @content %>
-  <div class="card">
-    <div class="card-header header-elements-sm-inline">
+<%= render 'general/header_nav'%>
+
+<section></section>
+
+<main id="main">
+
+
+<section id="archive" class="archive">
+  <div class="container">
+
+  <% if @content %>
+    <div class="header-elements-sm-inline">
       <h1 class="card-title"><%= @content.title %></h1>
-      <div class="header-elements">
-          <ul class="pagination pagination-sm pagination-pager justify-content-between">
-              <li class="page-item">
-                  <% if @previous_content %>
-                      <%= link_to content_path(@previous_content), :class => "font-weight-semibold" do %>
-                          <span class="page-link"><b><i class="icon-previous2"></i></b> Previous</span>
-                      <% end %>
-                  <% end %>
-              </li>
-              <li class="page-item">
-                  <% if @next_content %>
-                      <%= link_to content_path(@next_content), :class => "font-weight-semibold" do %>
-                          <span class="page-link">Next <b><i class="icon-next2"></i></b> </span>
-                      <% end %>
-                  <% end %>
-              </li>
-          </ul>
-      </div>
     </div>
-
-    <div class="card-body">
-        <%= simple_format @content.question %>
-    </div>
-
-    <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
-        <ul class="list-inline list-inline-condensed mb-sm-0">
-            <li class="list-inline-item">
-                <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span>
-            </li>
-        </ul>
-    </div>
-  </div>
-<% end %>
-
-<div class="card">
-  <div class="card-header header-elements-inline">
-    <% if @content %>
-      <h5 class="card-title">Get the answer</h5>
-    <% else %>
-      <h5 class="card-title">Create an order</h5>
-    <% end %>
-  </div>
-
-  <div class="card-body">
-    <%= form_for @order, :url => url_for(:controller => 'orders', :action => 'create', ) do |form| %>
-      <% if @content %>
-        <%= form.hidden_field :content_id, value: @content.id %>
-      <% end %>
+  <% end %>
+    <div class="card">
+      <div class="card-body">
+          <%= form_for @order, :url => url_for(:controller => 'orders', :action => 'create', ) do |form| %>
+            <% if @content %>
+              <%= form.hidden_field :content_id, value: @content.id %>
+            <% end %>
+            <div class="row">
+              <div class="col-md-12">
+                <legend class="font-weight-semibold mt-3">Enter your order details below</legend>
+                <%= render 'general/error_messages', object: form.object %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <fieldset>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Order Type:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :order_type_id, OrderType.order('name ASC').all, :id, :name, {prompt: "Select Order Type" }, class: "form-control"  , :required=>true%>
+                    </div>
+                  </div>
       
-      <div class="row">
-        <div class="col-md-12">
-          <legend class="font-weight-semibold"><i class="icon-cart2 mr-2"></i>Instructions</legend>
-          <%= render 'general/error_messages', object: form.object %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <fieldset>
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Order Type:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :order_type_id, OrderType.order('name ASC').all, :id, :name, {prompt: "Select Order Type" }, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Paper Format:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :paper_format_id, PaperFormat.all, :id, :name, {prompt: "Select Format" }, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">English Type:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :english_type_id, EnglishType.all, :id, :name, {prompt: "Select English" , :selected =>1}, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Academic Level:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :academic_level_id, AcademicLevel.all, :id, :name, {prompt: "Select Level" , :selected =>1}, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Spacing:</label>
-              <div class="col-lg-9">
-                <%= form.select(:spacing, options_for_select([['Single Spaced - 550 words', 1], ['Double Spaced - 275 words', 2]],2), {:prompt => 'Select Spacing'},{class: "form-control"}) %>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Number of Sources:</label>
-              <div class="col-lg-9">
-                <%= form.number_field :sources_count, placeholder: "Sources", class: "form-control", min: 1  , :required=>true %>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Order Quality:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Order Deadline:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Pages:</label>
-              <div class="col-lg-9">
-                <%= form.number_field :pages, :value => 1, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="col-md-6">
-          <fieldset>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Subject:</label>
-              <div class="col-lg-9">
-                <%= form.collection_select :subject_id, Subject.all, :id, :name, {prompt: "Select Subject"}, class: "form-control"  , :required=>true%>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Topic:</label>
-              <div class="col-lg-9">
-                <%= form.text_area :topic, placeholder: "Topic", class: "form-control" , :required=>true, rows: 2 %>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Instructions:</label>
-              <div class="col-lg-9">
-                <%= form.text_area :instructions, placeholder: "Additional instructions", class: "form-control"  , :required=>true, rows: 10 %>
-              </div>
-            </div>
-
-            <div class="form-group text-center text-muted content-divider">
-                <span class="px-2"></span>
-            </div>
-
-            <div class="form-group row alert alert-success">
-                
-                <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Price:</h1>
-                <div class="col-lg-7">
-                    <div class="form-group form-group-feedback form-group-feedback-left">
-                        <%= text_field_tag :total_price,0, placeholder: "Topic", class: "form-control font-weight-black" , :readonly => true %>
-                        <div class="form-control-feedback">
-                            <i class="icon-coin-dollar"></i>
-                        </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Paper Format:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :paper_format_id, PaperFormat.all, :id, :name, {prompt: "Select Format" }, class: "form-control"  , :required=>true%>
                     </div>
-                </div>
-                <% if @voucher %>
-                    <div class="row"></div>
-                    <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discounted Price:</h1>
-                    <div class="col-lg-7">
-                        <div class="form-group form-group-feedback form-group-feedback-left">
-                            <%= text_field_tag :discount,0, placeholder: "Topic", class: "form-control font-weight-black" , :readonly => true %>
-                            <div class="form-control-feedback">
-                                <i class="icon-coin-dollar"></i>
-                            </div>
-                        </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">English Type:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :english_type_id, EnglishType.all, :id, :name, {prompt: "Select English" , :selected =>1}, class: "form-control"  , :required=>true%>
                     </div>
-                <% end %>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Academic Level:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :academic_level_id, AcademicLevel.all, :id, :name, {prompt: "Select Level" , :selected =>1}, class: "form-control"  , :required=>true%>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Spacing:</label>
+                    <div class="col-lg-9">
+                      <%= form.select(:spacing, options_for_select([['Single Spaced - 550 words', 1], ['Double Spaced - 275 words', 2]],2), {:prompt => 'Select Spacing'},{class: "form-control"}) %>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Number of Sources:</label>
+                    <div class="col-lg-9">
+                      <%= form.number_field :sources_count, placeholder: "Sources", class: "form-control", min: 1  , :required=>true %>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Order Quality:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :order_quality_id, OrderQuality.all, :id, :quality, {prompt: "Select Quality" , :selected =>1}, class: "form-control"  , :required=>true%>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Order Deadline:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :order_urgency_id, OrderUrgency.all, :id, :display, {prompt: "Select Deadline" , :selected =>1}, class: "form-control"  , :required=>true%>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Pages:</label>
+                    <div class="col-lg-9">
+                      <%= form.number_field :pages, :value => 1, placeholder: "Pages", class: "form-control", min: 1  , :required=>true%>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+      
+              <div class="col-md-6">
+                <fieldset>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Subject:</label>
+                    <div class="col-lg-9">
+                      <%= form.collection_select :subject_id, Subject.all, :id, :name, {prompt: "Select Subject"}, class: "form-control"  , :required=>true%>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Topic:</label>
+                    <div class="col-lg-9">
+                      <%= form.text_area :topic, placeholder: "Topic", class: "form-control" , :required=>true, rows: 2 %>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Instructions:</label>
+                    <div class="col-lg-9">
+                      <%= form.text_area :instructions, placeholder: "Additional instructions", class: "form-control"  , :required=>true, rows: 10 %>
+                    </div>
+                  </div>
+      
+                  <div class="form-group text-center text-muted content-divider">
+                      <span class="px-2"></span>
+                  </div>
+      
+                  <div class="form-group row alert alert-success">
+                      
+                      <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Price:</h1>
+                      <div class="col-lg-7">
+                          <div class="form-group form-group-feedback form-group-feedback-left">
+                              <%= text_field_tag :total_price,0, placeholder: "Topic", class: "form-control font-weight-black" , :readonly => true %>
+                              <div class="form-control-feedback">
+                                  <i class="icon-coin-dollar"></i>
+                              </div>
+                          </div>
+                      </div>
+                      <% if @voucher %>
+                          <div class="row"></div>
+                          <h1 class="col-lg-5 col-form-label text-left mb-0 font-weight-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discounted Price:</h1>
+                          <div class="col-lg-7">
+                              <div class="form-group form-group-feedback form-group-feedback-left">
+                                  <%= text_field_tag :discount,0, placeholder: "Topic", class: "form-control font-weight-black" , :readonly => true %>
+                                  <div class="form-control-feedback">
+                                      <i class="icon-coin-dollar"></i>
+                                  </div>
+                              </div>
+                          </div>
+                      <% end %>
+                  </div>
+      
+                </fieldset>
+              </div>
             </div>
-
-          </fieldset>
-        </div>
+      
+            <div class="text-right">
+              <%= button_tag(:class => "btn bg-primary btn-lg mb-3") do %>
+                Create Order
+              <% end %>
+            </div>
+          <%end%>
+          <% if @content %>
+            <%= simple_format @content.question %>
+            <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span><br/>
+          <% end %>
       </div>
-
-      <div class="text-right">
-        <%= button_tag(:class => "btn bg-primary") do %>
-          Create Order <i class="icon-paperplane ml-2"></i>
-        <% end %>
-      </div>
-    <%end%>
+    </div>
   </div>
-</div>
+
+
+
+  </div>
+</section>
+
 
 
 <script>

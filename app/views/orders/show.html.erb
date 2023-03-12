@@ -1,176 +1,187 @@
+<%= render 'general/header_nav'%>
+
+<section></section>
+
+<main id="main">
+
+<section id="archive" class="archive">
+  <div class="container">
 
 
-<h1><%= @order.topic %></h1>
+  <h1><%= @order.topic %></h1>
 
-<div class="card">
-<div class="card-header header-elements-sm-inline">
-  <h3 class="card-title">Summary</h3>
-  <div class="header-elements">
-    <span class="badge bg-success badge-pill"><%= @order.messages.count%> messages</span>
-  </div>
-</div>
-
-<div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
-  <div class="d-flex align-items-center mb-3 mb-sm-0">
-    <div class="text-sm-left mb-0 mt-3 mt-sm-0 ml-auto">
-      <ul class="list list-unstyled mb-0">
-      <li>Order Code: <%= @order.code %></li>
-        <li>Order Price: <span class="font-weight-semibold">$<%= @order.price%></span></li>
-        <% if @order.user_voucher %>
-          <li>Discount: <span class="font-weight-semibold"><%= @order.user_voucher.voucher.value %>% : $<%= @order.discounted_price%> </span></li>
-        <% end %>
-        <li>Order Status: <span class="font-weight-semibold"><%= @order.order_status.name %></span></li>
-        <li>
-          Payment Status:
-            <% if @order.paid? %>
-              <span class="font-weight-semibold badge bg-success badge-pill">Paid</span>
-            <% else %>
-              <span class="font-weight-semibold badge bg-danger badge-pill">Pending</span>
-            <% end %>
-        </li>
-        <li>Paid On: <span class="font-weight-semibold"><%= @order.paid ? local_time(@order.paid_on) : "Unpaid" %></span></li>
-        <% if @order.order_status.name == "Complete" %>
-          <li>Completion Date: <span class="font-weight-semibold"><%= local_time(@order.completed_on) %></span></li>
-        <% elsif !@order.paid? %>
-          <li>Due Date: <span class="font-weight-semibold">Date is provided after payment is made</span></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center mb-3 mb-sm-0">
-    <div class="text-sm-left mb-0 mt-3 mt-sm-0 ml-auto">
-      <ul class="list list-unstyled mb-0">
-        <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
-        <li>Issued On: <span class="font-weight-semibold"><%= local_time(@order.created_at) %></span></li>
-        
-        <li>Spacing: <span class="font-weight-semibold"><%= @order.spacing_text %></span></li>
-          <li>English Type: <span class="font-weight-semibold"><%= @order.english_type.name %></span></li>
-          <li>Academic Level: <span class="font-weight-semibold"><%= @order.academic_level.name %></span></li>
-          <li>Pages: <span class="font-weight-semibold"><%= @order.pages %></span></li>
-          
-      </ul>
-    </div>
-  </div>
-
-  <div>
-  <% if @current_user.admin? %>
-    <%= form_for @order, :url => url_for(:controller => 'orders', :action => 'update_status' ) do |form| %>
-      <%= form.hidden_field :key, value: @order.key %>
-      Update Status
-      <% if @order.order_status.id == 1 %>
-        <%= form.hidden_field :order_status_id, value: 2 %>
-        <div class="row">
-          <div class="col-lg-12">
-            <%= button_tag(:class => "btn bg-success") do %>
-            In Progress
-            <% end %>
-          </div>
-        </div>
-      <% elsif @order.order_status.id == 2 %>
-        <%= form.hidden_field :order_status_id, value: 3 %>
-        <div class="row">
-          <div class="col-lg-12">
-            <%= button_tag(:class => "btn bg-warning") do %>
-              Complete
-            <% end %>
-          </div>
-        </div>
-      <% elsif @order.order_status.id = 3 || @order.order_status.id = 4 %>
-        <%= form.hidden_field :order_status_id, value: 2 %>
-        <div class="row">
-          <div class="col-lg-12">
-            <%= button_tag(:class => "btn bg-danger") do %>
-              In Progress
-            <% end %>
-          </div>
-        </div>
-      <%end%>
-    <%end%>
-  <% else %>
-  <ul class="list list-unstyled mb-0">
-    
-    <li>Order Type: <span class="font-weight-semibold"><%= @order.order_type.name %></span></li>
-    <li>Paper Format: <span class="font-weight-semibold"><%= @order.paper_format.name %></span></li>
-    <li>Quality: <span class="font-weight-semibold"><%= @order.order_quality.quality %></span></li>
-    <li>Number of Sources: <span class="font-weight-semibold"><%= @order.sources_count %></span></li>
-    <li>Subject: <span class="font-weight-semibold">
-          <% if @order.subject %>
-            <%= @order.subject.name %>
-          <% else %>
-            No Subject
-          <% end %></span>
-          </li>
-  </ul>
-  <% end %>
-    
-  </div>
-</div>
-</div>
-
-<% if @content %>
   <div class="card">
-    <div class="card-header header-elements-sm-inline">
-      <h2 class="card-title"><%= @content.title %></h2>
-      <div class="header-elements">
-          <ul class="pagination pagination-sm pagination-pager justify-content-between">
-              <li class="page-item">
-                  <% if @previous_content %>
-                      <%= link_to content_path(@previous_content), :class => "font-weight-semibold" do %>
-                          <span class="page-link"><b><i class="icon-previous2"></i></b> Previous</span>
-                      <% end %>
-                  <% end %>
-              </li>
-              <li class="page-item">
-                  <% if @next_content %>
-                      <%= link_to content_path(@next_content), :class => "font-weight-semibold" do %>
-                          <span class="page-link">Next <b><i class="icon-next2"></i></b> </span>
-                      <% end %>
-                  <% end %>
+  <div class="card-header header-elements-sm-inline">
+    <h3 class="card-title">Summary</h3>
+    <div class="header-elements">
+      <span class="badge bg-success badge-pill"><%= @order.messages.count%> messages</span>
+    </div>
+  </div>
+  
+  <div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
+    <div class="d-flex align-items-center mb-3 mb-sm-0">
+      <div class="text-sm-left mb-0 mt-3 mt-sm-0 ml-auto">
+        <ul class="list list-unstyled mb-0">
+        <li>Order Code: <%= @order.code %></li>
+          <li>Order Price: <span class="font-weight-semibold">$<%= @order.price%></span></li>
+          <% if @order.user_voucher %>
+            <li>Discount: <span class="font-weight-semibold"><%= @order.user_voucher.voucher.value %>% : $<%= @order.discounted_price%> </span></li>
+          <% end %>
+          <li>Order Status: <span class="font-weight-semibold"><%= @order.order_status.name %></span></li>
+          <li>
+            Payment Status:
+              <% if @order.paid? %>
+                <span class="font-weight-semibold badge bg-success badge-pill">Paid</span>
+              <% else %>
+                <span class="font-weight-semibold badge bg-danger badge-pill">Pending</span>
+              <% end %>
+          </li>
+          <li>Paid On: <span class="font-weight-semibold"><%= @order.paid ? local_time(@order.paid_on) : "Unpaid" %></span></li>
+          <% if @order.order_status.name == "Complete" %>
+            <li>Completion Date: <span class="font-weight-semibold"><%= local_time(@order.completed_on) %></span></li>
+          <% elsif !@order.paid? %>
+            <li>Due Date: <span class="font-weight-semibold">Date is provided after payment is made</span></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="d-flex align-items-center mb-3 mb-sm-0">
+      <div class="text-sm-left mb-0 mt-3 mt-sm-0 ml-auto">
+        <ul class="list list-unstyled mb-0">
+          <li>Urgency: <span class="font-weight-semibold"><%= @order.order_urgency.display %></span></li>
+          <li>Issued On: <span class="font-weight-semibold"><%= local_time(@order.created_at) %></span></li>
+          
+          <li>Spacing: <span class="font-weight-semibold"><%= @order.spacing_text %></span></li>
+            <li>English Type: <span class="font-weight-semibold"><%= @order.english_type.name %></span></li>
+            <li>Academic Level: <span class="font-weight-semibold"><%= @order.academic_level.name %></span></li>
+            <li>Pages: <span class="font-weight-semibold"><%= @order.pages %></span></li>
+            
+        </ul>
+      </div>
+    </div>
+  
+    <div>
+    <% if @current_user.admin? %>
+      <%= form_for @order, :url => url_for(:controller => 'orders', :action => 'update_status' ) do |form| %>
+        <%= form.hidden_field :key, value: @order.key %>
+        Update Status
+        <% if @order.order_status.id == 1 %>
+          <%= form.hidden_field :order_status_id, value: 2 %>
+          <div class="row">
+            <div class="col-lg-12">
+              <%= button_tag(:class => "btn bg-success") do %>
+              In Progress
+              <% end %>
+            </div>
+          </div>
+        <% elsif @order.order_status.id == 2 %>
+          <%= form.hidden_field :order_status_id, value: 3 %>
+          <div class="row">
+            <div class="col-lg-12">
+              <%= button_tag(:class => "btn bg-warning") do %>
+                Complete
+              <% end %>
+            </div>
+          </div>
+        <% elsif @order.order_status.id = 3 || @order.order_status.id = 4 %>
+          <%= form.hidden_field :order_status_id, value: 2 %>
+          <div class="row">
+            <div class="col-lg-12">
+              <%= button_tag(:class => "btn bg-danger") do %>
+                In Progress
+              <% end %>
+            </div>
+          </div>
+        <%end%>
+      <%end%>
+    <% else %>
+    <ul class="list list-unstyled mb-0">
+      
+      <li>Order Type: <span class="font-weight-semibold"><%= @order.order_type.name %></span></li>
+      <li>Paper Format: <span class="font-weight-semibold"><%= @order.paper_format.name %></span></li>
+      <li>Quality: <span class="font-weight-semibold"><%= @order.order_quality.quality %></span></li>
+      <li>Number of Sources: <span class="font-weight-semibold"><%= @order.sources_count %></span></li>
+      <li>Subject: <span class="font-weight-semibold">
+            <% if @order.subject %>
+              <%= @order.subject.name %>
+            <% else %>
+              No Subject
+            <% end %></span>
+            </li>
+    </ul>
+    <% end %>
+      
+    </div>
+  </div>
+  </div>
+  
+  <% if @content %>
+    <div class="card mt-3">
+      <div class="card-header header-elements-sm-inline">
+        <h2 class="card-title"><%= @content.title %></h2>
+        <div class="header-elements">
+            <ul class="pagination pagination-sm pagination-pager justify-content-between">
+                <li class="page-item">
+                    <% if @previous_content %>
+                        <%= link_to content_path(@previous_content), :class => "font-weight-semibold" do %>
+                            <span class="page-link"><b><i class="icon-previous2"></i></b> Previous</span>
+                        <% end %>
+                    <% end %>
+                </li>
+                <li class="page-item">
+                    <% if @next_content %>
+                        <%= link_to content_path(@next_content), :class => "font-weight-semibold" do %>
+                            <span class="page-link">Next <b><i class="icon-next2"></i></b> </span>
+                        <% end %>
+                    <% end %>
+                </li>
+            </ul>
+        </div>
+      </div>
+  
+      <div class="card-body">
+          <%= simple_format @content.question %>
+      </div>
+  
+      <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
+          <ul class="list-inline list-inline-condensed mb-sm-0">
+              <li class="list-inline-item">
+                  <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span>
               </li>
           </ul>
       </div>
     </div>
-
+  <% end %>
+  
+  <% if @order.is_closed? %>
+   <%= render 'orders/shared/review'%>
+  <% end %>
+  
+  
+  <div class="card mt-3">
     <div class="card-body">
-        <%= simple_format @content.question %>
+      <legend class="text-uppercase font-size-sm font-weight-bold mt-3">Instructions</legend>
+      <%= @order.instructions %>
     </div>
-
-    <div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
-        <ul class="list-inline list-inline-condensed mb-sm-0">
-            <li class="list-inline-item">
-                <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span>
-            </li>
-        </ul>
+    <div class="mr-3 ml-3">
+      <% if @current_user.admin? %>
+        <%= render 'orders/shared/admin'%>
+      <% else %>
+        <%= render 'orders/shared/client'%>
+      <% end %>
     </div>
   </div>
-<% end %>
-
-<% if @order.is_closed? %>
- <%= render 'orders/shared/review'%>
-<% end %>
-
-
-<div class="card">
-  <div class="card-body">
-    <legend class="text-uppercase font-size-sm font-weight-bold mt-3">Instructions</legend>
-    <%= @order.instructions %>
-  </div>
-  <div class="mr-3 ml-3">
-    <% if @current_user.admin? %>
-      <%= render 'orders/shared/admin'%>
-    <% else %>
-      <%= render 'orders/shared/client'%>
-    <% end %>
-  </div>
-</div>
-<div class="card">
-  <div class="card-body">
-    <legend class="text-uppercase font-size-sm font-weight-bold">Messages</legend>
-    <div class="row mb-3">
-      <div class="col-lg-12">
-        <%= render 'orders/shared/messages'%>
+  
+  <div class="card mt-3">
+    <div class="card-body">
+      <legend class="text-uppercase font-size-sm font-weight-bold">Messages</legend>
+      <div class="row mb-3">
+        <div class="col-lg-12">
+          <%= render 'orders/shared/messages'%>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
+</section>

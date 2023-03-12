@@ -96,8 +96,8 @@ public class Crawler {
             }
         }
 
-        //Fetch the first 3 questions that have no attachments and meets the content size threshold
-        List<Question> noAttachments = new ArrayList<>();
+        //Fetch the first 3 questions that have no attachments and meets the content size thresholds
+        List<Question> filtered = new ArrayList<>();
         for (Question question : questions) {
             Document _doc = Jsoup.connect(question.targetUrl).get();
             Elements mainQuestion = _doc.select("div#main-question");
@@ -108,19 +108,20 @@ public class Crawler {
                 //no attachments
                 boolean exists = Network.questionExists(question.targetUrl);
                 if (!exists) {
-                    if (question.description.length() >= 500) {
-                        noAttachments.add(question);
-                        if (noAttachments.size() >= 3) {
+                    if (question.description.length() >= 500 && question.title.length() >= 25) {
+                        //description length meets threshold
+                        //title length meets threshold
+                        filtered.add(question);
+                        if (filtered.size() >= 3) {
                             break;
                         }
                     }
-
                 }
             }
         }
 
         // Post the questions
-        for (Question question : noAttachments) {
+        for (Question question : filtered) {
             boolean success = Network.createQuestion(question);
             logger.info("Question posted = " + String.valueOf(success).toUpperCase() + " : " + question.targetUrl);
         }

@@ -1,8 +1,14 @@
 class ClientController < ApplicationController
   before_action :must_have_user
+  layout 'www'
 
   def home
 
+  end
+
+
+  def orders
+    @orders = Order.where(user_id: @current_user.id)
   end
 
   def orders_todo

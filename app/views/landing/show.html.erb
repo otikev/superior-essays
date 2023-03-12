@@ -1,0 +1,78 @@
+<% provide(:title, "#{@content.title}") %>
+<% provide(:description, 'Superior Essays Pro is an academic help service focused on providing writing and homework assistance to learners across the globe.') %>
+<% provide(:keywords, 'Buy Assignment Online, Buy Research Paper, Write My Research Paper, Term Paper Help, Cheap Essay Writing Service, Superior Essay Papers, Essays,Buy Essay,College Essay, Custom Essay Online, Cheap Essay Writing, Do Your Essay, Order Essay,Top Essay Writing, research, books, writing, questions, term papers') %>
+
+<%= render 'general/header_nav', :page => "archives" %>
+
+<section></section>
+
+<main id="main">
+
+<section>
+<div class="container">
+
+<div>
+<div class="header-elements">
+        <ul class="pagination pagination-sm pagination-pager justify-content-between">
+            <li class="page-item">
+                <% if @previous_content %>
+                    <%= link_to content_path(@previous_content), :class => "font-weight-semibold" do %>
+                        <span class="page-link"><b><i class="icon-previous2"></i></b> Previous</span>
+                    <% end %>
+                <% end %>
+            </li>
+            <li class="page-item">
+                <% if @next_content %>
+                    <%= link_to content_path(@next_content), :class => "font-weight-semibold" do %>
+                        <span class="page-link">Next <b><i class="icon-next2"></i></b> </span>
+                    <% end %>
+                <% end %>
+            </li>
+        </ul>
+    </div>
+    <h1 class="card-title"><%= @content.title %></h1>
+</div>
+
+<div class="card">
+
+<div class="card-body">
+    <%= simple_format @content.question %>
+</div>
+<div class="card-footer bg-transparent d-sm-flex justify-content-sm-between align-items-sm-center border-top-0 pt-0">
+    <ul class="list-inline list-inline-condensed mb-sm-0">
+        <li class="list-inline-item">
+            <span class="opacity-50"><%= local_time(@content.updated_at, '%B %e, %Y')%></span>
+        </li>
+    </ul>
+</div>
+
+    <div class="card-body">
+        <% if @current_user %>
+            <%= link_to orders_new_path(:content_key => @content.key), method: :get do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg mb-3"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+            <% end %>
+            <%= link_to orders_new_path(:content_key => @content.key), method: :get do %>
+                <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+            <% end %>
+        <% else %>
+            <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                <span class="btn btn-primary btn-labeled btn-labeled-left btn-lg"><b><i class="icon-cart2"></i></b> Get Answer Now</span>
+            <% end %>
+            <%= link_to '/auth/google_oauth2', method: :post, :class => "navbar-nav-link font-weight-semibold" do %>
+                <%= image_tag('blurred.png',width: "100%", class: "img-responsive", alt: "Blurred answer") %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col-lg-12 text-center mt-1 mb-1">
+        <%= image_tag('deadline.png', class: "img-responsive", alt: "beat the deadline", :size => '100x100') %>
+        <%= image_tag('plagiarism-free.png', class: "img-responsive", alt: "Plagiarism free", :size => '150x150', :style => "margin-right: 50px; margin-left: 50px;") %>
+        <%= image_tag('paypal.png', class: "img-responsive", alt: "Paypal payments", :size => '200x100') %>
+    </div>
+</div>
+
+</div>
+
+
+ 
+</section>
+
